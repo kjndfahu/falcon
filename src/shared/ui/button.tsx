@@ -6,9 +6,9 @@ interface Props {
     styles?:string;
 }
 
-export const Buttons:React.FC<Props> = ({className, styles, title}) => {
+export const Button:React.FC<Props> = ({className, styles, title}) => {
     return (
-        <div className={`flex ${styles} items-center font-normal p-2 gap-2`}>
+        <div className={`flex ${styles} cursor-pointer items-center font-normal p-2 gap-2`}>
             <EnterLogo/>
             {title}
         </div>
