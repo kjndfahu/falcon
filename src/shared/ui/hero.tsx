@@ -2,10 +2,12 @@ interface Props{
     title: string;
     text?:string;
     button?: React.ReactNode;
+    banner: string;
+
 }
-export const Hero:React.FC<Props> = ({title, text, button}) => {
+export const Hero:React.FC<Props> = ({title, text, banner, button}) => {
     return (
-        <div className="flex flex-col items-start text-white gap-[30px] justify-center px-[220px] text-[96px] leading-[87px] font-medium bg-blue-400 h-[600px]">
+        <div className={`flex flex-col ${banner} bg-cover bg-center items-start text-white gap-[30px] justify-center px-[220px] text-[96px] leading-[87px] font-medium h-[600px]`}>
             {title}
             <p className="text-[18px] font-normal leading-[28px]">{text}</p>
         </div>

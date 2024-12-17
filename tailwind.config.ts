@@ -13,6 +13,13 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      backgroundImage: {
+        'contact-banner': "url('/assets/img/contact-banner.png')",
+        'faq-banner': "url('/assets/img/faq-banner.png')",
+        'main-banner': "url('/assets/img/main-banner.png')",
+        'pc-banner': "url('/assets/img/pc-banner.png')",
+        'auth-banner': "url('/assets/img/auth-banner.png')",
+      },
     },
   },
   plugins: [],

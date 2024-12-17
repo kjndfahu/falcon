@@ -5,7 +5,7 @@ import {AccordionBlock} from "@/widgets/faq/accordion-block";
 export default function FaqPage() {
     return (
         <div className="flex flex-col gap-[70px]">
-            <Hero title="Top questions" text="Need something cleared up? Here are our most frequently asked questions."/>
+            <Hero banner="bg-faq-banner" title="Top questions" text="Need something cleared up? Here are our most frequently asked questions."/>
             <AccordionBlock/>
             <QuestionBlock/>
         </div>
