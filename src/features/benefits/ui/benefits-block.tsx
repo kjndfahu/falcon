@@ -1,13 +1,12 @@
-import {ArrowRight, TelegramLogo} from "@/shared/ui/icons";
+import {ArrowRight} from "@/shared/ui/icons";
 
 interface Props{
-    className?:string;
     title?:string;
     text?:string;
     logo?:React.ReactNode;
 }
 
-export const BenefitsBlock:React.FC<Props> = ({title, text, logo, className}) => {
+export const BenefitsBlock:React.FC<Props> = ({title, text, logo}) => {
     return (
         <div className="flex flex-col justify-between text-left bg-[#FFFFFF99] w-[450px] h-[350px] px-[50px] border-[1px] backdrop-blur-xl text-[#0A131D] font-medium rounded-[15px] border-[#CAE8FF] text-[24px] py-9">
             <div className="flex flex-col gap-[25px]">

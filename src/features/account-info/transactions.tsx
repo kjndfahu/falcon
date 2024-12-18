@@ -11,26 +11,6 @@ interface HistoryItem {
     statusIcon: React.ReactNode;
 }
 
-const historyData: HistoryItem[] = [
-    {
-        balance: "0.000000",
-        usdEquivalent: "0.000 USD",
-        title: "USDT",
-        icon: <span>⚔️</span>,
-        status: "Conclusion",
-        statusColor: "text-pink-500",
-        statusIcon: <span>🔗</span>,
-    },
-    {
-        balance: "0.000000",
-        usdEquivalent: "0.000 USD",
-        title: "Visa",
-        icon: <span>💳</span>,
-        status: "Replenished",
-        statusColor: "text-blue-500",
-        statusIcon: <span>🔄</span>,
-    },
-];
 
 export const Transactions: React.FC = () => {
     return (

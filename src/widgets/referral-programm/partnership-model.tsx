@@ -5,7 +5,7 @@ interface Props{
     className?:string;
 }
 
-export const PartnershipModel:React.FC<Props> = ({className}) => {
+export const PartnershipModel:React.FC<Props> = ({}) => {
     return (
         <div className="flex flex-col gap-[50px] items-center justify-center text-[36px] text-black font-semibold leading-[40px] px-[220px]">
             Our Partnership Models

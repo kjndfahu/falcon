@@ -1,4 +1,3 @@
-import {sessionService} from "@/enteties/user/services/session";
 import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
 import localFont from "next/font/local";
 import "../globals.css";

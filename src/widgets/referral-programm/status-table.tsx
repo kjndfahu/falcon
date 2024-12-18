@@ -3,7 +3,7 @@ import {statusValues} from "@/features/referral-programm/model/constants";
 interface Props{
     className?:string,
 }
-export const StatusTable:React.FC<Props> = ({className}) => {
+export const StatusTable:React.FC<Props> = ({}) => {
     return (
         <div className="px-[220px]">
             <table className="w-full table-fixed border-collapse border-[rgba(190,_218,_233,_1)] text-center">
