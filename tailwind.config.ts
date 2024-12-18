@@ -19,6 +19,8 @@ export default {
         'main-banner': "url('/assets/img/main-banner.png')",
         'pc-banner': "url('/assets/img/pc-banner.png')",
         'auth-banner': "url('/assets/img/auth-banner.png')",
+        'referral-banner': "url('/assets/img/referral-banner.png')",
+        'bg-referral': "url('/assets/img/bg-referral.png')",
       },
     },
   },
