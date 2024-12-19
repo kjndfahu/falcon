@@ -1,21 +1,23 @@
-
-import {Button} from "@/shared/ui/button";
 import {GoogleButton} from "@/shared/ui/google-button";
 
 interface Props{
-    signupfields?: React.ReactNode;
-    signinfields?: React.ReactNode;
+    fields?: React.ReactNode;
     titlebtn: string;
     maintitle:string;
+    actions:React.ReactNode;
+    errors: React.ReactNode,
+    action?  : (formData: FormData) => void;
 }
 
-export const AuthFormLayout:React.FC<Props> = ({signinfields, signupfields, maintitle, titlebtn}) => {
+export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields, maintitle,}) => {
     return (
         <div className="flex flex-col w-full text-[#0A131D] text-[32px] font-semibold">
             <h3>{maintitle}</h3>
-            {signupfields}
-            {signinfields}
-            <Button styles="flex justify-center text-[18px] mt-[25px] py-4 font-light text-white rounded-[15px] bg-[#0057FF]" title={titlebtn}/>
+            <form action={action}>
+                {fields}
+                {errors}
+                {actions}
+            </form>
             <GoogleButton/>
         </div>
     )

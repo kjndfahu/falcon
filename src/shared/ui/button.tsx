@@ -1,15 +1,18 @@
-import {EnterLogo} from "@/shared/ui/icons";
+import { EnterLogo } from "@/shared/ui/icons";
+import * as React from "react";
 
 interface Props {
     title?: string;
-    styles?:string;
+    isPending?: boolean;
+    styles?: string;
 }
 
-export const Button:React.FC<Props> = ({styles, title}) => {
+export const Button: React.FC<Props> = ({ isPending, title, styles }) => {
+    console.log(isPending);
     return (
-        <div className={`flex ${styles} cursor-pointer items-center font-normal p-2 gap-2`}>
-            <EnterLogo/>
+        <button disabled={isPending} type="submit" className={`flex ${styles} cursor-pointer items-center font-normal p-2 gap-2`}>
+            <EnterLogo />
             {title}
-        </div>
-    )
-}
+        </button>
+    );
+};

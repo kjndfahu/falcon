@@ -1,4 +1,5 @@
 import "server-only";
+
 import { SignJWT, jwtVerify } from "jose";
 import { left, right } from "@/shared/lib/either";
 import { SessionEntity, UserEntity, userToSession } from "@/enteties/user/domain";
@@ -30,7 +31,7 @@ async function decrypt(session: string | undefined = "") {
 
 async function addSession (user: UserEntity){
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    const sessionDate = userToSession(user, expiresAt.toString());
+    const sessionDate = userToSession(user,  expiresAt.toString());
     const session = await encrypt(sessionDate);
     const cookiesStore = await cookies();
 

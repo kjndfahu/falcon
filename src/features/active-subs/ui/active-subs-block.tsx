@@ -16,7 +16,7 @@ export const ActiveSubsBlock = () => {
                             <h3 className="text-[24px] font-medium text-[#0A131D]">324</h3>
                         </div>
                     </div>
-                    <BlueBtn styles="w-[199px] py-[20px]" title="Renew subscription"/>
+                    <BlueBtn styles="w-[198px]  py-[20px]" title="Renew subscription"/>
                 </div>
 
                 <div className="flex flex-col gap-[50px]">

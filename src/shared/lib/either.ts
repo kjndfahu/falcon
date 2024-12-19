@@ -29,6 +29,8 @@ export const mapRight = <R, R2, L = unknown>(
 
     return either;
 };
+
+
 export const mapLeft = <R, L, L2>(
     either: Either<L, R>,
     fn: (value: L) => L2,

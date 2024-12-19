@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://neondb_owner:eiAUyOG7gx8k@ep-snowy-waterfall-a2cduzte-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  login    String @unique
+  email    String @unique
+  password String
+  salt     String
+  role     Role   @default(USER)
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+  RESELLER
+  PARTNER
+  VIPPARTNER
+  DISTRIBUTOR
+}
