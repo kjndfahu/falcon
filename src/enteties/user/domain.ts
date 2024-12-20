@@ -9,6 +9,7 @@ export type UserEntity = {
     email: string;
     password: string;
     salt: string;
+    referralCode: string;
 }
 
 export type SessionEntity = {

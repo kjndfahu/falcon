@@ -59,7 +59,8 @@ export default {
 			'pc-banner': "url('/assets/img/pc-banner.png')",
 			'auth-banner': "url('/assets/img/auth-banner.png')",
 			'referral-banner': "url('/assets/img/referral-banner.png')",
-			'bg-referral': "url('/assets/img/bg-referral.png')"
+			'bg-referral': "url('/assets/img/bg-referral.png')",
+			'bubbles-banner': "url('/assets/img/bubbles-banner.png')"
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

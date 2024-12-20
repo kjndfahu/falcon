@@ -46,5 +46,12 @@ export const navbarLinks: NavbarLink[] = [
         link: '/purchase-history',
         logoInactive: <HistoryInactive className="w-[27px] h-[27px]"/>,
         logoActive: <HistoryActive className="w-[27px] h-[27px]"/>,
-    }
+    },
+    {
+        id: 5,
+        title: 'Referral',
+        link: '/referral',
+        logoInactive: <HistoryInactive className="w-[27px] h-[27px]"/>,
+        logoActive: <HistoryActive className="w-[27px] h-[27px]"/>,
+    },
 ]

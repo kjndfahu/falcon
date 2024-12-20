@@ -7,7 +7,7 @@ interface Props{
     num?:string,
     btn?:React.ReactNode,
     styles?: string;
-    modal: React.ReactNode;
+    modal?: React.ReactNode;
 }
 
 export const PcBlock:React.FC<Props> = ({title, num, btn, styles, modal}) => {

@@ -10,14 +10,64 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
 
-  login    String @unique
-  email    String @unique
-  password String
-  salt     String
-  role     Role   @default(USER)
+  login        String @unique
+  email        String @unique
+  password     String
+  salt         String
+  role         Role   @default(USER)
+  balance      Float  @default(0)
+  referralCode String @unique
+
+  deposits Deposits[]
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
+}
+
+model Referrals {
+  id Int @id @default(autoincrement())
+
+  totalReferrals Int   @default(0)
+  totalCashback  Float @default(0)
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Deposits {
+  id Int @id @default(autoincrement())
+
+  depositSum Float
+
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int?
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Subscriptions {
+  id Int @id @default(autoincrement())
+
+  type           SubscriptionType
+  price          Int
+  trackingNumber Int              @unique
+  autorenew      Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  endDate   DateTime
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum SubscriptionType {
+  BASIC
+  FAST
+  TURBO
 }
 
 enum Role {

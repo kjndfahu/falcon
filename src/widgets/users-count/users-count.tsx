@@ -6,7 +6,8 @@ interface Props{
 
 export const UsersCount:React.FC<Props> = ({className}) => {
     return (
-        <div className="flex flec-col">
+        <div className="flex flex-col text-[25px] text-black font-semibold w-full gap-[50px] flec-col">
+            <h3>Всего пользователей</h3>
             <UsersDiagram/>
         </div>
     )

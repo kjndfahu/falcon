@@ -25,7 +25,8 @@ export const createUser = async ({
         login,
         email,
         password: hash,
-        salt
+        salt,
+        referralCode: '1234'
     })
 
     return right(user);

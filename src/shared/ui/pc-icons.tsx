@@ -522,3 +522,23 @@ export const GoogleLogo:React.FC<Props> = ({className}) => {
         </svg>
     )
 }
+export const CopyLogo:React.FC<Props> = ({className}) => {
+    return (
+        <svg
+            className={className}
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 1.25C3.37665 1.25 1.25 3.37665 1.25 6V11C1.25 13.6234 3.37665 15.75 6 15.75V14.25C4.20507 14.25 2.75 12.7949 2.75 11V6C2.75 4.20507 4.20507 2.75 6 2.75H11C12.7949 2.75 14.25 4.20507 14.25 6C14.25 6.41421 14.5858 6.75 15 6.75C15.4142 6.75 15.75 6.41421 15.75 6C15.75 3.37665 13.6234 1.25 11 1.25H6ZM8.25 13C8.25 10.3766 10.3766 8.25 13 8.25H18C20.6234 8.25 22.75 10.3766 22.75 13V18C22.75 20.6234 20.6234 22.75 18 22.75H13C10.3766 22.75 8.25 20.6234 8.25 18V13Z"
+                fill="white"
+            />
+        </svg>
+
+    )
+}

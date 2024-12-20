@@ -4,10 +4,10 @@ import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-export const UsersDiagram = () => {
+export const StatisticsDiagram = () => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const chartInstanceRef = useRef<Chart | null>(null); // Хранение экземпляра графика
+    const chartInstanceRef = useRef<Chart | null>(null);
 
     useEffect(() => {
         if (!chartRef.current || !tooltipRef.current) return;
@@ -17,11 +17,9 @@ export const UsersDiagram = () => {
 
         if (!ctx || !tooltipEl) return;
 
-
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
-
 
         const customTooltip = (context: any) => {
             const tooltipModel = context.tooltip;
@@ -53,7 +51,6 @@ export const UsersDiagram = () => {
             tooltipEl.style.transition = 'opacity 0.2s ease';
         };
 
-        // Создаем новый график
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
@@ -70,6 +67,30 @@ export const UsersDiagram = () => {
                         tension: 0.4,
                         fill: 'start',
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    },
+                    {
+                        label: 'Revenue',
+                        data: [5, 15, 10, 20, 30],
+                        borderColor: '#ef4444',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#ef4444',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 5,
+                        tension: 0.4,
+                        fill: 'start',
+                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    },
+                    {
+                        label: 'Users',
+                        data: [8, 18, 12, 25, 20],
+                        borderColor: '#10b981',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#10b981',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 5,
+                        tension: 0.4,
+                        fill: 'start',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
                     },
                 ],
             },
@@ -114,7 +135,7 @@ export const UsersDiagram = () => {
     }, []);
 
     return (
-        <div className="relative w-[900px]">
+        <div className="relative w-[90%]">
             <canvas ref={chartRef} className="w-[1000px]"></canvas>
             <div
                 ref={tooltipRef}

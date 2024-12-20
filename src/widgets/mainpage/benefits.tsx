@@ -3,7 +3,7 @@ import {BlocksLogo, LiveLogo, ThunderLogo} from "@/shared/ui/icons";
 
 export const Benefits = () => {
     return (
-        <div className="flex items-center flex-col w-full gap-[112px] text-center py-[95px] bg-blue-200">
+        <div className="flex items-center flex-col w-full gap-[112px] text-center py-[95px] bg-bubbles-banner">
             <div className="flex flex-col gap-[25px] text-[36px] leading-[36px] font-medium text-[#0A131D]">
                 <h3>How is your comfort measured?</h3>
                 <p className="text-[18px] font-normal leading-[27px]">Real-time statistics Instant information about what is happening<br/> happening in game map, full control and dozens of features</p>
