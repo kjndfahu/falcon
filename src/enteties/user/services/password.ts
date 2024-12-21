@@ -16,4 +16,13 @@ async function comparePasswords({hash, password, salt}: {password: string, hash:
     return hash === ((await hashPassword(password, salt))).hash
 }
 
-export const passwordService={comparePasswords, hashPassword}
+async function verifyPassword(password: string, storedHash: string, storedSalt: string): Promise<boolean> {
+    return await comparePasswords({
+        hash: storedHash,
+        password,
+        salt: storedSalt
+    });
+}
+
+
+export const passwordService={comparePasswords, verifyPassword, hashPassword}

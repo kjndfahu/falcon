@@ -1,9 +1,9 @@
-import {MainBanner} from "@/features/account-info/main-banner";
-import {UserInfo} from "@/features/account-info/user-info";
+import {MainBanner} from "@/features/account-info/ui/main-banner";
+import {UserInfo} from "@/features/account-info/ui/user-info";
 import {PcBlock} from "@/shared/ui/pc-block";
 import {DepositBlock} from "@/shared/ui/pc-icons";
 import {BlueBtn} from "@/shared/ui/blue-btn";
-import {Transactions} from "@/features/account-info/transactions";
+import {Transactions} from "@/features/account-info/ui/transactions";
 import {PremiumBlock} from "@/widgets/premium-block";
 import {sessionService} from "@/enteties/user/services/session";
 

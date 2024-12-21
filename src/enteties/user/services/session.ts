@@ -37,7 +37,6 @@ async function addSession (user: UserEntity){
 
     cookiesStore.set("session", session, {
         httpOnly: true,
-        //secure: true,
         expires: expiresAt,
         sameSite: "lax",
         path: "/"

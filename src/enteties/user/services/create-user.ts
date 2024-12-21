@@ -2,6 +2,7 @@ import {left, right} from "@/shared/lib/either";
 import ShortUniqueId from 'short-unique-id';
 import {passwordService} from "@/enteties/user/services/password";
 import {userRepository} from "@/enteties/user/repositories/user";
+import {generateReferralCode} from "@/enteties/user/services/referralcode-generation";
 
 export const createUser = async ({
     login,
@@ -26,7 +27,7 @@ export const createUser = async ({
         email,
         password: hash,
         salt,
-        referralCode: '1234'
+        referralCode: generateReferralCode()
     })
 
     return right(user);

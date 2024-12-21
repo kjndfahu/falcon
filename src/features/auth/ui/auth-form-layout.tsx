@@ -1,4 +1,5 @@
-import {GoogleButton} from "@/shared/ui/google-button";
+import {GoogleButton} from "@/features/auth/ui/google-button";
+
 
 interface Props{
     fields?: React.ReactNode;
@@ -18,7 +19,7 @@ export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields
                 {errors}
                 {actions}
             </form>
-            <GoogleButton/>
+            <GoogleButton />
         </div>
     )
 }
