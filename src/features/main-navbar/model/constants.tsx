@@ -3,7 +3,7 @@ import {
     HistoryActive,
     HistoryInactive,
     MainLogoActive,
-    MainLogoInactive, SettingActive,
+    MainLogoInactive, ReferralActive, ReferralInactive, SettingActive,
     SettingInactive,
     SubsActive,
     SubsInactive
@@ -51,7 +51,7 @@ export const navbarLinks: NavbarLink[] = [
         id: 5,
         title: 'Referral',
         link: '/referral',
-        logoInactive: <HistoryInactive className="w-[27px] h-[27px]"/>,
-        logoActive: <HistoryActive className="w-[27px] h-[27px]"/>,
+        logoInactive: <ReferralInactive className="w-[27px] h-[27px]"/>,
+        logoActive: <ReferralActive className="w-[27px] h-[27px]"/>,
     },
 ]

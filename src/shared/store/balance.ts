@@ -10,4 +10,4 @@ export const useBalanceStore = create<State>((set, get) => ({
     balance: 0,
     newSum: 0,
     setBalance: (newSum) => set((state) => ({ balance: state.balance + newSum })),
-}));
+})); 

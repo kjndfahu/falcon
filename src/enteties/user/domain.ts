@@ -1,6 +1,7 @@
 import { UserId } from "@/kernel/ids";
 
 export type Role = "USER" | "ADMIN" | "RESELLER" | "PARTNER" | "VIPPARTNER" | "DISTRIBUTOR";
+export type DepositType = "USDT" | "VISA";
 
 export type UserEntity = {
     id: UserId;
@@ -10,6 +11,13 @@ export type UserEntity = {
     password: string;
     salt: string;
     referralCode: string;
+}
+
+export type DepositEntity = {
+    id: number;
+    depositSum: number;
+    type: DepositType;
+    user: UserEntity;
 }
 
 export type SessionEntity = {

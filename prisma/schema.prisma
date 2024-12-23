@@ -38,6 +38,8 @@ model Deposits {
   id Int @id @default(autoincrement())
 
   depositSum Float
+  type       DepositType
+  system     DepositSystem
 
   user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int?
@@ -57,6 +59,16 @@ model Subscriptions {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   endDate   DateTime
+}
+
+enum DepositSystem {
+  USDT
+  VISA
+}
+
+enum DepositType {
+  TOPUP
+  WITHDRAW
 }
 
 enum SubscriptionStatus {

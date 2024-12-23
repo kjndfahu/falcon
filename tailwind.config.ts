@@ -59,6 +59,7 @@ export default {
 			'pc-banner': "url('/assets/img/pc-banner.png')",
 			'auth-banner': "url('/assets/img/auth-banner.png')",
 			'referral-banner': "url('/assets/img/referral-banner.png')",
+			'referral-block': "url('/assets/img/referral-block.png')",
 			'bg-referral': "url('/assets/img/bg-referral.png')",
 			'bubbles-banner': "url('/assets/img/bubbles-banner.png')"
   		},

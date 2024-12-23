@@ -1,8 +1,24 @@
+'use client'
 import {BlueBtn} from "@/shared/ui/blue-btn";
 import {useAmountInput} from "@/features/account-info/model/useInput";
+import { useSession } from "next-auth/react";
+import {useBalanceStore} from "@/shared/store/balance";
 
-export const DepositModal = () => {
-    const { amount, handleChange } = useAmountInput();
+interface Props{
+    balance?: number;
+}
+
+export const DepositModal:React.FC<Props> = ({balance}) => {
+    const {amount, handleChange} = useAmountInput();
+    const { data: session } = useSession();
+    const userId = session?.user?.id ? parseInt(session.user.id) : undefined;
+    const setBalance = useBalanceStore((state) => state.setBalance);
+
+    const handleDeposit = async (depositResult: any) => {
+        if (depositResult.success && depositResult.data.updatedBalance) {
+            setBalance(depositResult.data.updatedBalance);
+        }
+    };
 
     return (
         <>
@@ -11,10 +27,11 @@ export const DepositModal = () => {
                     className="flex flex-col w-[242px] rounded-[15px] gap-[37px] bg-[linear-gradient(113.87deg,_#212121_2.05%,_#393939_97.95%)] text-white text-[16px] px-[25px] py-[28px]">
                     Balance
                     <h3 className="text-[42px] leading-[44px] font-semibold">
-                        $100.00
+                        ${balance?.toFixed(2)}
                     </h3>
                 </div>
-                <div className="flex flex-col justify-center gap-[25px] text-black font-medium text-[16px] rounded-[15px] border-[1px] border-[#BEDAE9] px-[25px] bg-[#F3F8FD]">
+                <div
+                    className="flex flex-col justify-center gap-[25px] text-black font-medium text-[16px] rounded-[15px] border-[1px] border-[#BEDAE9] px-[25px] bg-[#F3F8FD]">
                     <h3>Account replenishment</h3>
                     <div className="flex gap-[25px]">
                         <div
@@ -27,7 +44,8 @@ export const DepositModal = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <BlueBtn title="Payment" styles="w-[215px]"/>
+                        <BlueBtn title="Payment" isUsed={true} styles="w-[215px]" amount={parseFloat(amount)} userId={userId} onSuccess={handleDeposit}
+                        />
                     </div>
                 </div>
             </div>

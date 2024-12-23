@@ -1,6 +1,7 @@
 import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
 import localFont from "next/font/local";
 import "../globals.css";
+import {Toaster} from "react-hot-toast";
 
 const myFont = localFont({
     src: [
@@ -28,9 +29,12 @@ export default async function LK({children}: {children: React.ReactNode}){
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
-        <div className="flex">
+        <div className="flex w-full min-h-screen">
             <MainNavbar/>
-            {children}
+            <div className="ml-[300px] flex-1">
+                <Toaster/>
+                {children}
+            </div>
         </div>
         </body>
         </html>

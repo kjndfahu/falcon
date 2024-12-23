@@ -2,7 +2,8 @@ import {sessionService} from "@/enteties/user/services/session";
 
 export async function UserInfo() {
     const {session} = await sessionService.verifySession()
-    console.log(session)
+
+    console.log(session.login)
     return (
         <div className="flex gap-1 text-[30px] leading-[30px] text-black font-medium flex-col">
             {session.login}
