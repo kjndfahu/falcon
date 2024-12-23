@@ -28,8 +28,8 @@ export const BlueBtn: React.FC<Props> = ({ styles, title, amount = 0, userId = 5
     };
 
     return (
-        <div onClick={isUsed ? handleClick : undefined} className={`flex items-center text-white font-normal ${styles} justify-center text-[18px] leading-[23px]  py-[13px] bg-[#0057FF] rounded-[15px] cursor-pointer`}>
+        <button onClick={isUsed ? handleClick : undefined} type="submit" className={`flex items-center text-white font-normal ${styles} justify-center text-[18px] leading-[23px]  py-[13px] bg-[#0057FF] rounded-[15px] cursor-pointer`}>
             {title}
-        </div>
+        </button>
     );
 };

@@ -1,18 +1,30 @@
-interface Props{
-    title?:string,
-    logo?:React.ReactNode,
+interface Props {
+    title?: string;
+    logo?: React.ReactNode;
     styles?: string;
-    child?:React.ReactNode;
-    isClicked:boolean;
-    setIsClicked:(isClicked:boolean) => void;
+    child?: React.ReactNode;
+    isActive: boolean;
+    onClick: () => void;
 }
 
-export const AdminBlocks:React.FC<Props> = ({title, isClicked, setIsClicked, logo, child, styles}) => {
+export const AdminBlocks: React.FC<Props> = ({ title, isActive, onClick, logo, child, styles }) => {
+    const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onClick();
+    };
+
     return (
-        <div onClick={() => setIsClicked(true)} className={`flex items-center justify-center gap-[40px] font-semibold w-[413px] ${styles} px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[25px] rounded-[15px] border-[#BEDAE9]`}>
+        <div
+            onClick={handleClick}
+            className={`flex items-center justify-center gap-[40px] font-semibold w-[413px] ${styles} px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[25px] rounded-[15px] border-[#BEDAE9] cursor-pointer relative`}
+        >
             {title}
             {logo}
-            {isClicked && child}
+            {isActive && (
+                <div onClick={e => e.stopPropagation()} className="absolute top-0 left-0">
+                    {child}
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};

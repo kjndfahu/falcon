@@ -18,7 +18,8 @@ model User {
   balance      Float  @default(0)
   referralCode String @unique
 
-  deposits Deposits[]
+  deposits  Deposits[]
+  withdraws Withdraws[]
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
@@ -48,6 +49,20 @@ model Deposits {
   updateAt  DateTime @updatedAt
 }
 
+model Withdraws {
+  id Int @id @default(autoincrement())
+
+  withrdawSum Float
+  type        DepositType
+  system      DepositSystem
+
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int?
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
 model Subscriptions {
   id Int @id @default(autoincrement())
 
@@ -64,6 +79,7 @@ model Subscriptions {
 enum DepositSystem {
   USDT
   VISA
+  ADMINRECHARGE
 }
 
 enum DepositType {
@@ -89,4 +105,5 @@ enum Role {
   PARTNER
   VIPPARTNER
   DISTRIBUTOR
+  INFLUENCER
 }
