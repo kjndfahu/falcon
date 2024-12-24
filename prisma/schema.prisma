@@ -10,13 +10,14 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
 
-  login        String @unique
-  email        String @unique
+  login        String  @unique
+  email        String  @unique
   password     String
   salt         String
-  role         Role   @default(USER)
-  balance      Float  @default(0)
-  referralCode String @unique
+  role         Role    @default(USER)
+  balance      Float   @default(0)
+  referralCode String  @unique
+  isBlocked    Boolean @default(false)
 
   deposits  Deposits[]
   withdraws Withdraws[]

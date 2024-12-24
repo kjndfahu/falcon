@@ -7,12 +7,12 @@ interface Props {
     title: string;
     styles?: string;
     amount?: number;
-    userId?: number;
+    userId: number;
     isUsed?: boolean;
     onSuccess?: (result: any) => void;
 }
 
-export const BlueBtn: React.FC<Props> = ({ styles, title, amount = 0, userId = 5340, isUsed, onSuccess }) => {
+export const BlueBtn: React.FC<Props> = ({ styles, title, amount = 0, userId, isUsed, onSuccess }) => {
     const handleClick = async () => {
         try {
             const result = await createDepositAction(amount, "TOPUP", 'USDT', userId);

@@ -17,7 +17,7 @@ interface Props{
 
 }
 
-export const PcBlock:React.FC<Props> = ({title, num, btn, styles}) => {
+export const PcBlock:React.FC<Props> = ({title, num, session, btn, styles}) => {
     const [isClicked, setIsClicked] = useState<boolean>(false);
     const getBalance = useBalanceStore((state) => state.balance);
     const fullBalance = getBalance === 0 ? num : getBalance
@@ -29,7 +29,7 @@ export const PcBlock:React.FC<Props> = ({title, num, btn, styles}) => {
                 <h3>${fullBalance?.toFixed(2)}</h3>
                 <div onClick={() => setIsClicked(true)}>{btn}</div>
             </div>
-            {isClicked && ( <Modal title="Deposit" setModal={setIsClicked} isModal={isClicked} child={<DepositModal balance={fullBalance}/>}/> )}
+            {isClicked && ( <Modal title="Deposit" setModal={setIsClicked} isModal={isClicked} child={<DepositModal session={session} balance={fullBalance}/>}/> )}
         </div>
     )
 }

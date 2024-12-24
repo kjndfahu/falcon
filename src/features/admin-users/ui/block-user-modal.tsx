@@ -2,27 +2,27 @@
 import {XLogo} from "@/shared/ui/pc-icons";
 import {BalanceType} from "@/features/admin-users/ui/balance-type";
 import {useState} from "react";
-import {AddBalanceForm} from "@/features/admin-users/ui/add-balance-form";
 import {BlueBtn} from "@/shared/ui/blue-btn";
 import {useActionState} from "@/shared/lib/react";
-import {addBalanceAction, AddBalanceState} from "@/features/admin-users/actions/add-balance";
 import {ErrorMessage} from "@/features/auth/ui/error-message";
-import {DecrementBalanceForm} from "@/features/admin-users/ui/decrement-balance-modal";
-import {decrementBalanceAction, DecrementBalanceState} from "@/features/admin-users/actions/decrement-balance";
 import { handleBalanceForm } from "../actions/handle-balance-form";
+import {blockUserAction, BlockUserState} from "@/features/admin-users/actions/block-user";
+import {unblockUserAction, UnblockUserState} from "@/features/admin-users/actions/unblock-user";
+import {BlockUserInput} from "@/features/admin-users/ui/block-user-input";
+import {handleBlockForm} from "@/features/admin-users/actions/handle-block-form";
 
 interface Props{
     activeModal: string;
     setActiveModal: (activeModal: string) => void;
 }
 
-export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
-    const [activeType, setActiveType] = useState('Пополнить');
-    const [formState] = useActionState(addBalanceAction, {} as AddBalanceState);
-    const [formDecrementState] = useActionState(decrementBalanceAction, {} as DecrementBalanceState);
+export const BlockUserModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
+    const [activeType, setActiveType] = useState('Заблокировать');
+    const [formState] = useActionState(blockUserAction, {} as BlockUserState);
+    const [formUnblock] = useActionState(unblockUserAction, {} as UnblockUserState);
 
     const handleSubmit = async (formData: FormData) => {
-        const result = await handleBalanceForm(activeType, formData);
+        const result = await handleBlockForm(activeType, formData);
         if (result && !result.errors) {
             setActiveModal(null);
         }
@@ -41,15 +41,15 @@ export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) 
                         <XLogo/>
                     </div>
                 </div>
-                <BalanceType label1="Пополнить" label2="Снять" activeType={activeType} setActiveType={setActiveType}/>
-                {activeType === 'Пополнить'
-                    ? <AddBalanceForm {...formState} />
-                    : <DecrementBalanceForm {...formDecrementState} />
+                <BalanceType label1="Заблокировать" label2="Разблокировать" activeType={activeType} setActiveType={setActiveType}/>
+                {activeType === 'Заблокировать'
+                    ? <BlockUserInput {...formState} />
+                    : <BlockUserInput {...formUnblock} />
                 }
                 <ErrorMessage error={
                     activeType === 'Пополнить'
                         ? formState.errors?._errors
-                        : formDecrementState.errors?._errors
+                        : formUnblock.errors?._errors
                 }/>
                 <BlueBtn
                     styles="w-full"

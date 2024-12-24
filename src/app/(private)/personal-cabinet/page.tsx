@@ -14,7 +14,7 @@ export default async function PersonalCabinet() {
 
     return (
         <div className="flex w-full flex-col gap-[50px] py-[77px] px-[129px]">
-            <MainBanner bg="bg-pc-banner"/>
+            <MainBanner styles="h-[252px]" bg="bg-pc-banner"/>
             <UserInfo/>
             <div className="flex gap-[46px]">
                 <PcBlock balance={user?.balance} session={session} title="BALANCE" num={user?.balance} btn={<DepositBlock className="cursor-pointer"/>}/>

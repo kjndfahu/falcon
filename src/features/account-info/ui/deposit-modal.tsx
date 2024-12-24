@@ -1,18 +1,20 @@
 'use client'
 import {BlueBtn} from "@/shared/ui/blue-btn";
 import {useAmountInput} from "@/features/account-info/model/useInput";
-import { useSession } from "next-auth/react";
 import {useBalanceStore} from "@/shared/store/balance";
+import {SessionEntity} from "@/enteties/user/domain";
 
 interface Props{
     balance?: number;
+    session: SessionEntity;
 }
 
-export const DepositModal:React.FC<Props> = ({balance}) => {
+export const DepositModal:React.FC<Props> = ({balance, session}) => {
     const {amount, handleChange} = useAmountInput();
-    const { data: session } = useSession();
-    const userId = session?.user?.id ? parseInt(session.user.id) : undefined;
+    const userId = session.id
     const setBalance = useBalanceStore((state) => state.setBalance);
+
+    console.log(userId)
 
     const handleDeposit = async (depositResult: any) => {
         if (depositResult.success && depositResult.data.updatedBalance) {
