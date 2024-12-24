@@ -1,32 +1,41 @@
+export interface QuestionsItemContent {
+    head: string;
+    description: string;
+}
+
 export interface QuestionsItem {
     id: number;
     title: string;
-    content: string;
+    content: QuestionsItemContent[]; // Массив объектов, описанных выше
 }
 
 export const questionsData: QuestionsItem[] = [
     {
         id: 1,
-        title: "What is Lorem Ipsum?",
-        content:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        title: "Basic commands and background information",
+        content: [
+            {
+                head: "/help",
+                description: "Output of all commands, symbols, and support contacts."
+            }
+        ]
     },
     {
         id: 2,
-        title: "Why do we use it?",
-        content:
-            "It is a long established fact that a reader will be distracted by the readable content of a page.",
-    },
-    {
-        id: 3,
-        title: "Where does it come from?",
-        content:
-            "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in classical Latin literature.",
-    },
-    {
-        id: 4,
-        title: "Where can I get some?",
-        content:
-            "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.",
+        title: "Tracking target activity",
+        content: [
+            {
+                head: "/at",
+                description: "Active lock tracking for 10 minutes."
+            },
+            {
+                head: "/pt or /t",
+                description: "Phalanx test (change in strength in 2 minutes)."
+            },
+            {
+                head: "/g",
+                description: "Withdrawal of the player's equipment."
+            },
+        ]
     },
 ];

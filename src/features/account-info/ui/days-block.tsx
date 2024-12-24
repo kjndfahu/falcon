@@ -1,43 +1,41 @@
 'use client';
 
-import { useState } from 'react';
+import {PromoBlock} from "@/shared/ui/promo-block";
 
-export const DaysBlock = () => {
-    const [activePlan, setActivePlan] = useState('30 days');
+interface Props {
+    selectedDays: number;
+    setSelectedDays: (days: number) => void;
+}
 
-    const plans = [
-        { label: '30 days', save: null },
-        { label: '90 days', save: 'Save 10%' },
-        { label: '180 days', save: 'Save 50%' },
-    ];
-
+export const DaysBlock: React.FC<Props> = ({ selectedDays, setSelectedDays }) => {
     return (
-        <div className="flex w-full items-center justify-center">
-            <div className="flex w-full gap-[30px] bg-[#f8fbff] border border-[#d7e7ff] p-5 rounded-[12px]">
-                {plans.map((plan) => (
-                    <div
-                        key={plan.label}
-                        onClick={() => setActivePlan(plan.label)}
-                        className={` flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] text-[22px] leading-[23px] font-medium cursor-pointer transition ${
-                            activePlan === plan.label
-                                ? 'bg-[#005dff] text-white'
-                                : 'bg-white text-[#000] border border-[#d7e7ff]'
-                        }`}
-                    >
-                        {plan.label}
-                        {plan.save && (
-                            <span className={`text-[14px] rounded-[5px] font-bold px-[5px] py-[7px] ${
-                                    activePlan === plan.label
-                                        ? 'bg-[#003d99] text-white'
-                                        : 'bg-[#d7e7ff] text-[#005dff]'
-                                }`}
-                            >
-                                {plan.save}
-                            </span>
-                        )}
-                    </div>
-                ))}
-            </div>
+        <div className="flex p-[20px] bg-[#F3FAFF] text-black border-[1px] border-[#D8EEFF] rounded-[12px] gap-[31px]">
+            <button 
+                onClick={() => setSelectedDays(30)}
+                className={`flex text-[24px] rounded-[10px] leading-[30px] border-[#BCE3FF] border-[1px] px-[18px] py-[10px] ${
+                    selectedDays === 30 ? 'bg-[#0057FF] text-white' : ''
+                }`}
+            >
+                30 days
+            </button>
+            <button 
+                onClick={() => setSelectedDays(90)}
+                className={`flex gap-[10px] text-[24px] rounded-[10px] leading-[30px] border-[#BCE3FF] border-[1px] px-[18px] py-[10px] ${
+                    selectedDays === 90 ? 'bg-[#0057FF] text-white' : ''
+                }`}
+            >
+                90 days
+                <PromoBlock title="Save 10%" styles="bg-[linear-gradient(102.67deg,_#6072B1_3.55%,_#1725A4_100%)]"/>
+            </button>
+            <button 
+                onClick={() => setSelectedDays(180)}
+                className={`flex gap-[10px] text-[24px] rounded-[10px] leading-[30px] border-[#BCE3FF] border-[1px] px-[18px] py-[10px] ${
+                    selectedDays === 180 ? 'bg-[#0057FF] text-white' : ''
+                }`}
+            >
+                180 days
+                <PromoBlock title="Save 50%" styles="bg-[linear-gradient(95.02deg,_#0027B3_4.13%,_#0066FF_96.05%)]"/>
+            </button>
         </div>
-    );
-};
+    )
+}

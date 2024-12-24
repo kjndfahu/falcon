@@ -71,10 +71,10 @@ model Subscriptions {
   price          Int
   trackingNumber Int              @unique
   autorenew      Boolean
+  endDate        DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  endDate   DateTime
 }
 
 enum DepositSystem {
