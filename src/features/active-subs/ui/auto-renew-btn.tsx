@@ -1,8 +1,12 @@
 'use client'
 import {useState} from "react";
 
-export const AutoRenewBtn = () => {
-    const [isActive, setIsActive] = useState(true);
+interface Props {
+    autorenew: boolean;
+}
+
+export const AutoRenewBtn:React.FC<Props> = ({autorenew}) => {
+    const [isActive, setIsActive] = useState(autorenew);
 
     return (
         <div className="flex items-center gap-2 py-[20px] px-[22px] text-[18px] text-[#0057FF] rounded-[15px] bg-[#d1e3ff]">

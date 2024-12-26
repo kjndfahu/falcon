@@ -6,29 +6,30 @@ interface Props {
     selectedDays: number;
 }
 
-export const SubscriptionBlock: React.FC<Props> = ({ activeTab, selectedDays }) => {
-    const getPriceByDays = (title: string, days: number) => {
-        const prices = {
-            Basic: {
-                30: 50,
-                90: 155,
-                180: 240
-            },
-            Fast: {
-                30: 60,
-                90: 160,
-                180: 285
-            },
-            Turbo: {
-                30: 110,
-                90: 295,
-                180: 540
-            }
-        };
-        return prices[title][days];
-    };
+const priceMap = {
+    'Basic': {
+        30: 50,
+        90: 155,
+        180: 240
+    },
+    'Fast': {
+        30: 60,
+        90: 160,
+        180: 285
+    },
+    'Turbo': {
+        30: 110,
+        90: 295,
+        180: 540
+    }
+} as const;
 
+export const SubscriptionBlock: React.FC<Props> = ({ activeTab, selectedDays }) => {
     const filteredSubscription = subscriptions.filter(sub => sub.title === activeTab);
+
+    const getPriceForPeriod = (type: string, days: number): string => {
+        return `${priceMap[type][days]} $`;
+    };
 
     return (
         <div className="flex w-min gap-[25px]">
@@ -40,12 +41,12 @@ export const SubscriptionBlock: React.FC<Props> = ({ activeTab, selectedDays }) 
                         className="flex flex-col text-center font-medium text-[24px] leading-[30px] text-[#0A131D] gap-[12px]">
                         {item.title}
                         <h4 className="text-[36px] leading-[45px]">
-                            ${getPriceByDays(item.title, selectedDays)}
+                            {getPriceForPeriod(item.title, selectedDays)}
                         </h4>
                     </div>
                     <Prosses item={item}/>
                 </div>
             ))}
         </div>
-    )
-}
+    );
+};
