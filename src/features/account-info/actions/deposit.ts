@@ -5,7 +5,6 @@ import { updateUserBalance } from "@/enteties/user/services/update-balance";
 
 type DepositActionResult = {
     success: boolean;
-    nothing: null;
     data?: {
         deposit: any;
         updatedBalance: number;

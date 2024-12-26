@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-interface State {
+interface BalanceState {
     balance: number;
-    newSum: number;
-    setBalance: (newSum: number) => void;
+    setBalance: (newBalance: number) => void;
+    updateBalance: (amount: number) => void;
 }
 
-export const useBalanceStore = create<State>((set, get) => ({
+export const useBalanceStore = create<BalanceState>((set) => ({
     balance: 0,
-    newSum: 0,
-    setBalance: (newSum) => set((state) => ({ balance: state.balance + newSum })),
-})); 
+    setBalance: (newBalance) => set({ balance: newBalance }),
+    updateBalance: (amount) => set((state) => ({ balance: state.balance + amount })),
+}));

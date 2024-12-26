@@ -1,35 +1,38 @@
 'use client'
-import {useState} from "react";
-import {Modal} from "@/shared/ui/modal";
-import {DepositModal} from "@/features/account-info/ui/deposit-modal";
-import {SessionEntity} from "@/enteties/user/domain";
 import {useBalanceStore} from "@/shared/store/balance";
+import {useEffect} from "react";
+import {SessionEntity} from "@/enteties/user/domain";
 
-interface Props{
-    className?:string,
-    title?:string,
-    num?:number,
-    btn?:React.ReactNode,
-    styles?: string;
-    balance?:number;
-    modal?: React.ReactNode;
+interface Props {
+    title: string;
+    num?: number;
+    btn?: React.ReactNode;
+    balance?: number;
     session: SessionEntity;
-
 }
 
-export const PcBlock:React.FC<Props> = ({title, num, btn, styles}) => {
-    const [isClicked, setIsClicked] = useState<boolean>(false);
-    const getBalance = useBalanceStore((state) => state.balance);
-    const fullBalance = getBalance === 0 ? num : getBalance
+export const PcBlock: React.FC<Props> = ({title, num = 0, btn, balance = 0, session}) => {
+    const setBalance = useBalanceStore((state) => state.setBalance);
+    const storeBalance = useBalanceStore((state) => state.balance);
+
+    useEffect(() => {
+        if (balance) {
+            setBalance(balance);
+        }
+    }, [balance, setBalance]);
+    const formatBalance = (balance: number) => {
+        const absBalance = Math.abs(balance);
+        return `$${absBalance.toFixed(2)}`;
+    };
 
     return (
-        <div className={`flex gap-[40px] w-[413px] ${styles} flex-col px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[14px] rounded-[15px] border-[#BEDAE9]`}>
+        <div
+            className="flex gap-[40px] w-[413px] flex-col px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[14px] rounded-[15px] border-[#BEDAE9]">
             {title}
             <div className="flex items-center justify-between font-bold text-[42px] leading-[45px] text-[#101D2C]">
-                <h3>${fullBalance?.toFixed(2)}</h3>
-                <div onClick={() => setIsClicked(true)}>{btn}</div>
+                <h3>{storeBalance < 0 ? '-' : ''}{formatBalance(storeBalance)}</h3>
+                {btn}
             </div>
-            {isClicked && ( <Modal title="Deposit" setModal={setIsClicked} isModal={isClicked} child={<DepositModal balance={fullBalance}/>}/> )}
         </div>
-    )
-}
+    );
+};

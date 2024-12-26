@@ -10,16 +10,18 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
 
-  login        String @unique
-  email        String @unique
+  login        String  @unique
+  email        String  @unique
   password     String
   salt         String
-  role         Role   @default(USER)
-  balance      Float  @default(0)
-  referralCode String @unique
+  role         Role    @default(USER)
+  balance      Float   @default(0)
+  referralCode String  @unique
+  isBlocked    Boolean @default(false)
 
-  deposits  Deposits[]
-  withdraws Withdraws[]
+  deposits      Deposits[]
+  subscriptions Subscription[]
+  withdraws     Withdraws[]
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
@@ -63,17 +65,20 @@ model Withdraws {
   updateAt  DateTime @updatedAt
 }
 
-model Subscriptions {
-  id Int @id @default(autoincrement())
-
+model Subscription {
+  id             Int                @id @default(autoincrement())
   type           SubscriptionType
-  price          Int
-  trackingNumber Int              @unique
-  autorenew      Boolean
+  price          Float
+  autorenew      Boolean            @default(false)
+  status         SubscriptionStatus
+  endDate        DateTime
+  trackingNumber Int
+  userId         Int
+  user           User               @relation(fields: [userId], references: [id])
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  endDate   DateTime
+  @@map("subscriptions")
 }
 
 enum DepositSystem {

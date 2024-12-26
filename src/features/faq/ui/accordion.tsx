@@ -1,4 +1,3 @@
-import React from "react";
 import {FaqItem} from "@/features/faq/model/constants";
 import {LogoBlock} from "@/shared/ui/logo-block";
 import {Arrow} from "@/shared/ui/icons";
