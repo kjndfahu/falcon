@@ -8,7 +8,7 @@ export const Benefits = () => {
                 <h3>How is your comfort measured?</h3>
                 <p className="text-[18px] font-normal leading-[27px]">Real-time statistics Instant information about what is happening<br/> happening in game map, full control and dozens of features</p>
             </div>
-            <div className="flex gap-[50px]">
+            <div className="flex flex-wrap items-center justify-center xl:gap-[50px] gap-[25px]">
                 <BenefitsBlock title="Instant Activation" text="Enjoy uninterrupted service with 99% uptime. Forget about downtime and focus on what matters." logo={ <ThunderLogo/> }/>
                 <BenefitsBlock title="Click and done" text="Designed for simplicity and big victories. Our intuitive interface ensures you can focus on the game, not on learning the software." logo={ <BlocksLogo/> }/>
                 <BenefitsBlock title="Regular Updates" text="We regularly update the bot, ensuring it evolves with the game and offers the latest features for maximum enjoy enjoyment." logo={ <LiveLogo/> }/>

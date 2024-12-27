@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const HeaderLinks = () => {
     return (
-        <div className="flex items-center gap-[25px]">
+        <div className="flex md:flex-row flex-col md:items-center xl:gap-[25px] lg:gap-[15px] gap-[10px]">
             {headerLinks.map((item) => (
                 <Link key={item.link} href={item.link}>
                     <div

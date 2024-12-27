@@ -8,7 +8,7 @@ interface Props{
 
 export const BenefitsBlock:React.FC<Props> = ({title, text, logo}) => {
     return (
-        <div className="flex flex-col justify-between text-left bg-[#FFFFFF99] w-[450px] h-[350px] px-[50px] border-[1px] backdrop-blur-xl text-[#0A131D] font-medium rounded-[15px] border-[#CAE8FF] text-[24px] py-9">
+        <div className="flex flex-col justify-between text-left bg-[#FFFFFF99] sm:w-[450px] w-full sm:mx-0 mx-[20px] h-[350px] px-[50px] border-[1px] backdrop-blur-xl text-[#0A131D] font-medium rounded-[15px] border-[#CAE8FF] text-[24px] py-9">
             <div className="flex flex-col gap-[25px]">
                 <div
                     className="flex w-[42px] h-[42px] items-center p-2 justify-center bg-[#0A131D0D] rounded-[5px] border-[1px] border-[#AFC0D0]">

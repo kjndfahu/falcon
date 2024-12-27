@@ -10,6 +10,15 @@ export default {
   ],
   theme: {
   	extend: {
+		screens: {
+			xl: "1600px",
+			lg: "1380px",
+			mdbvp: "1280px",
+			md: "1100px",
+			mds: "800px",
+			sml: "650px",
+			sm: "480px"
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

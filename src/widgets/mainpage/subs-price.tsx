@@ -8,7 +8,7 @@ export const SubsPrice = () => {
                 Subscription Pricing
                 <DaysBlock/>
             </div>
-            <div className="flex gap-[65px]">
+            <div className="flex items-center justify-center flex-wrap xl:gap-[65px] gap-[25px]">
                 <PriceBlock/>
             </div>
         </div>

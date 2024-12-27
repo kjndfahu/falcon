@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <div className="flex gap-[70px] flex-col">
             <Hero banner="bg-main-banner" title="Enjoy your game" text="Manage your game"/>
-            <div className="flex flex-col items-center gap-[70px]">
+            <div className="flex flex-col items-center mds:gap-[70px] gap-[25px]">
                 <WhyUs/>
                 <MainFeatures/>
                 <Benefits/>

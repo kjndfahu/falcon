@@ -34,7 +34,7 @@ export default async function AuthLayout({children}: {children: React.ReactNode}
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
-        <div className="flex w-[100vw] justify-between items-center min-h-screen">
+        <div className="flex md:flex-row flex-col-reverse w-[100vw] md:p-0 p-5 md:justify-between justify-center md:gap-0 sm:gap-[50px] gap-[20px] items-center md:min-h-screen">
             {children}
             <AuthBanner/>
         </div>

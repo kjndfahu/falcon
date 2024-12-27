@@ -21,11 +21,10 @@ export const SignInFields:React.FC<Props> = ({formData, errors}) => {
     const passwordId = useId();
 
     return (
-        <div className="flex flex-col gap-[20px] pt-[50px]">
+        <div className="flex flex-col gap-[20px] sml:pt-[50px] pt-[30px]">
             <div className="flex flex-col font-medium text-[18px] leading-[17px] text-[#0A131D] gap-3">
                 <label htmlFor={loginId}>Email or Username</label>
-                <div
-                    className="rounded-[15px] w-[528px] border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
+                <div className="rounded-[15px] sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                     <input
                         id={loginId}
                         name="login"
@@ -39,7 +38,7 @@ export const SignInFields:React.FC<Props> = ({formData, errors}) => {
             <div className="flex flex-col font-medium text-[18px] leading-[17px] text-[#0A131D] gap-3">
                 <label htmlFor={passwordId}>Password</label>
                 <div
-                    className="flex items-center rounded-[15px] w-[528px] border-[1px] border-[#DDE6EF] bg-[#F3F5F9] pl-[16px] py-[18px] pr-[31px]">
+                    className="flex items-center rounded-[15px] sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] pl-[16px] py-[18px] pr-[31px]">
                     <input placeholder="Enter your name"
                            id={passwordId}
                            name="password"
