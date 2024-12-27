@@ -11,11 +11,9 @@ export function saveUser(user: UserEntity): Promise<UserEntity> {
         update: user,
     })
 }
-
 export function getUser(where: Prisma.UserWhereInput) {
     return prisma.user.findFirst({where})
 }
-
 export function createTopUp(depositSum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number) {
     return prisma.deposits.create({
         data: {
@@ -26,7 +24,6 @@ export function createTopUp(depositSum: number, type: $Enums.DepositType, system
         },
     });
 }
-
 export function createWithdraw(withrdawSum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number){
     return prisma.withdraws.create({
         data: {
@@ -37,14 +34,12 @@ export function createWithdraw(withrdawSum: number, type: $Enums.DepositType, sy
         },
     });
 }
-
 export function changeUserRole(userEmail: string, role: $Enums.Role) {
     return prisma.user.update({
         where: {email: userEmail},
         data: {role}
     })
 }
-
 export function getUserTransactions(where: Prisma.DepositsWhereInput) {
     return prisma.deposits.findMany({
         where,
@@ -53,5 +48,29 @@ export function getUserTransactions(where: Prisma.DepositsWhereInput) {
         }
     })
 }
-
-export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, createWithdraw, getUserTransactions};
+export function restoreAccess(email: string, password: string, salt: string) {
+    return prisma.user.update({
+        where: {email},
+        data: {
+            password,
+            salt
+        }
+    })
+}
+export function blockUser(email: string){
+    return prisma.user.update({
+        where: {email},
+        data: {
+            isBlocked: true,
+        }
+    })
+}
+export function unblockUser(email: string){
+    return prisma.user.update({
+        where: {email},
+        data: {
+            isBlocked: false,
+        }
+    })
+}
+export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, restoreAccess, blockUser,unblockUser, createWithdraw, getUserTransactions};

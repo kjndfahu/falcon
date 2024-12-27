@@ -1,4 +1,4 @@
-import { pbkdf2, randomBytes } from "node:crypto";
+import { pbkdf2, randomBytes } from "crypto";
 
 async function hashPassword(password: string, salt = randomBytes(16).toString('hex')){
     const hash = await new Promise<Buffer>((res, rej) =>

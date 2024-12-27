@@ -4,8 +4,8 @@ interface Props {
 
 export const FeedbackForm:React.FC<Props> = ({question}) => {
     return (
-        <div className="flex flex-col gap-[50px]">
-            <div className="flex w-full gap-[50px]">
+        <div className="flex flex-col sml:gap-[50px] gap-[25px]">
+            <div className="flex sml:flex-row flex-col w-full sml:gap-[50px] gap-[25px]">
                 <div className="flex w-full flex-col gap-3 text-[#0A131D] text-[18px] font-medium leading-[17px]">
                     <h4>Your Name</h4>
                     <div className="px-[16px] py-[19px] rounded-[15px] border-[1px] border-[#DDE6EF] bg-[#F3F5F980]">
@@ -26,8 +26,8 @@ export const FeedbackForm:React.FC<Props> = ({question}) => {
             <div className="flex flex-col gap-3 text-[#0A131D] text-[18px] font-medium leading-[17px]">
                 <h4>Your question</h4>
                 <div className="px-[16px] py-[19px] rounded-[15px] border-[1px] border-[#DDE6EF] bg-[#F3F5F980]">
-                    <input className="bg-transparent w-full focus:outline-none focus:ring-0"
-                           placeholder="Anticipate the information " type="text"/>
+                    <input className="bg-transparent h-auto w-full focus:outline-none focus:ring-0"
+                           placeholder="Anticipate the information" type="text"/>
                 </div>
             </div>
         </div>

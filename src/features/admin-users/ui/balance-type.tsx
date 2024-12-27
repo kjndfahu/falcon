@@ -1,11 +1,13 @@
 interface Props{
+    label1: string,
+    label2: string,
     activeType: string;
     setActiveType: (activeType: string) => void;
 }
-export const BalanceType:React.FC<Props> = ({activeType, setActiveType}) => {
+export const BalanceType:React.FC<Props> = ({activeType, label1, label2, setActiveType}) => {
     const plans = [
-        { label: 'Пополнить' },
-        { label: 'Снять' },
+        { label: label1 },
+        { label: label2 },
     ];
     return (
             <div className="flex w-full gap-[30px] bg-[#f8fbff]  rounded-[12px]">

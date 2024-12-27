@@ -10,12 +10,29 @@ interface Props {
     userId?: number;
     isUsed?: boolean;
     onSuccess?: (result: any) => void;
+    onClick?: () => void;
+    type?: "button" | "submit" | "reset";
 }
 
-export const BlueBtn: React.FC<Props> = ({ styles, title, amount = 0, userId = 5340, isUsed, onSuccess }) => {
-    const handleClick = async () => {
+export const BlueBtn: React.FC<Props> = ({ 
+    styles, 
+    title, 
+    amount, 
+    userId, 
+    isUsed, 
+    onSuccess,
+    onClick,
+    type = "submit"
+}) => {
+    const handleClick = async (e: React.MouseEvent) => {
+        if (!isUsed) {
+            onClick?.();
+            return;
+        }
+        
+        e.preventDefault();
         try {
-            const result = await createDepositAction(amount, "TOPUP", 'USDT', userId);
+            const result = await createDepositAction(amount || 0, "TOPUP", 'USDT', userId || 0);
             if (result.success) {
                 console.log("Deposit created successfully:", result.data);
                 onSuccess?.(result);
@@ -28,7 +45,11 @@ export const BlueBtn: React.FC<Props> = ({ styles, title, amount = 0, userId = 5
     };
 
     return (
-        <button onClick={isUsed ? handleClick : undefined} type="submit" className={`flex items-center text-white font-normal ${styles} justify-center text-[18px] leading-[23px]  py-[13px] bg-[#0057FF] rounded-[15px] cursor-pointer`}>
+        <button 
+            onClick={handleClick} 
+            type={type}
+            className={`flex items-center text-white font-normal ${styles} justify-center text-[18px] leading-[23px] py-[13px] bg-[#0057FF] rounded-[15px] cursor-pointer`}
+        >
             {title}
         </button>
     );

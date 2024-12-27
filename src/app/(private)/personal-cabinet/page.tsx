@@ -13,16 +13,16 @@ export default async function PersonalCabinet() {
     const user = await getUserInfo({login: session.login})
 
     return (
-        <div className="flex w-full flex-col gap-[50px] py-[77px] px-[129px]">
-            <MainBanner bg="bg-pc-banner"/>
+        <div className="flex w-full flex-col sml:gap-[50px] gap-[25px] sml:py-[77px] py-[20px] xl:px-[129px] sml:px-[50px] px-[25px]">
+            <MainBanner bg="sml:bg-pc-banner bg-personal-adaptive"/>
             <UserInfo/>
-            <div className="flex gap-[46px]">
-                <PcBlock balance={user?.balance} session={session} title="BALANCE" num={user?.balance} btn={<DepositBlock className="cursor-pointer"/>}/>
+            <div className="flex mds:flex-row flex-col gap-[46px]">
+                <PcBlock styles="mds:w-[413px] w-full" balance={user?.balance} session={session} title="BALANCE" num={user?.balance} btn={<DepositBlock className="cursor-pointer"/>}/>
                 <ActiveSubs/>
             </div>
-            {session.role != "USER" && (
-                <PremiumBlock/>
-            )}
+            {/*{session.role != "USER" && (*/}
+            {/*    <PremiumBlock/>*/}
+            {/*)}*/}
             <Transactions/>
         </div>
     )

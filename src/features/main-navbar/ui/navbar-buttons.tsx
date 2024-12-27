@@ -7,7 +7,7 @@ export const NavbarButtons = () => {
     const { navbarLinks, activeId, handleNavigation } = useNavbar();
 
     return (
-        <div className="flex w-[300px] flex-col gap-5">
+        <div className="flex md:w-[300px] w-full flex-col gap-5">
             {navbarLinks.map((item) => (
                 <div key={item.id} onClick={() => handleNavigation(item.id, item.link)} className={`flex items-center py-[3px] gap-[26px] cursor-pointer ${activeId === item.id ? "bg-[linear-gradient(90deg,_rgba(23,_102,_255,_0)_0%,_rgba(23,_102,_255,_0.05)_18%,_rgba(23,_102,_255,_0.05)_83.5%,_rgba(23,_102,_255,_0)_100%)]" : "text-[#0057FF]"}`}>
                     {activeId === item.id ? (

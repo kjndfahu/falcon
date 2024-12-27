@@ -70,7 +70,8 @@ export default {
 			'referral-banner': "url('/assets/img/referral-banner.png')",
 			'referral-block': "url('/assets/img/referral-block.png')",
 			'bg-referral': "url('/assets/img/bg-referral.png')",
-			'bubbles-banner': "url('/assets/img/bubbles-banner.png')"
+			'bubbles-banner': "url('/assets/img/bubbles-banner.png')",
+			'personal-adaptive': "url('/assets/img/personal-adaptive.png')"
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

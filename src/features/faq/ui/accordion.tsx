@@ -11,7 +11,7 @@ interface AccordionProps {
 
 export const Accordion: React.FC<AccordionProps> = ({ data, openId, toggleAccordion }) => {
     return (
-        <div className="flex flex-col w-full gap-[25px] px-[220px]">
+        <div className="flex flex-col w-full gap-[25px] xl:px-[220px] lg:px-[150px] mdbvp:px-[100px] sml:px-[50px] px-[20px]">
             {data.map((item) => (
                 <div key={item.id} className="rounded-[15px] border-[1px] border-[#BEDAE9]">
                     <button onClick={() => toggleAccordion(item.id)} className="w-full rounded-[15px] text-left px-[42px] py-12 flex justify-between items-center bg-white">

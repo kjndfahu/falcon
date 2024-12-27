@@ -41,7 +41,7 @@ export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) 
                         <XLogo/>
                     </div>
                 </div>
-                <BalanceType activeType={activeType} setActiveType={setActiveType}/>
+                <BalanceType label1="Пополнить" label2="Снять" activeType={activeType} setActiveType={setActiveType}/>
                 {activeType === 'Пополнить'
                     ? <AddBalanceForm {...formState} />
                     : <DecrementBalanceForm {...formDecrementState} />

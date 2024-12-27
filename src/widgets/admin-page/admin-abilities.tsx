@@ -5,6 +5,8 @@ import { CircleDollarSign, RefreshCcw, ShieldX, UserRoundPlus } from "lucide-rea
 import { AddBalanceModal } from "@/features/admin-users/ui/add-balance-modal";
 import { ChangeRoleModal } from "@/features/admin-users/ui/change-role-modal";
 import { useState } from "react";
+import {RestoreAccessModal} from "@/features/admin-users/ui/restore-access-modal";
+import {BlockUserModal} from "@/features/admin-users/ui/block-user";
 
 export const AdminAbilities = () => {
     const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -23,6 +25,11 @@ export const AdminAbilities = () => {
                     logo={<RefreshCcw width={40} height={40} />}
                     isActive={activeModal === "restoreAccess"}
                     onClick={() => handleModalOpen("restoreAccess")}
+                    child={
+                        activeModal === "restoreAccess" && (
+                            <RestoreAccessModal activeModal={activeModal} setActiveModal={setActiveModal}/>
+                        )
+                    }
                 />
                 <AdminBlocks
                     title="Назначить роль"
@@ -56,6 +63,11 @@ export const AdminAbilities = () => {
                     logo={<ShieldX width={40} height={40} />}
                     isActive={activeModal === "blockUnblock"}
                     onClick={() => handleModalOpen("blockUnblock")}
+                    child={
+                        activeModal === "blockUnblock" && (
+                            <BlockUserModal activeModal={activeModal} setActiveModal={setActiveModal}/>
+                        )
+                    }
                 />
             </div>
         </>

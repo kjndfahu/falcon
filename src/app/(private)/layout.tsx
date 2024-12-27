@@ -29,9 +29,9 @@ export default async function LK({children}: {children: React.ReactNode}){
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
-        <div className="flex w-full min-h-screen">
+        <div className="flex md:flex-row flex-col w-full min-h-screen">
             <MainNavbar/>
-            <div className="ml-[300px] flex-1">
+            <div className="md:ml-[300px] flex-1">
                 <Toaster/>
                 {children}
             </div>
