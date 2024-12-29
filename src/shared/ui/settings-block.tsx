@@ -2,6 +2,7 @@
 import {useState} from "react";
 import {Modal} from "@/shared/ui/modal";
 import {SettingsModal} from "@/features/settings/ui/settings-modal";
+import {ChangePasswordModal} from "@/features/settings/ui/change-password-modal";
 
 interface Props {
     title: string,
@@ -19,7 +20,7 @@ export const SettingsBlock:React.FC<Props> = ({title, info}) => {
             <div onClick={() => setModal(!isModal)} className="flex items-center cursor-pointer sml:h-auto h-[63px] sml:w-auto w-[153px] justify-center bg-[#0057FF] px-[47px] text-[18px] text-white rounded-[15px]">
                 Change
             </div>
-            {isModal && ( <Modal isModal={isModal} setModal={setModal} title="Change Password" child={ <SettingsModal/> }/> )}
+            {isModal && ( <Modal isModal={isModal} setModal={setModal} title="Change Password" child={ <ChangePasswordModal/> }/> )}
         </div>
     )
 }
