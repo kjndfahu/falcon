@@ -1,5 +1,5 @@
 import {ReferralInfoBlock} from "@/features/referral/ui/referral-info-block";
-import {UserPin} from "@/shared/ui/admin-icons";
+import {FewUsers, UserCircle, UserPin, UserPlus} from "@/shared/ui/admin-icons";
 
 
 export const ReferralInfo = () => {
@@ -9,14 +9,14 @@ export const ReferralInfo = () => {
                 firstlogo={<UserPin/>}
                 firsttitle={"Registered at\nthe link"}
                 firstvalue="2"
-                secondlogo={<UserPin/>}
+                secondlogo={<UserPlus/>}
                 secondtitle={"Registered made a\npurchase"}
                 secondvalue="15"/>
             <ReferralInfoBlock
-                firstlogo={<UserPin/>}
+                firstlogo={<FewUsers/>}
                 firsttitle={"Registered at\nthe link"}
                 firstvalue="2"
-                secondlogo={<UserPin/>}
+                secondlogo={<UserCircle/>}
                 secondtitle={"Registered made a\npurchase"}
                 secondvalue="15"/>
         </div>

@@ -1,0 +1,1 @@
+export type SubscriptionType = "BASIC" | "FAST" | "TURBO";

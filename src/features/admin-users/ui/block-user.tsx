@@ -2,10 +2,15 @@
 import {XLogo} from "@/shared/ui/pc-icons";
 import {BalanceType} from "@/features/admin-users/ui/balance-type";
 import {useState} from "react";
+import {AddBalanceForm} from "@/features/admin-users/ui/add-balance-form";
 import {BlueBtn} from "@/shared/ui/blue-btn";
+import {DecrementBalanceForm} from "@/features/admin-users/ui/decrement-balance-modal";
 import {BlockUserForm} from "@/features/admin-users/ui/block-user-form";
 import {UnblockUserForm} from "@/features/admin-users/ui/unblock-user-form";
 import {useActionState} from "@/shared/lib/react";
+import {addBalanceAction, AddBalanceState} from "@/features/admin-users/actions/add-balance";
+import {decrementBalanceAction, DecrementBalanceState} from "@/features/admin-users/actions/decrement-balance";
+import {handleBalanceForm} from "@/features/admin-users/actions/handle-balance-form";
 import {blockUserAction, BlockUserState} from "@/features/admin-users/actions/block-user";
 import {unblockUserAction, UnblockUserState} from "@/features/admin-users/actions/unblock-user";
 
@@ -16,26 +21,12 @@ interface Props{
 
 export const BlockUserModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
     const [activeType, setActiveType] = useState('Заблокировать');
-    const [blockFormState, blockAction] = useActionState(blockUserAction, {} as BlockUserState);
-    const [unblockFormState, unblockAction] = useActionState(unblockUserAction, {} as UnblockUserState);
+    const [formState] = useActionState(blockUserAction, {} as BlockUserState);
+    const [formUnblock] = useActionState(unblockUserAction, {} as UnblockUserState);
 
-    const handleSubmit = async (formData: FormData) => {
-        try {
-            let result;
-            if (activeType === 'Заблокировать') {
-                result = await blockAction(formData);
-            } else {
-                result = await unblockAction(formData);
-            }
+    
 
-            if (result && !result.errors?._errors) {
-                setActiveModal('');
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
-    };
-
+    // @ts-ignore
     return (
         <div className="flex items-center justify-center z-[10] fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm">
             <form
@@ -44,31 +35,18 @@ export const BlockUserModal: React.FC<Props> = ({activeModal, setActiveModal}) =
             >
                 <div className="flex items-center w-full text-black justify-between">
                     Заблокировать / Разблокировать
-                    <div className="cursor-pointer" onClick={() => setActiveModal('')}>
+                    <div className="cursor-pointer" onClick={() => setActiveModal(null)}>
                         <XLogo/>
                     </div>
                 </div>
-                <BalanceType 
-                    label1="Заблокировать" 
-                    label2="Разблокировать" 
-                    activeType={activeType} 
-                    setActiveType={setActiveType}
-                />
+                <BalanceType label1="Заблокировать" label2="Разблокировать" activeType={activeType} setActiveType={setActiveType}/>
                 {activeType === 'Заблокировать'
-                    ? <BlockUserForm {...blockFormState}/>
-                    : <UnblockUserForm {...unblockFormState}/>
+                    ? <BlockUserForm {...formState}/>
+                    : <UnblockUserForm  {...formUnblock}/>
                 }
-                {activeType === 'Заблокировать' && blockFormState.errors?._errors && (
-                    <div className="text-red-500">{blockFormState.errors._errors}</div>
-                )}
-                {activeType === 'Разблокировать' && unblockFormState.errors?._errors && (
-                    <div className="text-red-500">{unblockFormState.errors._errors}</div>
-                )}
                 <BlueBtn
                     styles="w-full"
                     title="Submit"
-                    type="submit"
-                    isUsed={false}
                 />
             </form>
         </div>

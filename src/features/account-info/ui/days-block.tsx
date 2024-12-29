@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 
-export const DaysBlock = () => {
-    const [activePlan, setActivePlan] = useState('30 days');
+interface Props {
+    activeDays: string;
+    setActiveDays: (days: string) => void;
+}
 
+export const DaysBlock: React.FC<Props> = ({ activeDays, setActiveDays }) => {
     const plans = [
-        { label: '30 days', save: null },
-        { label: '90 days', save: 'Save 10%' },
-        { label: '180 days', save: 'Save 50%' },
+        { label: '30', save: null },
+        { label: '90', save: 'Save 10%' },
+        { label: '180', save: 'Save 50%' },
     ];
 
     return (
@@ -17,21 +20,20 @@ export const DaysBlock = () => {
                 {plans.map((plan) => (
                     <div
                         key={plan.label}
-                        onClick={() => setActivePlan(plan.label)}
-                        className={` flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] text-[22px] leading-[23px] font-medium cursor-pointer transition ${
-                            activePlan === plan.label
+                        onClick={() => setActiveDays(plan.label)}
+                        className={`flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] text-[22px] leading-[23px] font-medium cursor-pointer transition ${
+                            activeDays === plan.label
                                 ? 'bg-[#005dff] text-white'
                                 : 'bg-white text-[#000] border border-[#d7e7ff]'
                         }`}
                     >
-                        {plan.label}
+                        {plan.label} days
                         {plan.save && (
                             <span className={`text-[14px] rounded-[5px] font-bold px-[5px] py-[7px] ${
-                                    activePlan === plan.label
-                                        ? 'bg-[#003d99] text-white'
-                                        : 'bg-[#d7e7ff] text-[#005dff]'
-                                }`}
-                            >
+                                activeDays === plan.label
+                                    ? 'bg-[#003d99] text-white'
+                                    : 'bg-[#d7e7ff] text-[#005dff]'
+                            }`}>
                                 {plan.save}
                             </span>
                         )}

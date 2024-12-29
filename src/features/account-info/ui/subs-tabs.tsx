@@ -1,7 +1,11 @@
 import {useState} from "react";
 
-export const SubsTabs = () => {
-    const [activeTab, setActiveTab] = useState('Basic');
+interface Props {
+    activeTab: string;
+    setActiveTab: (tab: string) => void;
+}
+
+export const SubsTabs: React.FC<Props> = ({ activeTab, setActiveTab }) => {
     const tabs = ['Basic', 'Fast', 'Turbo'];
 
     return (

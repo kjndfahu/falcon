@@ -6,12 +6,12 @@ import {useBalanceStore} from "@/shared/store/balance";
 
 interface Props{
     balance?: number;
+    userId: string;
 }
 
-export const DepositModal:React.FC<Props> = ({balance}) => {
+export const DepositModal:React.FC<Props> = ({balance, userId}) => {
     const {amount, handleChange} = useAmountInput();
-    const { data: session } = useSession();
-    const userId = session?.user?.id ? parseInt(session.user.id) : undefined;
+
     const setBalance = useBalanceStore((state) => state.setBalance);
 
     const handleDeposit = async (depositResult: any) => {

@@ -1,6 +1,7 @@
 import {$Enums, Prisma} from "@prisma/client";
 import {UserEntity} from "../domain";
 import {prisma} from "@/shared/lib/db";
+import {UserId} from "@/kernel/ids";
 
 export function saveUser(user: UserEntity): Promise<UserEntity> {
     return prisma.user.upsert({
@@ -13,6 +14,30 @@ export function saveUser(user: UserEntity): Promise<UserEntity> {
 }
 export function getUser(where: Prisma.UserWhereInput) {
     return prisma.user.findFirst({where})
+}
+export function getTotalBalance() {
+    return prisma.user.findMany({
+        select: {
+            balance: true,
+        },
+    });
+}
+export function getUserAndBalance() {
+    return prisma.user.findMany({
+        select: {
+            id: true,
+            balance: true,
+        },
+    });
+}
+export function getActiveSubscriptions(now: Date) {
+    return prisma.subscriptions.findMany({
+        where: {
+            endDate: {
+                gt: now,
+            },
+        },
+    });
 }
 export function createTopUp(depositSum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number) {
     return prisma.deposits.create({
@@ -73,4 +98,16 @@ export function unblockUser(email: string){
         }
     })
 }
-export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, restoreAccess, blockUser,unblockUser, createWithdraw, getUserTransactions};
+export function buySubscription(type: $Enums.SubscriptionType, price: number, trackingNumber: number, autorenew: boolean, userId: UserId, endDate: Date) {
+    return prisma.subscriptions.create({
+        data: {
+            type,
+            price,
+            trackingNumber,
+            autorenew,
+            userId,
+            endDate
+        }
+    })
+}
+export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, getActiveSubscriptions, restoreAccess, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};

@@ -11,7 +11,7 @@ interface Props {
     isUsed?: boolean;
     onSuccess?: (result: any) => void;
     onClick?: () => void;
-    type?: "button" | "submit" | "reset";
+    type?: "button" | "submit";
 }
 
 export const BlueBtn: React.FC<Props> = ({ 
@@ -19,28 +19,31 @@ export const BlueBtn: React.FC<Props> = ({
     title, 
     amount, 
     userId, 
-    isUsed, 
+    isUsed = false,
     onSuccess,
     onClick,
     type = "submit"
 }) => {
     const handleClick = async (e: React.MouseEvent) => {
+        e.preventDefault();
+
         if (!isUsed) {
             onClick?.();
             return;
         }
-        
-        e.preventDefault();
-        try {
-            const result = await createDepositAction(amount || 0, "TOPUP", 'USDT', userId || 0);
-            if (result.success) {
-                console.log("Deposit created successfully:", result.data);
-                onSuccess?.(result);
-            } else {
-                console.error("Failed to create deposit:", result.error);
+
+        if (isUsed && amount && userId) {
+            try {
+                const result = await createDepositAction(amount, "TOPUP", 'USDT', userId);
+                if (result.success) {
+                    console.log("Deposit created successfully:", result.data);
+                    onSuccess?.(result);
+                } else {
+                    console.error("Failed to create deposit:", result.error);
+                }
+            } catch (error) {
+                console.error("Error creating deposit:", error);
             }
-        } catch (error) {
-            console.error("Error creating deposit:", error);
         }
     };
 
