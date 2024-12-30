@@ -10,12 +10,10 @@ export const Header = () => {
     return (
         <div className="flex md:flex-row flex-col md:items-center justify-between md:py-[30px] xl:px-[210px] lg:px-[150px] mdbvp:px-[75px] md:px-[25px]">
             <LogoText isClicked={isClicked} setClicked={setClicked} />
-            {isClicked ? (
                     <>
                         <HeaderLinks/>
                         <ButtonsBlock/>
                     </>
-            ) : ('')}
         </div>
     )
 }

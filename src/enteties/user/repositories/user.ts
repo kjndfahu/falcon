@@ -98,6 +98,14 @@ export function unblockUser(email: string){
         }
     })
 }
+export function getReferredBy(referralCode:string){
+    return prisma.user.findFirst({
+        where: {referralCode},
+        select: {
+            login: true
+        }
+    })
+}
 export function buySubscription(type: $Enums.SubscriptionType, price: number, trackingNumber: number, autorenew: boolean, userId: UserId, endDate: Date) {
     return prisma.subscriptions.create({
         data: {
@@ -110,4 +118,4 @@ export function buySubscription(type: $Enums.SubscriptionType, price: number, tr
         }
     })
 }
-export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, getActiveSubscriptions, restoreAccess, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};
+export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};

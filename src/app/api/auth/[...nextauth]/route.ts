@@ -71,7 +71,8 @@ export const authOptions: AuthOptions = {
               role: "USER",
               password: "",
               salt: "",
-              referralCode: generateReferralCode()
+              referralCode: generateReferralCode(),
+              referredBy: Number(null)
             }
           });
         }

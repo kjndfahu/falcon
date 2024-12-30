@@ -11,6 +11,8 @@ export type UserEntity = {
     password: string;
     salt: string;
     referralCode: string;
+    isBlocked: boolean;
+    referredBy: number;
 }
 
 export type DepositEntity = {

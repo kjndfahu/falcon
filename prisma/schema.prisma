@@ -18,6 +18,7 @@ model User {
   balance      Float   @default(0)
   referralCode String  @unique
   isBlocked    Boolean
+  referredBy   Int
 
   deposits     Deposits[]
   withdraws    Withdraws[]
