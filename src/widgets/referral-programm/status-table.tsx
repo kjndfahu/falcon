@@ -1,4 +1,4 @@
-import {statusValues} from "@/features/referral-programm/model/constants";
+import {statusHeaders, statusValues} from "@/features/referral-programm/model/constants";
 
 interface Props{
     className?:string,
@@ -6,24 +6,36 @@ interface Props{
 export const StatusTable:React.FC<Props> = ({}) => {
     return (
         <div className="px-[220px]">
-            <table className="w-full table-fixed border-collapse border-[rgba(190,_218,_233,_1)] text-center">
+            <table className="w-full text-black table-fixed border-collapse border-[rgba(190,_218,_233,_1)] text-center">
                 <thead>
                 <tr className="bg-[linear-gradient(90deg,_#DFF3FD_0%,_#CDEEFF_100%)]">
-                    {statusValues.map((item, index) => (
+                    {statusHeaders.map((item, index) => (
                         <th key={index}
                             className="w-1/5 px-3 py-7 text-black font-semibold border-[rgba(190,_218,_233,_1)] border">{item}</th>
                     ))}
                 </tr>
                 </thead>
                 <tbody>
-                <tr className="text-black transition-colors border-b">
-                    {statusValues.map((item, index) => (
-                            <td key={index}
-                                className="w-1/5 px-3 py-7 border-[rgba(190,_218,_233,_1)] border">{item}</td>
-                    ))}
-                </tr>
+                {statusValues.map((row, rowIndex) => (
+                    <tr
+                        key={rowIndex}
+                        className=""
+                    >
+                        <td className="px-4 py-2 border border-gray-200 font-semibold">
+                            {row.label}
+                        </td>
+                        {row.values.map((value, colIndex) => (
+                            <td
+                                key={colIndex}
+                                className="px-4 py-2 border border-gray-200"
+                            >
+                                {value}
+                            </td>
+                        ))}
+                    </tr>
+                ))}
                 </tbody>
             </table>
-</div>
-)
+        </div>
+    )
 }

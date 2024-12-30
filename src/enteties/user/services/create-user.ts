@@ -1,36 +1,45 @@
-import {left, right} from "@/shared/lib/either";
-import ShortUniqueId from 'short-unique-id';
-import {passwordService} from "@/enteties/user/services/password";
+import {UserEntity} from "@/enteties/user/domain";
 import {userRepository} from "@/enteties/user/repositories/user";
+import {Either, left, right} from "@/shared/lib/either";
+import {passwordService} from "@/enteties/user/services/password";
 import {generateReferralCode} from "@/enteties/user/services/referralcode-generation";
+import ShortUniqueId from 'short-unique-id';
 
-export const createUser = async ({
-    login,
-    email,
-    password
-}: {login: string, email: string, password: string}) => {
-    const userWithLogin = await userRepository.getUser({login})
-    const userWithEmail = await userRepository.getUser({email})
+type CreateUserDTO = {
+    login: string;
+    email: string;
+    password: string;
+    referredBy?: number;
+}
 
-    const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
+export async function createUser(dto: CreateUserDTO): Promise<Either<string, UserEntity>> {
+    const existingUser = await userRepository.getUser({
+        OR: [
+            {login: dto.login},
+            {email: dto.email}
+        ]
+    });
 
-    if(userWithLogin || userWithEmail){
-        return left('user-already-exists' as const)
+    if (existingUser) {
+        return left("User already exists");
     }
 
-    const {hash, salt} = await passwordService.hashPassword(password)
+    const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
+    const {hash, salt} = await passwordService.hashPassword(dto.password);
+    const referralCode = generateReferralCode();
 
     const user = await userRepository.saveUser({
-        id:  parseInt(uid.randomUUID()),
-        role: "USER",
-        login,
-        email,
+        id: parseInt(uid.randomUUID()),
+        login: dto.login,
+        email: dto.email,
         password: hash,
         salt,
-        referralCode: generateReferralCode(),
+        role: "USER",
+        balance: 0,
         isBlocked: false,
-        referredBy: Number(null),
-    })
+        referralCode,
+        referredBy: dto.referredBy || 0,
+    });
 
     return right(user);
 }

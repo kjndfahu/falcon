@@ -1,24 +1,33 @@
 import {ReferralInfoBlock} from "@/features/referral/ui/referral-info-block";
 import {FewUsers, UserCircle, UserPin, UserPlus} from "@/shared/ui/admin-icons";
 
+interface Props{
+    referralInfo:  {
+        totalReferrals: number,
+        registeredWithPurchase: number,
+        totalCashback: number ,
+        purchasesOfReferrals: number
+    } | null
+}
 
-export const ReferralInfo = () => {
+
+export const ReferralInfo:React.FC<Props> = ({referralInfo}) => {
     return (
         <div className="flex flex-col gap-[50px]">
             <ReferralInfoBlock
                 firstlogo={<UserPin/>}
                 firsttitle={"Registered at\nthe link"}
-                firstvalue="2"
+                firstvalue={referralInfo?.totalReferrals?.toString() || "0"}
                 secondlogo={<UserPlus/>}
                 secondtitle={"Registered made a\npurchase"}
-                secondvalue="15"/>
+                secondvalue={referralInfo?.registeredWithPurchase?.toString() || "0"}/>
             <ReferralInfoBlock
                 firstlogo={<FewUsers/>}
-                firsttitle={"Registered at\nthe link"}
-                firstvalue="2"
+                firsttitle={"Cashback\nreceived"}
+                firstvalue={referralInfo?.totalCashback?.toString() + '$' || "0"}
                 secondlogo={<UserCircle/>}
-                secondtitle={"Registered made a\npurchase"}
-                secondvalue="15"/>
+                secondtitle={"Purchases of\nreferrals"}
+                secondvalue={referralInfo?.purchasesOfReferrals?.toString() + '$' || "0"}/>
         </div>
     )
 }

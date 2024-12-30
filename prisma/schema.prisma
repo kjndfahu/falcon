@@ -20,6 +20,7 @@ model User {
   isBlocked    Boolean
   referredBy   Int
 
+  referral     Referrals[]
   deposits     Deposits[]
   withdraws    Withdraws[]
   subsriptions Subscriptions[]
@@ -34,6 +35,10 @@ model Referrals {
   totalReferrals         Int   @default(0)
   registeredWithPurchase Int   @default(0)
   totalCashback          Float @default(0)
+  purchasesOfReferrals   Float @default(0)
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt

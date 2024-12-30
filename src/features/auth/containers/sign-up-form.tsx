@@ -8,13 +8,15 @@ import {Button} from "@/shared/ui/button";
 import {ErrorMessage} from "@/features/auth/ui/error-message";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export function SignUpForm() {
     const [formState, action, isPending] = useActionState(signUpAction, {} as SignUpFormState);
     const { status } = useSession();
     const router = useRouter();
+    const params = useParams();
+    const referralCode = params?.referralCode as string;
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -23,9 +25,12 @@ export function SignUpForm() {
     }, [status, router]);
 
     const handleSubmit = async (formData: FormData) => {
+        if (referralCode) {
+            formData.append('referralCode', referralCode);
+        }
+
         const result = await action(formData);
         
-        // @ts-ignore
         if (result && !result.errors && result.user) {
             const login = formData.get('login') as string;
             const password = formData.get('password') as string;

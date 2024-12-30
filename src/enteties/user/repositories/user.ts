@@ -106,6 +106,25 @@ export function getReferredBy(referralCode:string){
         }
     })
 }
+export function getReferralInfo(userId: UserId){
+    return prisma.referrals.findFirst({
+        where: {userId: userId},
+        select: {
+            totalReferrals: true,
+            totalCashback: true,
+            registeredWithPurchase: true,
+            purchasesOfReferrals: true,
+        }
+    })
+}
+export function referredBy(referralCode:string){
+    return prisma.user.findFirst({
+            where: {referralCode},
+        select: {
+                login: true
+        }
+        })
+}
 export function buySubscription(type: $Enums.SubscriptionType, price: number, trackingNumber: number, autorenew: boolean, userId: UserId, endDate: Date) {
     return prisma.subscriptions.create({
         data: {

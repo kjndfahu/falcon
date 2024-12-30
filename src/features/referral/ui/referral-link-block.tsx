@@ -11,7 +11,7 @@ interface Props {
 export const ReferralLinkBlock: React.FC<Props> = ({ referralCode }) => {
     const handleCopy = () => {
         if (referralCode) {
-            copyCode(referralCode);
+            copyCode(`http://localhost:3000/sign-up/${referralCode}`);
             toast.success("Referral code copied to clipboard!");
         }
     };

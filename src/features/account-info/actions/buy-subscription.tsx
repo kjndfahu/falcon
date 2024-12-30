@@ -1,10 +1,9 @@
 "use server";
 
-import { z } from "zod";
-import { userRepository } from "@/enteties/user/repositories/user";
-import { UserId } from "@/kernel/ids";
-import { $Enums } from "@prisma/client";
-import { prisma } from "@/shared/lib/db";
+import {z} from "zod";
+import {$Enums} from "@prisma/client";
+import {prisma} from "@/shared/lib/db";
+import {UserId} from "@/kernel/ids";
 
 export type BuySubscriptionState = {
     formData?: FormData;
@@ -23,7 +22,7 @@ const buySubscriptionDataSchema = z.object({
 });
 
 export const buySubscriptionAction = async (
-    state: BuySubscriptionState, 
+    state: BuySubscriptionState,
     formData: FormData
 ): Promise<BuySubscriptionState> => {
     const data = Object.fromEntries(formData.entries());
@@ -42,10 +41,9 @@ export const buySubscriptionAction = async (
     }
 
     try {
-        // Начинаем транзакцию
         const transaction = await prisma.$transaction(async (tx) => {
             const user = await tx.user.findUnique({
-                where: { id: result.data.userId }
+                where: {id: result.data.userId}
             });
 
             if (!user) {
@@ -56,7 +54,6 @@ export const buySubscriptionAction = async (
                 throw new Error("Insufficient balance");
             }
 
-            // Создаем подписку
             const subscription = await tx.subscriptions.create({
                 data: {
                     type: result.data.type as $Enums.SubscriptionType,
@@ -68,19 +65,51 @@ export const buySubscriptionAction = async (
                 }
             });
 
-            // Обновляем баланс пользователя
             const updatedUser = await tx.user.update({
-                where: { id: user.id },
+                where: {id: user.id},
                 data: {
                     balance: user.balance - result.data.price
                 }
             });
 
-            return { subscription, updatedUser };
+            if (user.referredBy !== 0) {
+                const existingReferral = await tx.referrals.findFirst({
+                    where: {
+                        userId: user.referredBy
+                    }
+                });
+
+                if (existingReferral) {
+                    await tx.referrals.update({
+                        where: {
+                            id: existingReferral.id
+                        },
+                        data: {
+                            purchasesOfReferrals: {
+                                increment: result.data.price
+                            },
+                            registeredWithPurchase: {
+                                increment: 1
+                            }
+                        }
+                    });
+                } else {
+                    await tx.referrals.create({
+                        data: {
+                            userId: user.referredBy,
+                            purchasesOfReferrals: result.data.price,
+                            registeredWithPurchase: 1,
+                            totalReferrals: 1
+                        }
+                    });
+                }
+            }
+
+            return {subscription, updatedUser};
         });
 
         console.log('Transaction completed successfully:', transaction);
-        return { formData };
+        return {formData};
 
     } catch (error) {
         console.error("Error processing subscription:", error);
