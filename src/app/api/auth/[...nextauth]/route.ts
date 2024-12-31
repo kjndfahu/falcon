@@ -55,31 +55,38 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
-        const existingUser = await prisma.user.findFirst({
-          where: {
-            email: user.email!
-          }
-        });
-
-        if (!existingUser) {
-          const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
-          await prisma.user.create({
-            data: {
-              id: parseInt(uid.randomUUID()),
-              email: user.email!,
-              login: user.email!.split('@')[0],
-              role: "USER",
-              password: "",
-              salt: "",
-              referralCode: generateReferralCode(),
-              referredBy: Number(null)
+        try {
+          const existingUser = await prisma.user.findFirst({
+            where: {
+              email: user.email!
             }
           });
+
+          if (!existingUser) {
+            const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
+            await prisma.user.create({
+              data: {
+                id: parseInt(uid.randomUUID()),
+                email: user.email!,
+                login: user.email!.split('@')[0],
+                role: "USER",
+                password: "",
+                salt: "",
+                isBlocked: false,
+                referralCode: generateReferralCode(),
+                referredBy: 0
+              }
+            });
+          }
+          return true;
+        } catch (error) {
+          console.error("Error in signIn callback:", error);
+          return false;
         }
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         const dbUser = await prisma.user.findFirst({
           where: {
@@ -106,20 +113,24 @@ export const authOptions: AuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-
-      if (url.startsWith(baseUrl)) return url
-      if (url.startsWith('/')) return `${baseUrl}${url}`
-      return baseUrl
+      if (url.startsWith('/sign-in')) {
+        return `${baseUrl}/personal-cabinet`;
+      }
+      if (url.startsWith(baseUrl)) return url;
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      return baseUrl;
     }
   },
   pages: {
-    signIn: '/sign-in'
+    signIn: '/sign-in',
+    error: '/auth/error',
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
-  }
+  },
+  debug: process.env.NODE_ENV === 'development',
 }
 
 const handler = NextAuth(authOptions)
