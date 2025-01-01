@@ -12,6 +12,13 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -86,7 +93,7 @@ export const authOptions: AuthOptions = {
       }
       return true;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
         const dbUser = await prisma.user.findFirst({
           where: {
@@ -96,29 +103,24 @@ export const authOptions: AuthOptions = {
         
         if (dbUser) {
           token.id = dbUser.id.toString();
+          token.email = dbUser.email;
           token.role = dbUser.role;
           token.login = dbUser.login;
-          token.email = dbUser.email;
         }
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-        session.user.login = token.login as string;
-        session.user.email = token.email as string;
+        session.user.id = token.id;
+        session.user.email = token.email;
+        session.user.role = token.role;
+        session.user.login = token.login;
       }
       return session;
     },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith('/sign-in')) {
-        return `${baseUrl}/personal-cabinet`;
-      }
-      if (url.startsWith(baseUrl)) return url;
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
-      return baseUrl;
+      return `${baseUrl}/personal-cabinet`;
     }
   },
   pages: {
@@ -128,7 +130,7 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   debug: process.env.NODE_ENV === 'development',
 }
