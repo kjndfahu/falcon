@@ -81,7 +81,8 @@ export const authOptions: AuthOptions = {
                 salt: "",
                 isBlocked: false,
                 referralCode: generateReferralCode(),
-                referredBy: 0
+                referredBy: 0,
+                discountRate: 0
               }
             });
           }
@@ -93,20 +94,14 @@ export const authOptions: AuthOptions = {
       }
       return true;
     },
-    async jwt({ token, user }) {
-      if (user) {
-        const dbUser = await prisma.user.findFirst({
-          where: {
-            email: user.email!
-          }
-        });
+    async jwt({ token, trigger, session }) {
+      if (trigger === "update" && session?.email) {
+        token.email = session.email;
         
-        if (dbUser) {
-          token.id = dbUser.id.toString();
-          token.email = dbUser.email;
-          token.role = dbUser.role;
-          token.login = dbUser.login;
-        }
+        await prisma.user.update({
+          where: { id: parseInt(token.id) },
+          data: { email: session.email }
+        });
       }
       return token;
     },
@@ -130,7 +125,7 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, 
   },
   debug: process.env.NODE_ENV === 'development',
 }

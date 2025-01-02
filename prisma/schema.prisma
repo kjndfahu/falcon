@@ -19,6 +19,7 @@ model User {
   referralCode String  @unique
   isBlocked    Boolean
   referredBy   Int
+  discountRate Float   @default(0)
 
   referral     Referrals[]
   deposits     Deposits[]

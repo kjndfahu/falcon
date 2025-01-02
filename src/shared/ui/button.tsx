@@ -1,17 +1,32 @@
-import { EnterLogo } from "@/shared/ui/icons";
+"use client";
+
+import React from "react";
 
 interface Props {
-    title?: string;
-    isPending?: boolean;
+    title: string;
     styles?: string;
+    type?: "button" | "submit" | "reset";
+    isPending?: boolean;
+    onClick?: () => void;
+    disabled?: boolean;
 }
 
-export const Button: React.FC<Props> = ({ isPending, title, styles }) => {
-    console.log(isPending);
+export const Button: React.FC<Props> = ({ 
+    styles = "", 
+    title,
+    type = "submit",
+    isPending = false,
+    onClick,
+    disabled = false
+}) => {
     return (
-        <button disabled={isPending} type="submit" className={`flex ${styles} cursor-pointer items-center font-normal p-2 gap-2`}>
-            <EnterLogo />
-            {title}
+        <button
+            type={type}
+            onClick={onClick}
+            disabled={disabled || isPending}
+            className={`flex items-center justify-center cursor-pointer ${styles} ${(disabled || isPending) ? 'opacity-50' : ''}`}
+        >
+            {isPending ? "Processing..." : title}
         </button>
     );
 };

@@ -2,13 +2,15 @@
 import {useState} from "react";
 import {Modal} from "@/shared/ui/modal";
 import {SettingsModal} from "@/features/settings/ui/settings-modal";
+import {ChangeMailModal} from "@/features/settings/ui/change-mail-modal";
 
 interface Props {
-    title: string,
-    info: string;
+    title: string;
+    info?: string;
+    type: 'email' | 'password';
 }
 
-export const SettingsBlock: React.FC<Props> = ({title, info}) => {
+export const SettingsBlock: React.FC<Props> = ({title, info, type}) => {
     const [isModal, setModal] = useState(false);
 
     return (
@@ -27,8 +29,11 @@ export const SettingsBlock: React.FC<Props> = ({title, info}) => {
                 <Modal 
                     isModal={isModal} 
                     setModal={setModal} 
-                    title="Change Password" 
-                    child={<SettingsModal setModal={setModal} />}
+                    title={type === 'email' ? "Change Email" : "Change Password"}
+                    child={type === 'email' 
+                        ? <ChangeMailModal setModal={setModal} currentEmail={info} /> 
+                        : <SettingsModal setModal={setModal} />
+                    }
                 />
             )}
         </div>

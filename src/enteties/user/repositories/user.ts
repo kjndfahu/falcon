@@ -125,6 +125,18 @@ export function referredBy(referralCode:string){
         }
         })
 }
+export function changePercent(userEmail: string, discountRate: number){
+    return prisma.user.update({
+        where: {email: userEmail},
+        data: {discountRate}
+    })
+}
+export function changeMail(userEmail: string, newMail: string){
+    return prisma.user.update({
+        where: {email: userEmail},
+        data: {email: newMail}
+    })
+}
 export function buySubscription(type: $Enums.SubscriptionType, price: number, trackingNumber: number, autorenew: boolean, userId: UserId, endDate: Date) {
     return prisma.subscriptions.create({
         data: {
@@ -137,4 +149,4 @@ export function buySubscription(type: $Enums.SubscriptionType, price: number, tr
         }
     })
 }
-export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};
+export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, changeMail, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};

@@ -39,6 +39,7 @@ export async function createUser(dto: CreateUserDTO): Promise<Either<string, Use
         isBlocked: false,
         referralCode,
         referredBy: dto.referredBy || 0,
+        discountRate: 0
     });
 
     return right(user);

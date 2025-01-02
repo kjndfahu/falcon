@@ -2,6 +2,8 @@
 import {Button} from "@/shared/ui/button";
 import { useState } from "react";
 import { ChangePasswordModal } from "./change-password-modal";
+import { MailVerificationModal } from "./mail-verification-modal";
+import { sendVerificationEmail } from "@/features/auth/actions/send-verification-email";
 
 interface Props {
     setModal: (isModal: boolean) => void;
@@ -9,17 +11,50 @@ interface Props {
 
 export const SettingsModal: React.FC<Props> = ({ setModal }) => {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [showVerificationModal, setShowVerificationModal] = useState(false);
     const [email, setEmail] = useState('');
+    const [verificationCode, setVerificationCode] = useState<string>('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (email) {
-            setShowPasswordModal(true);
+            const formData = new FormData();
+            formData.append('email', email);
+            
+            const result = await sendVerificationEmail({}, formData);
+            
+            if (result.success && result.verificationCode) {
+                setVerificationCode(result.verificationCode);
+                setShowVerificationModal(true);
+            }
         }
     };
 
     if (showPasswordModal) {
         return <ChangePasswordModal setModal={setModal} email={email} />;
+    }
+
+    if (showVerificationModal) {
+        return (
+            <MailVerificationModal 
+                email={email}
+                expectedCode={verificationCode}
+                onVerificationComplete={() => {
+                    setShowVerificationModal(false);
+                    setShowPasswordModal(true);
+                }}
+                onResendCode={async () => {
+                    const formData = new FormData();
+                    formData.append('email', email);
+                    const result = await sendVerificationEmail({}, formData);
+                    if (result.success && result.verificationCode) {
+                        setVerificationCode(result.verificationCode);
+                        return true;
+                    }
+                    return false;
+                }}
+            />
+        );
     }
 
     return (
