@@ -13,9 +13,9 @@ interface Props{
 
 export const ActiveSubsBlock:React.FC<Props> = ({type, autorenew, trackingNumber, price, endDate}) => {
     return (
-        <div className="flex gap-[50px] rounded-[15px] p-[50px] w-[548px] border-[1px] border-[#CCE5F8] bg-[F6FCFF]">
-            <div className="flex gap-[50px]">
-                <div className="flex flex-col gap-[50px]">
+        <div className="flex gap-[50px] rounded-[15px] sml:p-[50px] p-[40px] sml:w-[548px] w-full border-[1px] border-[#CCE5F8] bg-[F6FCFF]">
+            <div className="flex sml:flex-row flex-col sml:gap-[50px] gap-[30px]">
+                <div className="flex flex-col sml:gap-[50px] gap-[25px]">
                     <div className="flex flex-col gap-[25px]">
                         <div className="flex flex-col gap-1 text-[18px] text-[#4B5167]">
                             Subscription type
@@ -26,10 +26,10 @@ export const ActiveSubsBlock:React.FC<Props> = ({type, autorenew, trackingNumber
                             <h3 className="text-[24px] font-medium text-[#0A131D]">{trackingNumber}</h3>
                         </div>
                     </div>
-                    <BlueBtn styles="w-[197px] py-[20px]" title="Renew subscription"/>
+                    <BlueBtn styles="sml:flex hidden w-[197px] py-[20px]" title="Renew subscription"/>
                 </div>
 
-                <div className="flex flex-col gap-[50px]">
+                <div className="flex flex-col sml:gap-[50px] gap-[25px]">
                     <div className="flex flex-col gap-[25px]">
                         <div className="flex flex-col gap-1 text-[18px] text-[#4B5167]">
                             Price type
@@ -40,6 +40,7 @@ export const ActiveSubsBlock:React.FC<Props> = ({type, autorenew, trackingNumber
                             <h3 className="text-[24px] font-medium text-[#0A131D]">{endDate}</h3>
                         </div>
                     </div>
+                    <BlueBtn styles="sml:hidden flex w-[197px] py-[20px]" title="Renew subscription"/>
                     <AutoRenewBtn autorenew={autorenew}/>
                 </div>
             </div>

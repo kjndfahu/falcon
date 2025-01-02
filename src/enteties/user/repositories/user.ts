@@ -15,6 +15,14 @@ export function saveUser(user: UserEntity): Promise<UserEntity> {
 export function getUser(where: Prisma.UserWhereInput) {
     return prisma.user.findFirst({where})
 }
+export function getUsersAndCreatedAt() {
+    return prisma.user.findMany({
+        select: {
+            id: true,
+            createdAt: true,
+        },
+    });
+}
 export function getTotalBalance() {
     return prisma.user.findMany({
         select: {

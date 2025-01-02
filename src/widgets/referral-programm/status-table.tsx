@@ -11,7 +11,7 @@ export const StatusTable:React.FC<Props> = ({}) => {
                 <tr className="bg-[linear-gradient(90deg,_#DFF3FD_0%,_#CDEEFF_100%)]">
                     {statusHeaders.map((item, index) => (
                         <th key={index}
-                            className="w-1/5 px-3 py-7 text-black font-semibold border-[rgba(190,_218,_233,_1)] border">{item}</th>
+                            className="w-1/5 px-3 py-7 text-black border-[rgba(190,_218,_233,_1)] border">{item}</th>
                     ))}
                 </tr>
                 </thead>
@@ -21,7 +21,7 @@ export const StatusTable:React.FC<Props> = ({}) => {
                         key={rowIndex}
                         className=""
                     >
-                        <td className="px-4 py-2 border border-gray-200 font-semibold">
+                        <td className="px-4 py-[28px] border border-gray-200">
                             {row.label}
                         </td>
                         {row.values.map((value, colIndex) => (

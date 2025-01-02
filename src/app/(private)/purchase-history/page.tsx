@@ -6,7 +6,7 @@ export default async function PurchaseHistory() {
     const {session} = await sessionService.verifySession()
     const subs = await getSubs({userId: session.id})
     return (
-        <div className="flex w-full flex-col gap-[50px] py-[77px] px-[129px]">
+        <div className="flex w-full flex-col gap-[50px] py-[77px] xl:px-[129px] lg:px-[100px] mdbvp:px-[50px] px-[20px]">
             <TariffTable subs={subs}/>
         </div>
     )

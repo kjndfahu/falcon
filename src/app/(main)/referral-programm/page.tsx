@@ -4,6 +4,7 @@ import {PartnershipModel} from "@/widgets/referral-programm/partnership-model";
 import {FeedbackForm} from "@/shared/ui/feedback-form";
 import {Feedback} from "@/shared/ui/feedback";
 import {PartneshipLevels} from "@/widgets/referral-programm/partneship-levels";
+import {BecomePartner} from "@/widgets/referral-programm/become-partner";
 
 export default function ReferralProgramPage() {
     return (
@@ -14,7 +15,8 @@ export default function ReferralProgramPage() {
             <StatusTable/>
             <PartnershipModel/>
             <PartneshipLevels/>
-            <Feedback title="Leave your request" children={ <FeedbackForm question="Count of active counts" /> }/>
+            <BecomePartner/>
+            <Feedback title="Leave your request" child={ <FeedbackForm question="Count of active counts" /> }/>
         </div>
     )
 }

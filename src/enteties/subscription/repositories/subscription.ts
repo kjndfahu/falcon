@@ -6,3 +6,6 @@ export function getSubscription(userId: UserId){
         where: {userId: userId},
     })
 }
+export function getAllSubscriptions(){
+    return prisma.subscriptions.findMany()
+}

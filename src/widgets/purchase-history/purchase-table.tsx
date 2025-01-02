@@ -22,7 +22,7 @@ export const TariffTable: React.FC<Props> = ({subs}) => {
             <tr className="bg-[linear-gradient(90deg,_#DFF3FD_0%,_#CDEEFF_100%)]">
                 {tableHeaders.map((item, index) => (
                     <th key={index}
-                        className="w-1/4 px-3 py-7 text-black font-semibold border-[rgba(190,_218,_233,_1)] border">{item}</th>
+                        className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 text-black font-semibold border-[rgba(190,_218,_233,_1)] border">{item}</th>
                 ))}
             </tr>
             </thead>
@@ -33,10 +33,10 @@ export const TariffTable: React.FC<Props> = ({subs}) => {
                     key={index}
                     className="text-black transition-colors border-b"
                 >
-                    <td className="w-1/4 px-3 py-7 border-[rgba(190,_218,_233,_1)] border">{formatDate(item.createdAt)}</td>
-                    <td className="w-1/4 px-3 py-7 border-[rgba(190,_218,_233,_1)] border">{item.trackingNumber}</td>
-                    <td className="w-1/4 px-3 py-7 border-[rgba(190,_218,_233,_1)] border">{formatType(item.type)}</td>
-                    <td className="w-1/4 px-3 py-7 border-[rgba(190,_218,_233,_1)] border">{item.price}$</td>
+                    <td className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 border-[rgba(190,_218,_233,_1)] border">{formatDate(item.createdAt)}</td>
+                    <td className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 border-[rgba(190,_218,_233,_1)] border">#{item.trackingNumber}</td>
+                    <td className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 border-[rgba(190,_218,_233,_1)] border">{formatType(item.type)}</td>
+                    <td className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 border-[rgba(190,_218,_233,_1)] border">{item.price}$</td>
                 </tr>
             ))}
             </tbody>

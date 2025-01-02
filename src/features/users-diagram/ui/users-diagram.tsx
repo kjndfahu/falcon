@@ -1,13 +1,23 @@
 'use client';
+
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
 import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-export const UsersDiagram = () => {
+interface User {
+    id: number;
+    createdAt: string; // Дата в формате ISO
+}
+
+interface Props {
+    users: User[];
+}
+
+export const UsersDiagram: React.FC<Props> = ({ users }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const chartInstanceRef = useRef<Chart | null>(null); // Хранение экземпляра графика
+    const chartInstanceRef = useRef<Chart | null>(null);
 
     useEffect(() => {
         if (!chartRef.current || !tooltipRef.current) return;
@@ -17,51 +27,30 @@ export const UsersDiagram = () => {
 
         if (!ctx || !tooltipEl) return;
 
-
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
 
+        // **1. Подготовка данных**
+        const registrationsPerDay: Record<string, number> = {};
 
-        const customTooltip = (context: any) => {
-            const tooltipModel = context.tooltip;
+        users.forEach((user) => {
+            const date = new Date(user.createdAt).toISOString().split('T')[0]; // Форматируем дату в YYYY-MM-DD
+            registrationsPerDay[date] = (registrationsPerDay[date] || 0) + 1;
+        });
 
-            if (!tooltipModel.opacity) {
-                tooltipEl.style.opacity = '0';
-                return;
-            }
+        const sortedDates = Object.keys(registrationsPerDay).sort(); // Сортируем даты
+        const counts = sortedDates.map((date) => registrationsPerDay[date]);
 
-            if (tooltipModel.body) {
-                const title = tooltipModel.title[0] || '';
-                const value = tooltipModel.body[0]?.lines[0] || '';
-                tooltipEl.innerHTML = `
-                    <div style="font-size: 16px; font-weight: bold; color: #3b82f6;">
-                        ${title}
-                    </div>
-                    <div style="font-size: 14px; color: #374151;">
-                        ${value}
-                    </div>
-                `;
-            }
-
-            const canvasPosition = chartRef.current.getBoundingClientRect();
-            tooltipEl.style.opacity = '1';
-            tooltipEl.style.position = 'absolute';
-            tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;
-            tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY - 200}px`;
-            tooltipEl.style.pointerEvents = 'none';
-            tooltipEl.style.transition = 'opacity 0.2s ease';
-        };
-
-        // Создаем новый график
+        // **2. Настройка графика**
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Point 1', 'Point 2', 'Point 3', 'Point 4', 'Point 5'],
+                labels: sortedDates, // Метки на оси X (даты)
                 datasets: [
                     {
-                        label: 'Subscriptions',
-                        data: [10, 20, 15, 30, 25],
+                        label: 'Daily Subscriptions',
+                        data: counts, // Количество подписок
                         borderColor: '#3b82f6',
                         borderWidth: 2,
                         pointBackgroundColor: '#3b82f6',
@@ -77,8 +66,7 @@ export const UsersDiagram = () => {
                 responsive: true,
                 plugins: {
                     tooltip: {
-                        enabled: false,
-                        external: customTooltip,
+                        enabled: true,
                     },
                 },
                 scales: {
@@ -111,7 +99,7 @@ export const UsersDiagram = () => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, []);
+    }, [users]);
 
     return (
         <div className="relative w-[900px]">

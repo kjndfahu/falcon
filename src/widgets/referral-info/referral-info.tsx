@@ -3,10 +3,10 @@ import {FewUsers, UserCircle, UserPin, UserPlus} from "@/shared/ui/admin-icons";
 
 interface Props{
     referralInfo:  {
-        totalReferrals: number,
-        registeredWithPurchase: number,
-        totalCashback: number ,
-        purchasesOfReferrals: number
+        totalReferrals: number | null,
+        registeredWithPurchase: number | null,
+        totalCashback: number | null,
+        purchasesOfReferrals: number | null
     } | null
 }
 
@@ -24,10 +24,10 @@ export const ReferralInfo:React.FC<Props> = ({referralInfo}) => {
             <ReferralInfoBlock
                 firstlogo={<FewUsers/>}
                 firsttitle={"Cashback\nreceived"}
-                firstvalue={referralInfo?.totalCashback?.toString() + '$' || "0"}
+                firstvalue={(referralInfo?.totalCashback ?? 0) + "$"}
                 secondlogo={<UserCircle/>}
                 secondtitle={"Purchases of\nreferrals"}
-                secondvalue={referralInfo?.purchasesOfReferrals?.toString() + '$' || "0"}/>
+                secondvalue={(referralInfo?.purchasesOfReferrals ?? 0) + "$"}/>
         </div>
     )
 }

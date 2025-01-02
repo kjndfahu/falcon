@@ -1,11 +1,8 @@
-'use client'
-import {useState} from "react";
+export const EndDateSwitcher = ({isActive, setIsActive}: {isActive: boolean, setIsActive: (boolean: any) => void}) => {
 
-export const EndDateSwitcher = () => {
-    const [isActive, setIsActive] = useState(true);
     return (
         <div
-            className="flex items-center justify-between rounded-[15px] border-[1px] w-[548px] border-[#CCE5F8] py-4 px-[50px] bg-[#F6FCFF]">
+            className="flex items-center justify-between rounded-[15px] border-[1px] sml:w-[548px] w-full border-[#CCE5F8] py-4 px-[50px] bg-[#F6FCFF]">
             <div className="flex flex-col gap-1 text-[18px] text-[#0A131D]">
                 End Date Tariff
                 <p className="text-[14px] text-[#4B5167]">Activate for sorting</p>
