@@ -30,6 +30,14 @@ export function getTotalBalance() {
         },
     });
 }
+export function getTotalSells() {
+    return prisma.subscriptions.findMany({
+        select: {
+            createdAt: true,
+            price: true,
+        },
+    });
+}
 export function getUserAndBalance() {
     return prisma.user.findMany({
         select: {
@@ -46,6 +54,16 @@ export function getActiveSubscriptions(now: Date) {
             },
         },
     });
+}
+export function createTransaction(sum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number) {
+    return prisma.transactions.create({
+        data: {
+            sum,
+            type,
+            system,
+            userId
+        }
+    })
 }
 export function createTopUp(depositSum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number) {
     return prisma.deposits.create({
@@ -73,8 +91,8 @@ export function changeUserRole(userEmail: string, role: $Enums.Role) {
         data: {role}
     })
 }
-export function getUserTransactions(where: Prisma.DepositsWhereInput) {
-    return prisma.deposits.findMany({
+export function getUserTransactions(where: Prisma.TransactionsWhereInput) {
+    return prisma.transactions.findMany({
         where,
         orderBy: {
             createdAt: 'desc'

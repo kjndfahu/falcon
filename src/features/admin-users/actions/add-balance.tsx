@@ -2,7 +2,7 @@
 
 import {z} from "zod";
 import {updateUserBalance} from "@/enteties/user/services/update-balance";
-import {userRepository} from "@/enteties/user/repositories/user";
+import {createTransaction, userRepository} from "@/enteties/user/repositories/user";
 import {createdTopUp} from "@/enteties/user/services/create-top-up";
 
 export type AddBalanceState = {
@@ -52,6 +52,7 @@ export const addBalanceAction = async (state: AddBalanceState, formData: FormDat
         }
 
         const depositResult = await createdTopUp(sum, "TOPUP", "ADMINRECHARGE", user.id);
+        const transactionResult = await createTransaction(sum, "TOPUP", "ADMINRECHARGE", user.id)
 
         const addBalanceResult = await updateUserBalance(user.id, sum);
         if (!addBalanceResult.success) {

@@ -18,7 +18,7 @@ export const AdminBlocks: React.FC<Props> = ({ title, isActive, onClick, logo, c
     return (
         <div
             onClick={handleClick}
-            className={`flex items-center justify-center gap-[40px] font-semibold w-[413px] ${styles} px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[25px] rounded-[15px] border-[#BEDAE9] cursor-pointer relative`}
+            className={`flex items-center justify-center mdbvp:gap-[40px] gap-[10px] font-semibold mdbvp:w-[413px] md:w-[365px] w-full ${styles} mdbvp:px-[25px] pt-[28px] pb-[34px] border-[1px] text-black sm:text-[25px] text-[18px] rounded-[15px] border-[#BEDAE9] cursor-pointer relative`}
         >
             {title}
             {logo}

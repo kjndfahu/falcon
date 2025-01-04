@@ -19,9 +19,9 @@ export default async function DashboardPage() {
 
 
     return (
-        <div className="flex w-full flex-col gap-[50px] px-[62px] pt-[77px]">
+        <div className="flex w-full flex-col gap-[50px] lg:px-[62px] sm:px-[30px] px-[10px] pt-[77px]">
             <UsersCount users={users}/>
-            <div className='flex gap-[50px]'>
+            <div className='flex flex-wrap lg:gap-[50px] gap-[20px]'>
                 <PrBlock child={ <SubsCount subscriptionCounts={subscriptionCounts} activeSubs={activeSubs.length}/> }/>
                 <PrBlock child={ <BalanceCount userAndBalance={userAndBalance} sum={sum}/> }/>
                 <PrBlock child={ <PaymentTypes/> }/>

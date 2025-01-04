@@ -1,7 +1,7 @@
 "use server";
 
 import {z} from "zod";
-import {userRepository} from "@/enteties/user/repositories/user";
+import {createTransaction, userRepository} from "@/enteties/user/repositories/user";
 import {createdWithdraws} from "@/enteties/user/services/create-withdraw";
 import {decrementBalance} from "@/enteties/user/services/decrement-balance";
 
@@ -79,7 +79,8 @@ export async function decrementBalanceAction(state: DecrementBalanceState, formD
             ).catch(error => {
                 return null;
             });
-            
+
+            const transactionResult = await createTransaction(sum, "WITHDRAW", "ADMINRECHARGE", user.id)
 
             if (!withdrawResult) {
                 return {

@@ -18,7 +18,7 @@ export const AdminAbilities = () => {
 
     return (
         <>
-            <div className="flex gap-[50px]">
+            <div className="flex mds:flex-row flex-col lg:gap-[50px] gap-[25px]">
                 <AdminBlocks
                     title="Восстановить доступ"
                     styles="h-[169px]"
@@ -44,7 +44,7 @@ export const AdminAbilities = () => {
                     onClick={() => handleModalOpen("changeRole")}
                 />
             </div>
-            <div className="flex gap-[50px]">
+            <div className="flex mds:flex-row flex-col lg:gap-[50px] gap-[25px]">
                 <AdminBlocks
                     title="Изменить баланс"
                     styles="h-[169px]"

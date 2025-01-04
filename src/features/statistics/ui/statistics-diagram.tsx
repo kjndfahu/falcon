@@ -1,10 +1,18 @@
 'use client';
+
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
 import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-export const StatisticsDiagram = () => {
+interface Props {
+    sells: {
+        price: number;
+        createdAt: Date;
+    }[];
+}
+
+export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
@@ -20,6 +28,15 @@ export const StatisticsDiagram = () => {
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
+
+        const groupedData = sells.reduce<Record<string, number>>((acc, sell) => {
+            const date = new Date(sell.createdAt).toLocaleDateString();
+            acc[date] = (acc[date] || 0) + sell.price;
+            return acc;
+        }, {});
+
+        const labels = Object.keys(groupedData);
+        const data = Object.values(groupedData);
 
         const customTooltip = (context: any) => {
             const tooltipModel = context.tooltip;
@@ -54,11 +71,11 @@ export const StatisticsDiagram = () => {
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Point 1', 'Point 2', 'Point 3', 'Point 4', 'Point 5'],
+                labels: labels,
                 datasets: [
                     {
-                        label: 'Subscriptions',
-                        data: [10, 20, 15, 30, 25],
+                        label: 'Total Sales by Day',
+                        data: data,
                         borderColor: '#3b82f6',
                         borderWidth: 2,
                         pointBackgroundColor: '#3b82f6',
@@ -67,30 +84,6 @@ export const StatisticsDiagram = () => {
                         tension: 0.4,
                         fill: 'start',
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                    },
-                    {
-                        label: 'Revenue',
-                        data: [5, 15, 10, 20, 30],
-                        borderColor: '#ef4444',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#ef4444',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 5,
-                        tension: 0.4,
-                        fill: 'start',
-                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                    },
-                    {
-                        label: 'Users',
-                        data: [8, 18, 12, 25, 20],
-                        borderColor: '#10b981',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#10b981',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 5,
-                        tension: 0.4,
-                        fill: 'start',
-                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
                     },
                 ],
             },
@@ -132,7 +125,7 @@ export const StatisticsDiagram = () => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, []);
+    }, [sells]);
 
     return (
         <div className="relative w-[90%]">

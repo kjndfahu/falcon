@@ -6,7 +6,7 @@ interface Props{
 
 export const SubsModal:React.FC<Props> = ({subscriptionCounts}) => {
     return (
-        <div className="max-h-[600px] w-[90%] overflow-y-auto">
+        <div className="max-h-[600px] w-[800px] overflow-y-auto">
             <table className="min-w-full table-auto">
                 <thead className="sticky top-0 bg-white">
                 <tr className="sml:table-row hidden border-b-[1px] border-[#BEDAE9] text-left font-normal text-[18px] text-[#4B5167]">

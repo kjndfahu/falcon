@@ -22,6 +22,7 @@ model User {
   discountRate Float   @default(0)
 
   referral     Referrals[]
+  transactions Transactions[]
   deposits     Deposits[]
   withdraws    Withdraws[]
   subsriptions Subscriptions[]
@@ -51,6 +52,20 @@ model Deposits {
   depositSum Float
   type       DepositType
   system     DepositSystem
+
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int?
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Transactions {
+  id Int @id @default(autoincrement())
+
+  sum    Float
+  type   DepositType
+  system DepositSystem
 
   user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int?

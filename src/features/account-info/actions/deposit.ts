@@ -2,6 +2,7 @@
 
 import { createdTopUp } from "@/enteties/user/services/create-top-up";
 import { updateUserBalance } from "@/enteties/user/services/update-balance";
+import {createTransaction} from "@/enteties/user/repositories/user";
 
 type DepositActionResult = {
     success: boolean;
@@ -21,6 +22,8 @@ export async function createDepositAction(
 ): Promise<DepositActionResult> {
     try {
         const depositResult = await createdTopUp(depositSum, type, system, userId);
+
+        const transactionResult = await createTransaction(depositSum, type, system, userId);
         
         if (!depositResult) {
             return { success: false, error: "Failed to create deposit" };

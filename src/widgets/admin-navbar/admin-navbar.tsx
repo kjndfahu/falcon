@@ -6,7 +6,7 @@ import {useState} from "react";
 export const AdminNavbar = () => {
     const [isClicked, setClicked] = useState(false);
     return (
-        <div className="flex flex-col gap-[100px] w-[300px] min-h-screen border-r-[1px] border-[#CDDBEB] py-[77px] bg-white">
+        <div className="md:fixed flex flex-col md:gap-[100px] gap-[18px] md:w-[300px] w-full md:min-h-screen border-r-[1px] border-[#CDDBEB] md:py-[77px] bg-white">
             <LogoBlock isClicked={isClicked} setClicked={setClicked}/>
             <AdminNavbarButtons/>
         </div>

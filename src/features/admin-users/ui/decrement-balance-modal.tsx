@@ -14,7 +14,6 @@ export const DecrementBalanceForm: React.FC<Props> = ({formData, errors}) => {
     const sumId = useId();
     const emailId = useId();
 
-    // Преобразуем FormData в обычный объект
     const formValues = formData ? {
         email: formData instanceof FormData ? formData.get("email") : '',
         sum: formData instanceof FormData ? formData.get("sum") : ''

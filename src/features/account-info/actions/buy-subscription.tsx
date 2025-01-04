@@ -3,7 +3,8 @@
 import {z} from "zod";
 import {$Enums} from "@prisma/client";
 import {prisma} from "@/shared/lib/db";
-import {UserId} from "@/kernel/ids";
+import {getSubscription} from "@/enteties/subscription/repositories/subscription";
+import {userRepository} from "@/enteties/user/repositories/user";
 
 export type BuySubscriptionState = {
     formData?: FormData;
@@ -80,6 +81,12 @@ export const buySubscriptionAction = async (
                 });
 
                 if (existingReferral) {
+                    const getReferral = await userRepository.getUser({id: existingReferral.userId});
+
+                    if (!getReferral) {
+                        throw new Error(`Referral user not found: ${existingReferral.userId}`);
+                    }
+
                     await tx.referrals.update({
                         where: {
                             id: existingReferral.id
@@ -90,6 +97,9 @@ export const buySubscriptionAction = async (
                             },
                             registeredWithPurchase: {
                                 increment: 1
+                            },
+                            totalCashback: {
+                                increment: (result.data.price * getReferral.discountRate) / 100
                             }
                         }
                     });
@@ -104,6 +114,39 @@ export const buySubscriptionAction = async (
                     });
                 }
             }
+
+            const userSusbcriptions = await getSubscription(result.data.userId)
+
+            if(userSusbcriptions.length >= 0 && userSusbcriptions.length <= 3) {
+                const updateUserRole = await tx.user.update({
+                    where: {id: user.id},
+                    data: {
+                        role: "RESELLER"
+                    }
+                })
+            } else if (userSusbcriptions.length >= 4 && userSusbcriptions.length <= 13){
+                const updateUserRole = await tx.user.update({
+                    where: {id: user.id},
+                    data: {
+                        role: "PARTNER"
+                    }
+                })
+            } else if (userSusbcriptions.length >= 14 && userSusbcriptions.length <= 28){
+                const updateUserRole = await tx.user.update({
+                    where: {id: user.id},
+                    data: {
+                        role: "VIPPARTNER"
+                    }
+                })
+            } else if (userSusbcriptions.length >= 29){
+                const updateUserRole = await tx.user.update({
+                    where: {id: user.id},
+                    data: {
+                        role: "DISTRIBUTOR"
+                    }
+                })
+            }
+
 
             return {subscription, updatedUser};
         });
