@@ -7,9 +7,9 @@ interface Props{
 
 export const PartnershipModel:React.FC<Props> = ({}) => {
     return (
-        <div className="flex flex-col gap-[50px] items-center justify-center text-[36px] text-black font-semibold leading-[40px] px-[220px]">
+        <div className="flex flex-col gap-[50px] items-center justify-center sml:text-[36px] text-[28px] text-black font-semibold leading-[40px] xl:px-[220px] sml:px-[50px] px-[20px]">
             Our Partnership Models
-            <div className="flex gap-[40px]">
+            <div className="flex md:flex-row flex-col sml:gap-[40px] gap-[25px]">
                 <InfoBlock title="Real-Time Alerts"
                            styles="bg-[#F6FCFF]"
                            text="Stay ahead with instant notifications Get real-time alerts for important events"

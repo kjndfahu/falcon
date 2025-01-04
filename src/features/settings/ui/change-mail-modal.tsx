@@ -96,7 +96,7 @@ export const ChangeMailModal: React.FC<Props> = ({ setModal, currentEmail }) => 
             <form onSubmit={handleNewEmailSubmit} className="flex flex-col text-[#0A131D] gap-[25px]">
                 <div className="flex flex-col text-[18px] gap-3">
                     <label>New Email</label>
-                    <div className="rounded-[15px] w-[528px] border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
+                    <div className="rounded-[15px] sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                         <input
                             type="email"
                             value={newEmail}
@@ -121,10 +121,10 @@ export const ChangeMailModal: React.FC<Props> = ({ setModal, currentEmail }) => 
     }
 
     return (
-        <form onSubmit={handleCurrentEmailSubmit} className="flex flex-col text-[#0A131D] gap-[25px]">
+        <form onSubmit={handleCurrentEmailSubmit} className="flex flex-col text-[#0A131D] w-full gap-[25px]">
             <div className="flex flex-col text-[18px] gap-3">
                 <label>Current Email</label>
-                <div className="rounded-[15px] w-[528px] border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
+                <div className="rounded-[15px] sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                     <input
                         type="email"
                         value={email}

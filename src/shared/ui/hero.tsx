@@ -6,9 +6,9 @@ interface Props{
 }
 export const Hero:React.FC<Props> = ({title, text, banner}) => {
     return (
-        <div className={`flex flex-col ${banner} bg-cover bg-center items-start text-white gap-[30px] justify-center px-[220px] text-[96px] leading-[87px] font-medium h-[600px]`}>
+        <div className={`flex flex-col ${banner} bg-cover mds:bg-center bg-[center_80%]  mds:mx-0 m-4 mds:rounded-[0px] rounded-[15px] items-start text-white gap-[30px] mds:justify-center mds:px-[220px] mds:text-[96px] sml:text-[48px] text-[32px] mds:leading-[87px] leading-[52px] mds:p-0 p-[40px] sml:font-medium font-semibold mds:h-[600px] h-[631px]`}>
             {title}
-            <p className="text-[18px] font-normal leading-[28px]">{text}</p>
+            <p className="sml:text-[18px] text-[16px] font-normal leading-[28px]">{text}</p>
         </div>
     )
 }

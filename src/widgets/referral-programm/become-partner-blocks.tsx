@@ -5,8 +5,8 @@ import flower from "@/shared/assets/img/flower.png";
 
 export const BecomePartnerBlocks = () => {
     return (
-        <div className="flex items-center xl:gap-[50px] gap-[30px]">
-            <div className="flex justify-between relative xl:w-[858px] mdbvp:w-[650px] w-[500px] mdbvp:h-[970px] h-[818px] flex-col border-[1px] rounded-[15px] border-[#BEDAE9]">
+        <div className="flex md:flex-row flex-col items-center xl:gap-[50px] gap-[30px]">
+            <div className="flex justify-between relative xl:w-[858px] mdbvp:w-[650px] w-[500px] mdbvp:h-[970px] md:h-[818px] h-[650px] flex-col border-[1px] rounded-[15px] border-[#BEDAE9]">
                 <div className="flex flex-col gap-[25px] py-[36px] px-[50px] items-start">
                     <div className="flex flex-col gap-[25px] w-[396px]">
                         <div
@@ -30,8 +30,8 @@ export const BecomePartnerBlocks = () => {
                     className="absolute bottom-0 z-[5] w-full mdbvp:h-[500px] h-[300px] bg-gradient-to-b from-white to-blue-200 rounded-lg shadow-md p-6"></div>
             </div>
             <div className="flex flex-col xl:gap-[50px] gap-[30px]">
-                <div className="flex xl:w-[572px] mdbvp:w-[470px] w-[400px] items-center relative flex-col border-[1px] rounded-[15px] border-[#BEDAE9]">
-                    <div className="flex flex-col mdbvp:gap-[25px] gap-[10px] mdbvp:py-[36px] py-[15px] items-start">
+                <div className="flex xl:w-[572px] mdbvp:w-[470px] md:w-[400px] w-[500px] items-center relative flex-col border-[1px] rounded-[15px] border-[#BEDAE9]">
+                    <div className="flex flex-col mdbvp:gap-[25px] gap-[10px] mdbvp:py-[36px] md:py-[15px] md:pt-0 pt-[51px] items-start">
                         <div className="flex flex-col mdbvp:gap-[25px] gap-[10px] mdbvp:px-0 px-[20px] w-[396px]">
                             <div
                                 className="flex w-[42px] text-[22px] h-[42px] items-center p-2 justify-center bg-[#0A131D0D] rounded-[5px] border-[1px] border-[#AFC0D0]">
@@ -52,7 +52,7 @@ export const BecomePartnerBlocks = () => {
                     <div
                         className="absolute bottom-0 z-[5] w-full h-[200px] bg-gradient-to-b from-white to-blue-200 rounded-lg shadow-md p-6"></div>
                 </div>
-                <div className="flex xl:w-[572px] mdbvp:w-[470px] w-[400px] items-center relative flex-col border-[1px] rounded-[15px] border-[#BEDAE9]">
+                <div className="flex xl:w-[572px] mdbvp:w-[470px] md:w-[400px] w-[500px] items-center relative flex-col border-[1px] rounded-[15px] border-[#BEDAE9]">
                     <div className="flex flex-col mdbvp:gap-[25px] gap-[10px] mdbvp:py-[36px] py-[15px]  items-start">
                         <div className="flex flex-col mdbvp:gap-[25px] gap-[10px] mdbvp:px-0 px-[20px] w-[396px]">
                             <div

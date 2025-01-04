@@ -22,7 +22,7 @@ export const DepositModal:React.FC<Props> = ({balance, userId}) => {
 
     return (
         <>
-            <div className="flex gap-[25px]">
+            <div className="flex sml:flex-row sml:items-center w-full items-start flex-col gap-[25px]">
                 <div
                     className="flex flex-col w-[242px] rounded-[15px] gap-[37px] bg-[linear-gradient(113.87deg,_#212121_2.05%,_#393939_97.95%)] text-white text-[16px] px-[25px] py-[28px]">
                     Balance
@@ -31,11 +31,11 @@ export const DepositModal:React.FC<Props> = ({balance, userId}) => {
                     </h3>
                 </div>
                 <div
-                    className="flex flex-col justify-center gap-[25px] text-black font-medium text-[16px] rounded-[15px] border-[1px] border-[#BEDAE9] px-[25px] bg-[#F3F8FD]">
+                    className="flex flex-col justify-center sml:w-auto w-full gap-[25px] text-black font-medium text-[16px] rounded-[15px] border-[1px] border-[#BEDAE9] px-[25px] sml:py-0 py-[28px] bg-[#F3F8FD]">
                     <h3>Account replenishment</h3>
-                    <div className="flex gap-[25px]">
+                    <div className="flex sml:flex-row flex-col gap-[25px]">
                         <div
-                            className="border-[1px] w-[309px] px-[16px] py-[19px] text-[18px] leading-[22px] rounded-[15px] border-[#DDE6EF]">
+                            className="border-[1px] md:w-[309px] px-[16px] py-[19px] text-[18px] leading-[22px] rounded-[15px] border-[#DDE6EF]">
                             <input
                                 placeholder="$ 5.00"
                                 className="bg-transparent w-full focus:outline-none focus:ring-0"

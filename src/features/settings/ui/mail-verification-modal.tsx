@@ -68,12 +68,12 @@ export const MailVerificationModal: React.FC<Props> = ({
     };
 
     return (
-        <div className="flex flex-col text-[#0A131D] gap-[25px]">
+        <div className="flex flex-col text-[#0A131D] w-full gap-[25px]">
             <div className="w-full">
                 <p className="text-[18px] text-gray-600 mb-6">
                     Enter the code sent to {email}
                 </p>
-                <div className="flex justify-center gap-8 mb-6">
+                <div className="flex justify-between sml:gap-8 mb-6">
                     {code.map((value, index) => (
                         <input
                             key={index}
@@ -82,7 +82,7 @@ export const MailVerificationModal: React.FC<Props> = ({
                             maxLength={1}
                             value={value}
                             onChange={(e) => handleInputChange(e.target.value, index)}
-                            className="w-[80px] h-[80px] text-center text-black text-lg font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
+                            className="sml:w-[80px] sm:w-[65px] w-[50px] sml:h-[80px] sm:h-[65px] h-[50px] text-center text-black text-lg font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
                         />
                     ))}
                 </div>

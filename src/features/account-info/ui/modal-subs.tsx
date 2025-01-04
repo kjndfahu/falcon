@@ -9,15 +9,17 @@ import {BlueBtn} from "@/shared/ui/blue-btn";
 import { SessionEntity } from "@/enteties/user/domain";
 import { buySubscriptionAction } from "../actions/buy-subscription";
 import { activeSub } from "../actions/constants";
+import {userRepository} from "@/enteties/user/repositories/user";
 
 interface Props {
     className?: string,
     isClicked: boolean,
     setIsClicked: (isClicked: boolean) => void,
     session: SessionEntity;
+    userRole: string;
 }
 
-export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, session}) => {
+export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, session}) => {
     const [activeTab, setActiveTab] = useState('Basic');
     const [activeDays, setActiveDays] = useState('30');
     const [isPending, startTransition] = useTransition();
@@ -77,7 +79,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, session}) =
             <div className="flex flex-col w-[1218px] items-center gap-[50px] p-[50px] bg-[#F3F8FD] text-[#b0b0b0] rounded-[20px]">
                 <SubsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
                 <div className="flex w-full gap-[25px]">
-                    <SubscriptionBlock activeTab={activeTab} activeDays={activeDays} />
+                    <SubscriptionBlock userRole={userRole} activeTab={activeTab} activeDays={activeDays} />
                     <div className="flex w-full justify-between flex-col">
                         <div className="flex text-[36px] text-black items-center justify-between ">
                             Subscription pricing

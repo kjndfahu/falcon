@@ -58,10 +58,10 @@ export const SettingsModal: React.FC<Props> = ({ setModal }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col text-[#0A131D] gap-[25px]">
+        <form onSubmit={handleSubmit} className="flex flex-col text-[#0A131D] sml:w-auto w-full gap-[25px]">
             <div className="flex flex-col text-[18px] gap-3">
                 <label>Your email</label>
-                <div className="rounded-[15px] w-[528px] border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
+                <div className="rounded-[15px] sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                     <input
                         name="email"
                         type="email"

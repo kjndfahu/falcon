@@ -13,7 +13,7 @@ interface Props{
 
 export const ReferralInfo:React.FC<Props> = ({referralInfo}) => {
     return (
-        <div className="flex flex-col gap-[50px]">
+        <div className="flex flex-col xl:gap-[50px] mdbvp:gap-[30px] md:gap-[10px] gap-[25px]">
             <ReferralInfoBlock
                 firstlogo={<UserPin/>}
                 firsttitle={"Registered at\nthe link"}

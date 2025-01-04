@@ -17,12 +17,12 @@ export const ReferralLinkBlock: React.FC<Props> = ({ referralCode }) => {
     };
 
     return (
-        <div className="flex flex-row">
-            <div className="flex items-center border-[1px] py-[35px] leading-[18px] px-[60px] text-[18px] text-[#D1DBFF] border-[#41549C] bg-[#0d1b4f] rounded-l-full">
+        <div className="flex sml:w-auto w-full sml:flex-row flex-col">
+            <div className="flex justify-center items-center sml:border-[1px] sml:py-[35px] py-[25px] leading-[18px] sml:px-[60px] text-[18px] text-[#D1DBFF] border-[#41549C] border-b-[1px] sml:bg-[#0d1b4f] sml:rounded-l-full">
                 Your referral link
             </div>
             <div
-                className="flex items-center gap-[10px] border-[1px] py-[35px] leading-[18px] px-[60px] text-[18px] text-[#D1DBFF] border-[#41549C] bg-[#0d1b4f] rounded-r-full cursor-pointer"
+                className="flex justify-center items-center gap-[10px] sml:border-[1px] sml:py-[35px] py-[25px] leading-[18px] sml:px-[60px] text-[18px] text-[#D1DBFF] border-[#41549C] sml:bg-[#0d1b4f] rounded-r-full cursor-pointer"
                 onClick={handleCopy}
             >
                 <CopyLogo />

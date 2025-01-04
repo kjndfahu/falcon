@@ -12,9 +12,9 @@ export default async function ReferralPage() {
     console.log(referralInfo)
 
     return (
-        <div className="flex w-full flex-col gap-[50px] py-[77px] px-[129px]">
+        <div className="flex w-full flex-col xl:gap-[50px] mdbvp:gap-[30px] gap-[15px] py-[77px] xl:px-[129px] md:px-[40px] px-[20px]">
             <ReferralBanner balance={user?.balance} referralCode={user?.referralCode}/>
-            <div className="flex gap-[50px] w-full flex-row">
+            <div className="flex xl:gap-[50px] mdbvp:gap-[30px] gap-[15px] w-full md:flex-row flex-col">
                 <div className="flex flex-col w-full">
                     <ReferralInfo referralInfo={referralInfo}/>
                 </div>

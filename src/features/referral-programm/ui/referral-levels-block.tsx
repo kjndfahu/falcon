@@ -12,9 +12,9 @@ interface Props {
 
 export const ReferralLevelsBlock:React.FC<Props> = ({logo1, blockstyles, title, text, laststyles, number}) => {
     return (
-        <div className="flex gap-[40px] font-extralight bg-[linear-gradient(258.62deg,_#272E6B_0%,_#0F1F54_100%)] border-[1px] rounded-[15px] border-[rgba(190,_218,_233,_0.1)] w-[720px] h-[372px] justify-between items-center pl-[80px] py-[65px] pr-[65px]">
+        <div className="flex mds:flex-row flex-col gap-[40px] font-extralight bg-[linear-gradient(258.62deg,_#272E6B_0%,_#0F1F54_100%)] border-[1px] rounded-[15px] border-[rgba(190,_218,_233,_0.1)] mds:w-[720px] w-full mds:h-[372px] justify-between mds:items-center sm:pl-[80px] pl-[30px] py-[65px] sm:pr-[65px]">
             {number}
-            <div className="flex flex-col items-start text-[18px] leading-[28px] gap-[25px] w-[384px] h-[242px]">
+            <div className="flex flex-col items-start text-[18px] leading-[28px] gap-[25px] mds:w-[384px] mds:h-[242px]">
                 <div className={`flex items-center ${blockstyles} gap-[10px] py-[10px] px-[20px] rounded-[5px]`}>
                     {logo1}
                     {title}
