@@ -72,7 +72,8 @@ export default {
 			'bg-referral': "url('/assets/img/bg-referral.png')",
 			'bubbles-banner': "url('/assets/img/bubbles-banner.png')",
 			'personal-adaptive': "url('/assets/img/personal-adaptive.png')",
-			'referral-program': "url('/assets/img/referral-program.png')"
+			'referral-program': "url('/assets/img/referral-program.png')",
+			'commands-banner': "url('/assets/img/commands-banner.png')"
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

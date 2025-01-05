@@ -1,11 +1,15 @@
 import { useState } from "react";
 
-export const useAccordion = (initialState: number | null = null) => {
-    const [openId, setOpenId] = useState<number | null>(initialState);
+export const useAccordion = () => {
+    const [openId, setOpenId] = useState<number | null>(null);
 
     const toggleAccordion = (id: number) => {
-        setOpenId((prevId) => (prevId === id ? null : id));
+        setOpenId(openId === id ? null : id);
     };
 
-    return { openId, toggleAccordion };
+    return {
+        openId,
+        toggleAccordion,
+        setOpenId
+    };
 };

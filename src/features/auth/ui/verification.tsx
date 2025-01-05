@@ -66,7 +66,7 @@ export const Verification: React.FC<Props> = ({
     };
 
     return (
-        <div className="flex flex-col w-full items-center justify-center min-h-screen">
+        <div className="flex flex-col w-full items-center justify-center md:min-h-screen">
             <div className="w-full bg-white">
                 <h2 className="text-[32px] font-bold text-gray-900 mb-4">
                     Mail verification
@@ -74,7 +74,7 @@ export const Verification: React.FC<Props> = ({
                 <p className="text-[18px] text-gray-600 mb-6">
                     Enter the code sent to {email}
                 </p>
-                <div className="flex justify-center gap-8 mb-6">
+                <div className="flex sml:justify-center justify-between sml:gap-8 mb-6">
                     {code.map((value, index) => (
                         <input
                             key={index}
@@ -83,7 +83,7 @@ export const Verification: React.FC<Props> = ({
                             maxLength={1}
                             value={value}
                             onChange={(e) => handleInputChange(e.target.value, index)}
-                            className="w-[80px] h-[80px] text-center text-black text-lg font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
+                            className="sml:w-[80px] sm:w-[70px] w-[60px] sml:h-[80px] sm:h-[70px] h-[60px] text-center text-black text-lg font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
                         />
                     ))}
                 </div>

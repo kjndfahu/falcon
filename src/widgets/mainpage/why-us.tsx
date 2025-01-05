@@ -4,7 +4,7 @@ import {AlertLogo, ClockLogo, LayersLogo, WindowsLogo} from "@/shared/ui/icons";
 
 export const WhyUs = () => {
     return (
-        <div className="flex flex-col gap-[50px] items-center text-center">
+        <div className="flex flex-col gap-[50px] items-center text-center sml:px-0 px-[20px]">
             <Texts title="Why Us" text="Built for you, trusted by many" />
             <div className="flex text-left flex-col gap-[40px]">
                 <div className="flex items-center justify-center flex-wrap xl:gap-[40px] gap-[25px] xl:justify-between">

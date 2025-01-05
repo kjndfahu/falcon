@@ -9,7 +9,7 @@ interface Props {
 export const LogoText:React.FC<Props> = ({isClicked, setClicked}) => {
     return (
         <div
-            className="flex items-center justify-between md:py-0 py-[22px] md:px-0 px-[50px] md:bg-transparent bg-[#1F2340] gap-3">
+            className="flex items-center justify-between md:py-0 py-[22px] md:px-0 sml:px-[50px] px-[20px] md:bg-transparent bg-[#1F2340] gap-3">
             <MainLogo/>
             <div
                 onClick={() => setClicked(!isClicked)}
