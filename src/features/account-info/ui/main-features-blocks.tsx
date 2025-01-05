@@ -36,10 +36,10 @@ const tools = [
 
 export const MainFeaturesBlocks = () => {
     return (
-        <div className="flex flex-col w-full gap-[50px]">
-            <div className="flex w-full justify-between">
+        <div className="flex flex-col max-w-[1500px] w-full gap-[50px]">
+            <div className="flex mdbvp:flex-row flex-col w-full gap-[50px] ">
                 <div
-                    className="flex relative bg-[#e6f3ff] flex-col justify-between w-[520px] h-[460px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[50px] pt-[36px] pb-[43px]">
+                    className="flex relative bg-[#e6f3ff] flex-col mds:justify-between w-full mdbvp:max-w-[520px] mds:h-[460px] h-[695px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[40px] lg:pt-[36px] pt-[55px] lg:pb-[43px] pb-[60px]">
                     <div
                         className="flex justify-between items-start text-left flex-col w-full gap-[25px] text-[#0A131D] text-[24px] leading-[32px] font-medium rounded-[15px] ">
                         <LogoBlock logo={<SaveIcon/>}/>
@@ -49,7 +49,7 @@ export const MainFeaturesBlocks = () => {
                             activated
                         </p>
                     </div>
-                    <div className="flex items-center text-[#4B5167] text-[18px] leading-[16px] gap-1">
+                    <div className="flex items-center text-[#4B5167] mds:pt-0 pt-[45px] text-[18px] leading-[16px] gap-1">
                         Read more
                         <ArrowRight/>
                     </div>
@@ -58,7 +58,7 @@ export const MainFeaturesBlocks = () => {
                     </div>
                 </div>
                 <div
-                    className="flex relative bg-[#ebf9ff] flex-col justify-between w-[858px] h-[460px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[50px] pt-[36px] pb-[43px]">
+                    className="flex relative bg-[#ebf9ff] flex-col mds:justify-between w-full mdbvp:max-w-[952px] mds:h-[460px] h-[695px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[50px] lg:pt-[36px] pt-[55px] lg:pb-[43px] pb-[60px]">
                     <div
                         className="flex justify-between items-start text-left flex-col w-full gap-[25px] text-[#0A131D] text-[24px] leading-[32px] font-medium rounded-[15px] ">
                         <LogoBlock logo={<SaveIcon/>}/>
@@ -66,18 +66,18 @@ export const MainFeaturesBlocks = () => {
                         <p className="text-[18px] leading-[25px] font-normal text-[#4B5167]">Feature monitors a player's
                             location and in-game<br/> activity in real time. Track their movements, actions.</p>
                     </div>
-                    <div className="flex items-center text-[#4B5167] text-[18px] leading-[16px] gap-1">
+                    <div className="flex items-center text-[#4B5167] text-[18px] mds:pt-0 pt-[45px] leading-[16px] gap-1">
                         Read more
                         <ArrowRight/>
                     </div>
-                    <div className="absolute bottom-0 right-0 mr-[42px]">
-                        <Image src={bars} alt="/"/>
+                    <div className="absolute bottom-0 right-0 xl:mr-[42px] mr-[15px]">
+                        <Image className="xl:w-full mdbvp:w-[400px] md:w-full w-[400px]" src={bars} alt="/"/>
                     </div>
                 </div>
             </div>
-            <div className="flex w-full justify-between">
+            <div className="flex mdbvp:flex-row flex-col w-full gap-[50px]">
                 <div
-                    className="flex relative bg-[#ebf9ff] flex-col justify-between w-[858px] h-[460px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[50px] pt-[36px] pb-[43px]">
+                    className="flex relative bg-[#ebf9ff] flex-col mds:justify-between w-full mds:h-[460px] h-[695px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[40px] lg:pt-[36px] mds:pt-[55px] pt-[40px] lg:pb-[43px] mds:pb-[60px]">
                     <div
                         className="flex justify-between items-start text-left flex-col w-full gap-[25px] text-[#0A131D] text-[24px] leading-[32px] font-medium rounded-[15px] ">
                         <LogoBlock logo={<SaveIcon/>}/>
@@ -88,16 +88,16 @@ export const MainFeaturesBlocks = () => {
                             will recommend the most suitable kingdom<br/>
                             that aligns with your playstyle and objectives.</p>
                     </div>
-                    <div className="flex items-center text-[#4B5167] text-[18px] leading-[16px] gap-1">
+                    <div className="flex items-center text-[#4B5167] text-[18px] mds:pt-0 pt-[45px] leading-[16px] gap-1">
                         Read more
                         <ArrowRight/>
                     </div>
-                    <div className="absolute bottom-0 right-0 mr-[42px]">
-                        <Image src={pie} alt="/"/>
+                    <div className="absolute bottom-0 right-0 xl:mr-[42px]">
+                        <Image className="xl:w-full lg:w-[400px] mdbvp:w-[300px] md:w-full mds:w-[400px] w-full" src={pie} alt="/"/>
                     </div>
                 </div>
                 <div
-                    className="flex relative bg-[#e6f3ff] flex-col justify-between w-[520px] h-[460px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[50px] pt-[36px] pb-[43px]">
+                    className="flex relative bg-[#e6f3ff] flex-col mds:justify-between w-full mdbvp:max-w-[520px] mds:h-[460px] h-[695px] rounded-[15px] border-[1px] border-[#CAE8FF] px-[50px] lg:pt-[36px] pt-[55px] lg:pb-[43px] mds:pb-[60px]">
                     <div
                         className="flex justify-between items-start text-left flex-col w-full gap-[25px] text-[#0A131D] text-[24px] leading-[32px] font-medium rounded-[15px] ">
                         <LogoBlock logo={<SaveIcon/>}/>
@@ -107,7 +107,7 @@ export const MainFeaturesBlocks = () => {
                             activated
                         </p>
                     </div>
-                    <div className="flex items-center text-[#4B5167] text-[18px] leading-[16px] gap-1">
+                    <div className="flex items-center text-[#4B5167] text-[18px] mds:pt-0 pt-[45px] leading-[16px] gap-1">
                         Read more
                         <ArrowRight/>
                     </div>

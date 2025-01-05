@@ -4,9 +4,9 @@ import {BlocksLogo, LiveLogo, ThunderLogo} from "@/shared/ui/icons";
 export const Benefits = () => {
     return (
         <div className="flex items-center flex-col w-full gap-[112px] text-center py-[95px] bg-bubbles-banner">
-            <div className="flex flex-col gap-[25px] text-[36px] leading-[36px] font-medium text-[#0A131D]">
+            <div className="flex flex-col gap-[25px] text-[36px] px-0 leading-[36px] font-semibold text-[#0A131D]">
                 <h3>How is your comfort measured?</h3>
-                <p className="text-[18px] font-normal leading-[27px]">Real-time statistics Instant information about what is happening<br/> happening in game map, full control and dozens of features</p>
+                <p className="text-[18px] font-normal text-[#4B5167] leading-[27px]">Real-time statistics Instant information about what is happening<br/> happening in game map, full control and dozens of features</p>
             </div>
             <div className="flex flex-wrap items-center justify-center xl:gap-[50px] gap-[25px]">
                 <BenefitsBlock title="Instant Activation" text="Enjoy uninterrupted service with 99% uptime. Forget about downtime and focus on what matters." logo={ <ThunderLogo/> }/>

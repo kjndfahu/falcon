@@ -11,6 +11,7 @@ export default {
   theme: {
   	extend: {
 		screens: {
+			xxl: "1850px",
 			xl: "1600px",
 			lg: "1380px",
 			mdbvp: "1280px",

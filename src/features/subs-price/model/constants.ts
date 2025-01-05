@@ -1,7 +1,11 @@
 export const subscriptions = [
     {
         title: 'Basic',
-        price: "50 $",
+        prices: {
+            '30': '50 $',
+            '90': '155 $',
+            '180': '240 $'
+        },
         scan_speed: '30 sec',
         value: [
             {
@@ -36,7 +40,11 @@ export const subscriptions = [
     },
     {
         title: 'Fast',
-        price: "60 $",
+        prices: {
+            '30': '60 $',
+            '90': '180 $',
+            '180': '300 $'
+        },
         scan_speed: '20 sec',
         value: [
             {
@@ -71,7 +79,11 @@ export const subscriptions = [
     },
     {
         title: 'Turbo',
-        price: "110 $",
+        prices: {
+            '30': '110 $',
+            '90': '297 $',
+            '180': '495 $'
+        },
         scan_speed: '5 sec',
         value: [
             {

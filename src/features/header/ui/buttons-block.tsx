@@ -3,13 +3,17 @@ import Link from "next/link";
 
 export const ButtonsBlock = () => {
     return(
-        <div className="flex md:flex-row flex-col items-center xl:gap-[25px] gap-[15px]">
-            <Link href="/sign-in">
-                <Button title="Log in" styles="bg-[#0057FF] md:w-auto w-[100vw] leading-[20px] py-[15px] rounded-[5px]"/>
-            </Link>
-            <Link href="/sign-up">
-                <Button title="Sign up" styles="bg-[#101D2C] md:w-auto w-[100vw] leading-[20px] py-[15px] rounded-[5px]"/>
-            </Link>
+        <div className="flex md:flex-row flex-col items-center justify-end xl:gap-[25px] sml:px-0 px-[20px] gap-[15px]">
+            <div className="w-full">
+                <Link href="/sign-in">
+                    <Button title="Log in" styles="bg-[#0057FF] md:w-[80px] w-full leading-[20px] py-[15px] md:rounded-[5px] rounded-[12px]"/>
+                </Link>
+            </div>
+            <div className="w-full ">
+                <Link href="/sign-up">
+                    <Button title="Sign up" styles="bg-[#101D2C] md:w-[80px] w-full leading-[20px] py-[15px] md:rounded-[5px] rounded-[12px]"/>
+                </Link>
+            </div>
         </div>
     )
 }
