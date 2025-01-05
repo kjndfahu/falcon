@@ -5,7 +5,7 @@ interface Props{
 }
 export const StatusTable:React.FC<Props> = ({}) => {
     return (
-        <div className="px-[220px]">
+        <div className="md:flex hidden px-[220px]">
             <table className="w-full text-black table-fixed border-collapse border-[rgba(190,_218,_233,_1)] text-center">
                 <thead>
                 <tr className="bg-[linear-gradient(90deg,_#DFF3FD_0%,_#CDEEFF_100%)]">
