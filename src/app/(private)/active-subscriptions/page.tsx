@@ -9,7 +9,6 @@ export default async function ActiveSubscriptionsPage() {
     const subs = await getSubs({userId: session.id})
     const activeSubs = await getActiveSubs({userId: session.id, currentDate: now})
 
-
     return (
         <AllBlock subs={subs} activeSubs={activeSubs}/>
     )

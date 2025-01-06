@@ -32,7 +32,8 @@ export const Verification: React.FC<Props> = ({
 
     const handleSubmit = async () => {
         setError(null);
-        const fullCode = code.join("");
+        const fullCode = code.join("").trim();
+        
         if (fullCode.length === 5) {
             try {
                 const isValid = await onVerificationComplete(fullCode);
@@ -40,8 +41,8 @@ export const Verification: React.FC<Props> = ({
                     setError("Invalid verification code");
                 }
             } catch (err) {
+                console.error("Verification error:", err);
                 setError("Error during verification");
-                console.error(err);
             }
         } else {
             setError("Please enter full code");

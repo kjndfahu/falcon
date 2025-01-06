@@ -58,6 +58,7 @@ export const DepositModal: React.FC<Props> = ({balance, userId}) => {
                         <BlueBtn 
                             title="Payment" 
                             styles="w-[215px]"
+                            type="button"
                             onClick={handleDeposit}
                             isPending={isPending}
                             disabled={!amount || isNaN(parseFloat(amount))}

@@ -76,11 +76,11 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
 
     return (
         <div className="flex items-center justify-center fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm">
-            <div className="flex flex-col w-[1218px] items-center gap-[50px] p-[50px] bg-[#F3F8FD] text-[#b0b0b0] rounded-[20px]">
+            <div className="flex flex-col mdbvp:w-[1218px] w-[1000px] items-center gap-[50px] mdbvp:p-[50px] p-[25px] bg-[#F3F8FD] text-[#b0b0b0] rounded-[20px]">
                 <SubsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
                 <div className="flex w-full gap-[25px]">
                     <SubscriptionBlock userRole={userRole} activeTab={activeTab} activeDays={activeDays} />
-                    <div className="flex w-full justify-between flex-col">
+                    <div className="flex w-full justify-between  flex-col">
                         <div className="flex text-[36px] text-black items-center justify-between ">
                             Subscription pricing
                             <div className="cursor-pointer" onClick={() => setIsClicked(false)}>

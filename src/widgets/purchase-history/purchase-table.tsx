@@ -31,7 +31,7 @@ export const TariffTable: React.FC<Props> = ({subs}) => {
             {filteredSubs.map((item, index) => (
                 <tr
                     key={index}
-                    className="text-black transition-colors border-b"
+                    className="text-black transition-colors border-b px-[20px]"
                 >
                     <td className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 border-[rgba(190,_218,_233,_1)] sm:border">{formatDate(item.createdAt)}</td>
                     <td className="w-1/4 sm:px-3 px-1 sm:py-7 py-2 border-[rgba(190,_218,_233,_1)] sm:border">#{item.trackingNumber}</td>

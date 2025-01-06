@@ -9,7 +9,7 @@ export const Transactions: React.FC = async () => {
     const transactions = await getUserTransactions({ userId: session.id });
 
     return (
-        <div className="overflow-x-auto rounded-[15px] border-[1px] border-[#BEDAE9] bg-white">
+        <div className="overflow-x-auto z-[1] rounded-[15px] border-[1px] border-[#BEDAE9] bg-white">
             <div className="sml:flex hidden border-b-[1px] border-[#BEDAE9] mds:px-[46px] px-[20px] py-[29px] pb-[21px] text-[18px] text-[#101D2C]">
                 History
             </div>

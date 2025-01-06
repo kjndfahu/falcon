@@ -55,7 +55,6 @@ export const ReferralDiagram = () => {
             tooltipEl.style.transition = 'opacity 0.2s ease';
         };
 
-        // Создаем новый график
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
@@ -116,7 +115,7 @@ export const ReferralDiagram = () => {
     }, []);
 
     return (
-        <div className="relative w-[643px]">
+        <div className="relative mdbvp:w-[643px] w-[450px]">
             <canvas ref={chartRef} className="w-[1000px]"></canvas>
             <div
                 ref={tooltipRef}

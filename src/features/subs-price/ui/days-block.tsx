@@ -7,7 +7,7 @@ interface Props{
 
 export const DaysBlock:React.FC<Props> = ({activeDays, setActiveDays}) => {
     return (
-        <div className="flex items-center w-full sml:flex-row flex-col p-[20px] bg-[#F3FAFF] border-[1px] border-[#D8EEFF] rounded-[12px] gap-[31px]">
+        <div className="flex items-center w-full sml:flex-row flex-col p-[20px] bg-[#F3FAFF] border-[1px] border-[#D8EEFF] rounded-[12px] gap-[31px] ">
             <div 
                 onClick={() => setActiveDays('30')} 
                 className={`flex ${activeDays === '30' ? 'bg-[#0094FF] text-white' : ''} text-[24px] cursor-pointer sml:w-auto w-[120px] rounded-[10px] leading-[30px] border-[#BCE3FF] border-[1px] px-[18px] py-[10px]`}

@@ -14,7 +14,11 @@ import { Verification } from "../ui/verification";
 import { sendVerificationEmail } from "../actions/send-verification-email";
 
 export function SignUpForm() {
-    const [formState, action, isPending] = useActionState(signUpAction, {} as SignUpFormState);
+    const [formState, action, isPending] = useActionState<SignUpFormState>(signUpAction, {
+        formData: undefined,
+        errors: undefined,
+        user: undefined
+    });
     const [showVerification, setShowVerification] = useState(false);
     const [userEmail, setUserEmail] = useState('');
     const [formData, setFormData] = useState<FormData | null>(null);
@@ -44,32 +48,45 @@ export function SignUpForm() {
         const verificationResult = await sendVerificationEmail({}, formData);
         
         if (verificationResult.success && verificationResult.verificationCode) {
-            console.log('Verification code:', verificationResult.verificationCode);
             setVerificationCode(verificationResult.verificationCode);
             setShowVerification(true);
         }
     };
 
     const handleVerificationComplete = async (code: string) => {
-        console.log('Entered code:', code);
-        console.log('Expected code:', verificationCode);
-        
-        if (code !== verificationCode) {
+        if (!formData) return false;
+
+        const cleanInputCode = code.toString().trim();
+        const cleanVerificationCode = verificationCode.toString().trim();
+
+        if (cleanInputCode !== cleanVerificationCode) {
             return false;
         }
 
         return new Promise<boolean>((resolve) => {
             startVerifying(async () => {
                 try {
+                    const newFormData = new FormData();
+                    for (const [key, value] of formData.entries()) {
+                        newFormData.append(key, value);
+                    }
+                    
                     if (referralCode) {
-                        formData.append('referralCode', referralCode);
+                        newFormData.append('referralCode', referralCode);
                     }
 
-                    const result = await action(formData);
-                    
-                    if (result && !result.errors && result.user) {
-                        const login = formData.get('login') as string;
-                        const password = formData.get('password') as string;
+                    const actionResult = await signUpAction({} as SignUpFormState, newFormData);
+                    console.log('Direct action result:', actionResult);
+
+                    if (!actionResult) {
+                        console.error('Action returned no result');
+                        resolve(false);
+                        return;
+                    }
+
+                    if (actionResult.user) {
+                        const login = newFormData.get('login') as string;
+                        const password = newFormData.get('password') as string;
 
                         try {
                             await signIn("credentials", {
@@ -79,11 +96,15 @@ export function SignUpForm() {
                                 redirect: true
                             });
                             resolve(true);
-                        } catch (error) {
-                            console.error("Sign in error:", error);
+                        } catch (signInError) {
+                            console.error("Sign in error:", signInError);
                             resolve(false);
                         }
+                    } else if (actionResult.errors) {
+                        console.error('Registration failed with errors:', actionResult.errors);
+                        resolve(false);
                     } else {
+                        console.error('Registration failed without specific errors');
                         resolve(false);
                     }
                 } catch (error) {
@@ -100,7 +121,8 @@ export function SignUpForm() {
             onVerificationComplete={handleVerificationComplete}
             isPending={isVerifying}
             onResendCode={async () => {
-                const verificationResult = await sendVerificationEmail({}, formData!);
+                if (!formData) return false;
+                const verificationResult = await sendVerificationEmail({}, formData);
                 if (verificationResult.success && verificationResult.verificationCode) {
                     setVerificationCode(verificationResult.verificationCode);
                     return true;
@@ -115,11 +137,7 @@ export function SignUpForm() {
             action={handleSubmit}
             maintitle="Create Your Account"
             titlebtn="Sign Up"
-            fields={
-                <>
-                    <SignUpFields {...formState}/>
-                </>
-            }
+            fields={<SignUpFields {...formState}/>}
             actions={
                 <Button
                     isPending={isPending}
@@ -129,5 +147,5 @@ export function SignUpForm() {
             }
             errors={<ErrorMessage error={formState.errors?._errors}/>}
         />
-    )
+    );
 }

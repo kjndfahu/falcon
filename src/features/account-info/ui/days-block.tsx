@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 interface Props {
     activeDays: string;
     setActiveDays: (days: string) => void;
@@ -16,12 +14,12 @@ export const DaysBlock: React.FC<Props> = ({ activeDays, setActiveDays }) => {
 
     return (
         <div className="flex w-full items-center justify-center">
-            <div className="flex w-full gap-[30px] bg-[#f8fbff] border border-[#d7e7ff] p-5 rounded-[12px]">
+            <div className="flex w-full mdbvp:gap-[30px] gap-[10px] bg-[#f8fbff] border border-[#d7e7ff] mdbvp:p-5 p-2 rounded-[12px]">
                 {plans.map((plan) => (
                     <div
                         key={plan.label}
                         onClick={() => setActiveDays(plan.label)}
-                        className={`flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] text-[22px] leading-[23px] font-medium cursor-pointer transition ${
+                        className={`flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] mdbvp:text-[22px] text-[18px] leading-[23px] font-medium cursor-pointer transition ${
                             activeDays === plan.label
                                 ? 'bg-[#005dff] text-white'
                                 : 'bg-white text-[#000] border border-[#d7e7ff]'

@@ -6,6 +6,14 @@ export function getSubscription(userId: UserId){
         where: {userId: userId},
     })
 }
+export function setAutoRenew(trackingNumber: number, autorenew: boolean) {
+    return prisma.subscriptions.update({
+        where: {trackingNumber},
+        data: {
+            autorenew,
+        }
+    })
+}
 export function getAllSubscriptions(){
     return prisma.subscriptions.findMany()
 }

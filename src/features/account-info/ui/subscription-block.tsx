@@ -21,7 +21,7 @@ export const SubscriptionBlock: React.FC<Props> = ({ activeTab, activeDays, user
 
     return (
         <div className="flex w-min gap-[25px]">
-            <div className="flex flex-col p-[50px] w-[450px] border-[1px] border-[#CAE8FF] h-[585px] rounded-[25px]">
+            <div className="flex flex-col p-[50px] mdbvp:w-[450px] w-[350px] border-[1px] border-[#CAE8FF] h-[585px] rounded-[25px]">
                 <div className="flex flex-col text-center font-medium text-[24px] leading-[30px] text-[#0A131D] gap-[12px]">
                     {selectedSub.title}
                     <h4 className="text-[36px] leading-[45px]">

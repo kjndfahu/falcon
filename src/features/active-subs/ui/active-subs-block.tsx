@@ -41,7 +41,10 @@ export const ActiveSubsBlock:React.FC<Props> = ({type, autorenew, trackingNumber
                         </div>
                     </div>
                     <BlueBtn styles="sml:hidden flex w-[197px] py-[20px]" title="Renew subscription"/>
-                    <AutoRenewBtn autorenew={autorenew}/>
+                    <AutoRenewBtn 
+                        autorenew={autorenew} 
+                        trackingNumber={trackingNumber}
+                    />
                 </div>
             </div>
         </div>

@@ -4,7 +4,6 @@ import { z } from "zod";
 import { createUser } from "@/enteties/user/services/create-user";
 import { UserEntity } from "@/enteties/user/domain";
 import { sessionService } from "@/enteties/user/services/session";
-import { prisma } from "@/shared/lib/db";
 
 export type SignUpFormState = {
     formData?: FormData;
@@ -12,26 +11,21 @@ export type SignUpFormState = {
         login?: string;
         email?: string;
         password?: string;
-        confirmPassword?: string;
         _errors?: string;
     };
     user?: UserEntity;
 };
 
-const formDataSchema = z
-    .object({
-        login: z.string().min(3),
-        email: z.string().email(),
-        password: z.string().min(3),
-        confirmPassword: z
-            .string()
-            .min(3, "Confirm Password must be at least 3 characters long"),
-        referralCode: z.string().optional(),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: "Passwords do not match",
-        path: ["confirmPassword"],
-    });
+const formDataSchema = z.object({
+    login: z.string().min(3, "Login must be at least 3 characters"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+    referralCode: z.string().optional()
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+});
 
 export const signUpAction = async (
     state: SignUpFormState,
@@ -39,105 +33,54 @@ export const signUpAction = async (
 ): Promise<SignUpFormState> => {
     try {
         const data = Object.fromEntries(formData.entries());
+        console.log('SignUpAction received data:', data);
+
         const result = formDataSchema.safeParse(data);
 
         if (!result.success) {
-            const formattedErrors = result.error.format();
+            const errors = result.error.flatten();
             return {
                 formData,
                 errors: {
-                    login: formattedErrors?.login?._errors.join(", "),
-                    email: formattedErrors?.email?._errors.join(", "),
-                    password: formattedErrors?.password?._errors.join(", "),
-                    confirmPassword: formattedErrors?.confirmPassword?._errors.join(", "),
-                    _errors: formattedErrors?._errors.join(", "),
-                },
+                    login: errors.fieldErrors.login?.[0],
+                    email: errors.fieldErrors.email?.[0],
+                    password: errors.fieldErrors.password?.[0],
+                    _errors: errors.formErrors[0] || "Validation failed"
+                }
             };
         }
 
-        let createdUser: UserEntity;
+        const createUserResult = await createUser({
+            login: result.data.login,
+            email: result.data.email,
+            password: result.data.password,
+            referredBy: result.data.referralCode ? parseInt(result.data.referralCode) : 0
+        });
 
-        try {
-            createdUser = await prisma.$transaction(async (tx) => {
-                let referrerId = 0;
-
-                if (result.data.referralCode) {
-                    const referrer = await tx.user.findFirst({
-                        where: { referralCode: result.data.referralCode }
-                    });
-
-                    if (!referrer) {
-                        throw new Error("Invalid referral code");
-                    }
-
-                    referrerId = referrer.id;
+        if (createUserResult.type === "left") {
+            return {
+                formData,
+                errors: {
+                    _errors: createUserResult.value
                 }
-
-                const createUserResult = await createUser({
-                    ...result.data,
-                    referredBy: referrerId
-                });
-
-                if (createUserResult.type === "left") {
-                    throw new Error(createUserResult.value);
-                }
-
-                const newUser = createUserResult.value;
-
-                if (referrerId) {
-                    const existingReferral = await tx.referrals.findFirst({
-                        where: {
-                            userId: referrerId
-                        }
-                    });
-
-                    if (existingReferral) {
-                        await tx.referrals.update({
-                            where: {
-                                id: existingReferral.id
-                            },
-                            data: {
-                                totalReferrals: {
-                                    increment: 1
-                                }
-                            }
-                        });
-                    } else {
-                        await tx.referrals.create({
-                            data: {
-                                userId: referrerId,
-                                totalReferrals: 1
-                            }
-                        });
-                    }
-                }
-
-                return newUser;
-            });
-        } catch (error) {
-            throw new Error(error instanceof Error ? error.message : "Transaction failed");
+            };
         }
 
-        try {
-            await sessionService.addSession(createdUser);
-        } catch (error) {
-            console.error("Error creating session:", error);
-            throw new Error("Failed to create session");
-        }
-        
+        const user = createUserResult.value;
+        await sessionService.addSession(user);
+
         return {
             formData,
-            errors: undefined,
-            user: createdUser,
+            user
         };
 
     } catch (error) {
-        console.error("Error in signUpAction:", error);
+        console.error("SignUp error:", error);
         return {
             formData,
             errors: {
-                _errors: error instanceof Error ? error.message : "Failed to create user",
-            },
+                _errors: error instanceof Error ? error.message : "Registration failed"
+            }
         };
     }
 };

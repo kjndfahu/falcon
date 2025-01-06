@@ -13,34 +13,41 @@ type CreateUserDTO = {
 }
 
 export async function createUser(dto: CreateUserDTO): Promise<Either<string, UserEntity>> {
-    const existingUser = await userRepository.getUser({
-        OR: [
-            {login: dto.login},
-            {email: dto.email}
-        ]
-    });
+    try {
+        const existingUser = await userRepository.getUser({
+            OR: [
+                {login: dto.login},
+                {email: dto.email}
+            ]
+        });
 
-    if (existingUser) {
-        return left("User already exists");
+        if (existingUser) {
+            return left("User already exists");
+        }
+
+        const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
+        const {hash, salt} = await passwordService.hashPassword(dto.password);
+        const referralCode = generateReferralCode();
+
+        const user = await userRepository.saveUser({
+            id: parseInt(uid.randomUUID()),
+            login: dto.login,
+            email: dto.email,
+            password: hash,
+            salt,
+            role: "USER",
+            balance: 0,
+            isBlocked: false,
+            referralCode,
+            referredBy: dto.referredBy || 0,
+            discountRate: 0
+        });
+
+        console.log("User saved:", user);
+
+        return right(user);
+    } catch (error) {
+        console.error("Create user error:", error);
+        return left(error instanceof Error ? error.message : "Failed to create user");
     }
-
-    const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
-    const {hash, salt} = await passwordService.hashPassword(dto.password);
-    const referralCode = generateReferralCode();
-
-    const user = await userRepository.saveUser({
-        id: parseInt(uid.randomUUID()),
-        login: dto.login,
-        email: dto.email,
-        password: hash,
-        salt,
-        role: "USER",
-        balance: 0,
-        isBlocked: false,
-        referralCode,
-        referredBy: dto.referredBy || 0,
-        discountRate: 0
-    });
-
-    return right(user);
 }

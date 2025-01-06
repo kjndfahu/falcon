@@ -1,10 +1,27 @@
 'use client';
-import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
+import {
+    Chart,
+    LineController,
+    LineElement,
+    PointElement,
+    LinearScale,
+    Title,
+    Tooltip,
+    CategoryScale,
+} from 'chart.js';
 import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-export const ResellerSellsDiagram = () => {
+interface Props {
+    resellerSells: {
+        price: number;
+        userId: number | null;
+        createdAt: Date;
+    }[];
+}
+
+export const ResellerSellsDiagram: React.FC<Props> = ({ resellerSells }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
@@ -20,6 +37,16 @@ export const ResellerSellsDiagram = () => {
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
+
+        const labels = resellerSells.map((item) =>
+            new Date(item.createdAt).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            })
+        );
+        const data = resellerSells.map((item) => item.price);
 
         const customTooltip = (context: any) => {
             const tooltipModel = context.tooltip;
@@ -45,8 +72,8 @@ export const ResellerSellsDiagram = () => {
             const canvasPosition = chartRef.current.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';
-            tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;
-            tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY - 200}px`;
+            tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX}px`;
+            tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY}px`;
             tooltipEl.style.pointerEvents = 'none';
             tooltipEl.style.transition = 'opacity 0.2s ease';
         };
@@ -54,11 +81,11 @@ export const ResellerSellsDiagram = () => {
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Point 1', 'Point 2', 'Point 3', 'Point 4', 'Point 5'],
+                labels,
                 datasets: [
                     {
-                        label: 'Subscriptions',
-                        data: [10, 20, 15, 30, 25],
+                        label: 'Sales Price',
+                        data,
                         borderColor: '#3b82f6',
                         borderWidth: 2,
                         pointBackgroundColor: '#3b82f6',
@@ -108,7 +135,7 @@ export const ResellerSellsDiagram = () => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, []);
+    }, [resellerSells]);
 
     return (
         <div className="relative w-[90%]">

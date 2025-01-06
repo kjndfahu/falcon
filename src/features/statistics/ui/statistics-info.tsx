@@ -8,10 +8,15 @@ import {ResellerSellsDiagram} from "@/features/statistics/ui/resellers-sels-diag
 interface Props{
     sells: {price: number,
         createdAt: Date
-    }[]
+    }[],
+    resellerSells: {
+        price: number,
+        userId: number | null,
+        createdAt: Date
+    }[],
 }
 
-export const StatisticsInfo:React.FC<Props> = ({sells}) => {
+export const StatisticsInfo:React.FC<Props> = ({sells, resellerSells}) => {
     const [graphic, setGraphic] = useState('Sells');
     return (
         <div className="flex flex-col text-[25px] text-black font-semibold w-full gap-[50px] flec-col">
@@ -23,7 +28,7 @@ export const StatisticsInfo:React.FC<Props> = ({sells}) => {
                 <StatisticsDiagram sells={sells}/>
             )}
             {graphic === 'Resellers' && (
-                <ResellerSellsDiagram />
+                <ResellerSellsDiagram resellerSells={resellerSells}/>
             )}
         </div>
     )

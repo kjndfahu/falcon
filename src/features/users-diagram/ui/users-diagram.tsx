@@ -11,7 +11,9 @@ interface User {
 }
 
 interface Props {
-    users: User[];
+    users:  {id: number;
+        createdAt: Date;
+    }[];
 }
 
 export const UsersDiagram: React.FC<Props> = ({ users }) => {

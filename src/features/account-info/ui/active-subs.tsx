@@ -17,7 +17,7 @@ export const ActiveSubs:React.FC<Props> = ({className, userRole, subs, session})
 
     return (
         <div
-            className="flex gap-[40px] mds:w-[413px] w-full flex-col px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[14px] rounded-[15px] border-[#BEDAE9]">
+            className="flex gap-[40px] z-[2] mds:w-[413px] w-full flex-col px-[25px] pt-[28px] pb-[34px] border-[1px] text-black text-[14px] rounded-[15px] border-[#BEDAE9]">
             ACTIVE SUBSCRIPTIONS
             <div className="flex items-center justify-between font-bold text-[42px] leading-[45px] text-[#101D2C]">
                 <h3>{subs}</h3>

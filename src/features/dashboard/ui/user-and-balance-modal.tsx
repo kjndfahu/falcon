@@ -9,7 +9,7 @@ interface Props{
 
 export const UserAndBalanceModal:React.FC<Props> = ({userAndBalance}) => {
     return (
-        <div className="max-h-[600px] w-[800px] overflow-y-auto">
+        <div className="max-h-[600px] md:w-[800px] mds:w-[700px] sml:w-[600px] w-full overflow-y-auto">
             <table className="min-w-full table-auto">
                 <thead className="sticky top-0 bg-white">
                     <tr className="sml:table-row hidden border-b-[1px] border-[#BEDAE9] text-left font-normal text-[18px] text-[#4B5167]">
