@@ -1,5 +1,4 @@
 'use client'
-import {useState} from "react";
 
 interface Props{
     className?:string,
@@ -23,7 +22,7 @@ export const GraphicSwitcher:React.FC<Props> = ({graphic, setGraphic}) => {
                     >
                         <option value="Sells">Сумма всех продаж</option>
                         <option value="Resellers">Сумма продаж всех реселлеров</option>
-                        <option value="Ref">Сумма продаж пользователей по реф ссылке</option>
+                        <option value="Referrals">Сумма продаж пользователей по реф ссылке</option>
                     </select>
                 </div>
             </div>

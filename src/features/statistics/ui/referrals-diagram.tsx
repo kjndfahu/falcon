@@ -1,11 +1,27 @@
 'use client';
-
-import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
+import {
+    Chart,
+    LineController,
+    LineElement,
+    PointElement,
+    LinearScale,
+    Title,
+    Tooltip,
+    CategoryScale,
+} from 'chart.js';
 import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-export const ReferralDiagram = () => {
+interface Props {
+    referralBuys: {
+        price: number,
+        userId: number | null,
+        createdAt: Date
+    }[]
+}
+
+export const ReferralsDiagram: React.FC<Props> = ({ referralBuys }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
@@ -18,11 +34,19 @@ export const ReferralDiagram = () => {
 
         if (!ctx || !tooltipEl) return;
 
-
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
 
+        const labels = referralBuys.map((item) =>
+            new Date(item.createdAt).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            })
+        );
+        const data = referralBuys.map((item) => item.price);
 
         const customTooltip = (context: any) => {
             const tooltipModel = context.tooltip;
@@ -45,12 +69,11 @@ export const ReferralDiagram = () => {
                 `;
             }
 
-            // @ts-ignore
             const canvasPosition = chartRef.current.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';
-            tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;
-            tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY - 200}px`;
+            tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX}px`;
+            tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY}px`;
             tooltipEl.style.pointerEvents = 'none';
             tooltipEl.style.transition = 'opacity 0.2s ease';
         };
@@ -58,11 +81,11 @@ export const ReferralDiagram = () => {
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Point 1', 'Point 2', 'Point 3', 'Point 4', 'Point 5'],
+                labels,
                 datasets: [
                     {
-                        label: 'Subscriptions',
-                        data: [10, 20, 15, 30, 25],
+                        label: 'Sales Price',
+                        data,
                         borderColor: '#3b82f6',
                         borderWidth: 2,
                         pointBackgroundColor: '#3b82f6',
@@ -112,10 +135,10 @@ export const ReferralDiagram = () => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, []);
+    }, [referralBuys]);
 
     return (
-        <div className="relative mdbvp:w-[643px] sml:w-[450px] w-[300px]">
+        <div className="relative w-[90%]">
             <canvas ref={chartRef} className="w-[1000px]"></canvas>
             <div
                 ref={tooltipRef}
@@ -132,4 +155,4 @@ export const ReferralDiagram = () => {
             ></div>
         </div>
     );
-}
+};

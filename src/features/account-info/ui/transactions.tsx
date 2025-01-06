@@ -16,7 +16,7 @@ export const Transactions: React.FC = async () => {
             <div className="relative">
                 <div className="overflow-y-auto max-h-[300px]">
                     <table className="min-w-full table-auto">
-                        <thead className="sticky top-0 bg-white">
+                        <thead className="sm:sticky sm:table-header-group hidden top-0 bg-white">
                         <tr className="border-b-[1px] border-[#BEDAE9] text-left font-normal text-[18px] text-[#4B5167]">
                             <th className="mds:px-[46px] sml:px-[20px] px-[5px] font-normal py-[20px]">
                                 Balances
@@ -31,31 +31,27 @@ export const Transactions: React.FC = async () => {
                         </thead>
                         <tbody>
                         {transactions.map((item, index) => (
-                            <tr
-                                key={index}
-                                className="border-b text-[18px] text-[#101D2C]"
-                            >
-                                <td className="mds:px-[46px] sml:px-[20px] px-[5px] font-normal py-[20px]">
-                                    <div className="flex flex-col leading-4 text-[18px] text-[#101D2C] gap-1">
+                            <tr key={index} className="border-b sml:text-[18px] text-[16px] text-[#101D2C]">
+                                <td className="mds:px-[46px] sml:px-[20px] px-[15px] font-normal py-[20px]">
+                                    <div
+                                        className="flex flex-col-reverse sm:flex-row sm:gap-3 gap-1 sm:order-1 sm:items-center sm:justify-start">
                                         ${item.sum}
                                         <p className="sml:flex hidden text-[14px] text-[#4B5167]">
                                             ${item.sum.toFixed(2)} USD
                                         </p>
                                     </div>
                                 </td>
-                                <td className="mds:px-[46px] sml:px-[20px] px-[5px] font-normal py-[20px]">
-                                    <div className="flex items-center sm:gap-3 gap-1 text-[18px] text-[#101D2C]">
-                                        <TetherLogo />
+                                <td className="mds:px-[46px] sml:px-[20px] px-[3px] font-normal py-[20px]">
+                                    <div
+                                        className="flex flex-row sm:gap-3 gap-1 sm:order-3 sm:items-center sm:justify-start">
+                                        <TetherLogo/>
                                         <p>{formatSystem(item.system)}</p>
                                     </div>
                                 </td>
-                                <td className="mds:px-[46px] sml:px-[20px] px-[5px] font-normal py-[20px]">
-                                    <div className="flex items-center sm:gap-3 gap-1 text-[18px] text-[#101D2C]">
-                                        {item.type === "WITHDRAW" ? (
-                                            <ConclusionLogo />
-                                        ) : (
-                                            <DepositLogo />
-                                        )}
+                                <td className="mds:px-[46px] sml:px-[20px] px-[3px] font-normal py-[20px]">
+                                    <div
+                                        className="flex flex-row sm:gap-3 gap-1 sm:order-2 sm:items-center sm:justify-start">
+                                        {item.type === "WITHDRAW" ? <ConclusionLogo/> : <DepositLogo/>}
                                         <p>{formatType(item.type)}</p>
                                     </div>
                                 </td>

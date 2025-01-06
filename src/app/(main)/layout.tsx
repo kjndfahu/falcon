@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import {Footer} from "@/widgets/footer";
 import {userRepository} from "@/enteties/user/repositories/user";
 import {sessionService} from "@/enteties/user/services/session";
+import {Toaster} from "react-hot-toast";
 
 const myFont = localFont({
     src: [
@@ -46,6 +47,7 @@ export default async function RootLayout({
         <Header isAuth={isAuth} />
         {children}
         <Footer/>
+        <Toaster/>
         </body>
         </html>
     );

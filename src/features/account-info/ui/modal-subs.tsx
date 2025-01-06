@@ -9,7 +9,6 @@ import {BlueBtn} from "@/shared/ui/blue-btn";
 import { SessionEntity } from "@/enteties/user/domain";
 import { buySubscriptionAction } from "../actions/buy-subscription";
 import { activeSub } from "../actions/constants";
-import {userRepository} from "@/enteties/user/repositories/user";
 
 interface Props {
     className?: string,
@@ -76,29 +75,53 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
 
     return (
         <div className="flex items-center justify-center fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm">
-            <div className="flex flex-col mdbvp:w-[1218px] w-[1000px] items-center gap-[50px] mdbvp:p-[50px] p-[25px] bg-[#F3F8FD] text-[#b0b0b0] rounded-[20px]">
-                <SubsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                <div className="flex w-full gap-[25px]">
-                    <SubscriptionBlock userRole={userRole} activeTab={activeTab} activeDays={activeDays} />
-                    <div className="flex w-full justify-between  flex-col">
-                        <div className="flex text-[36px] text-black items-center justify-between ">
-                            Subscription pricing
-                            <div className="cursor-pointer" onClick={() => setIsClicked(false)}>
-                                <XLogo/>
-                            </div>
-                        </div>
-                        <DaysBlock activeDays={activeDays} setActiveDays={setActiveDays} />
-                        <ReferralDiagram/>
-                        {error && (
-                            <div className="text-red-500">{error}</div>
-                        )}
-                        <BlueBtn 
+            <div
+                className="flex flex-col mds:max-h-[100%] max-h-[850px] mdbvp:w-[1218px] md:w-[1000px] w-full md:mx-0 mx-[50px] items-center md:gap-[50px] gap-[25px] mdbvp:p-[50px] sm:p-[25px] p-[10px] bg-[#F3F8FD] text-[#b0b0b0] rounded-[20px]">
+                <div className="md:hidden w-full justify-end flex cursor-pointer" onClick={() => setIsClicked(false)}>
+                    <XLogo/>
+                </div>
+                <SubsTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
+                <div
+                    className="flex items-center mds:overflow-y-hidden overflow-y-auto mds:scroll-y-auto custom-scroll md:flex-row flex-col-reverse w-full gap-[25px]">
+                    <div className="md:hidden flex">
+                        <BlueBtn
                             title={isPending ? "Processing..." : "Buy"}
                             onClick={handleBuyClick}
                             type="button"
                             isUsed={false}
-                            styles="w-full"
+                            styles="w-[50vw]"
                         />
+                    </div>
+                    <div className="md:hidden flex">
+                        <ReferralDiagram/>
+                        {error && (
+                            <div className="text-red-500">{error}</div>
+                        )}
+                    </div>
+                    <SubscriptionBlock userRole={userRole} activeTab={activeTab} activeDays={activeDays}/>
+                    <div className="flex w-full justify-between  flex-col">
+                        <div className="flex sm:text-[36px] text-[24px] text-black items-center justify-between ">
+                            Subscription pricing
+                            <div className="md:flex hidden cursor-pointer" onClick={() => setIsClicked(false)}>
+                                <XLogo/>
+                            </div>
+                        </div>
+                        <DaysBlock activeDays={activeDays} setActiveDays={setActiveDays}/>
+                        <div className="md:flex hidden">
+                            <ReferralDiagram/>
+                            {error && (
+                                <div className="text-red-500">{error}</div>
+                            )}
+                        </div>
+                        <div className="md:flex hidden">
+                            <BlueBtn
+                                title={isPending ? "Processing..." : "Buy"}
+                                onClick={handleBuyClick}
+                                type="button"
+                                isUsed={false}
+                                styles="w-full"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

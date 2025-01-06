@@ -3,6 +3,6 @@ import {Feedback} from "@/shared/ui/feedback";
 
 export const FeedbackWidget = () => {
     return (
-        <Feedback title="Feedback" child={ <FeedbackForm question="Your Contact" /> }/>
+        <Feedback title="Feedback" child={ <FeedbackForm telegram_thread={18} question="Your Contact" /> }/>
     )
 }

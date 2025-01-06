@@ -18,7 +18,7 @@ export default function ReferralProgramPage() {
             <PartnershipModel/>
             <PartneshipLevels/>
             <BecomePartner/>
-            <Feedback title="Leave your request" child={ <FeedbackForm question="Count of active counts" /> }/>
+            <Feedback title="Leave your request" child={ <FeedbackForm telegram_thread={23} question="Count of active counts" /> }/>
         </div>
     )
 }

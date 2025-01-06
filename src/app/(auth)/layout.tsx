@@ -2,6 +2,7 @@ import {AuthBanner} from "@/widgets/auth-banner";
 import localFont from "next/font/local";
 import "../globals.css";
 import type {Metadata} from "next";
+import {NextAuthProvider} from "@/providers/next-auth-provider";
 
 const myFont = localFont({
     src: [
@@ -35,8 +36,10 @@ export default async function AuthLayout({children}: {children: React.ReactNode}
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
         <div className="flex md:flex-row flex-col-reverse w-[100vw] md:p-0 p-5 md:justify-between justify-center md:gap-0 sm:gap-[50px] gap-[20px] items-center md:min-h-screen">
-            {children}
-            <AuthBanner/>
+            <NextAuthProvider>
+                {children}
+                <AuthBanner/>
+            </NextAuthProvider>
         </div>
         </body>
         </html>

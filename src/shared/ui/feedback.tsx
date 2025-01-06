@@ -1,5 +1,4 @@
 import {Message} from "@/shared/ui/icons";
-import {Button} from "@/shared/ui/button";
 
 interface Props {
     title?: string;
@@ -14,7 +13,6 @@ export const Feedback:React.FC<Props> = ({child, title}) => {
                 {title}
             </div>
             {child}
-            <Button title="Send" styles="bg-[#0057FF] justify-center rounded-[15px] py-[18px]"/>
         </div>
     )
 }

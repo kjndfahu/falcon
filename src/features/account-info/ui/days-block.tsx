@@ -14,7 +14,7 @@ export const DaysBlock: React.FC<Props> = ({ activeDays, setActiveDays }) => {
 
     return (
         <div className="flex w-full items-center justify-center">
-            <div className="flex w-full mdbvp:gap-[30px] gap-[10px] bg-[#f8fbff] border border-[#d7e7ff] mdbvp:p-5 p-2 rounded-[12px]">
+            <div className="flex mds:flex-row flex-col w-full mdbvp:gap-[30px] gap-[10px] bg-[#f8fbff] border border-[#d7e7ff] mdbvp:p-5 p-2 rounded-[12px]">
                 {plans.map((plan) => (
                     <div
                         key={plan.label}
