@@ -8,12 +8,12 @@ interface Props {
     onResendCode: () => Promise<boolean>;
 }
 
-export const Verification: React.FC<Props> = ({ 
-    email, 
-    onVerificationComplete, 
-    isPending,
-    onResendCode 
-}) => {
+export const Verification: React.FC<Props> = ({
+                                                  email,
+                                                  onVerificationComplete,
+                                                  isPending,
+                                                  onResendCode
+                                              }) => {
     const [code, setCode] = useState<string[]>(Array(5).fill(""));
     const [error, setError] = useState<string | null>(null);
     const [isResending, startResending] = useTransition();
@@ -33,7 +33,7 @@ export const Verification: React.FC<Props> = ({
     const handleSubmit = async () => {
         setError(null);
         const fullCode = code.join("").trim();
-        
+
         if (fullCode.length === 5) {
             try {
                 const isValid = await onVerificationComplete(fullCode);

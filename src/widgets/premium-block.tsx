@@ -1,13 +1,18 @@
 import {PrBlock} from "@/shared/ui/pr-block";
-import {LevelBlock} from "@/features/premium-block/ui/level-block";
 import {CustomersCount} from "@/features/premium-block/ui/customers-count";
 import {EarningSales} from "@/features/premium-block/ui/earning-sales";
+import {NextLvLBlock} from "@/features/account-info/ui/next-lvl-block";
 
-export const PremiumBlock = () => {
+interface Props{
+    progress?: number;
+    getReferrals?: number;
+}
+
+export const PremiumBlock:React.FC<Props> = ({progress, getReferrals}) => {
     return (
         <div className="flex items-center gap-[50px]">
-            <PrBlock child={ <LevelBlock/> } />
-            <PrBlock child={ <CustomersCount/> } />
+            <NextLvLBlock percentage={progress}/>
+            <PrBlock child={ <CustomersCount /> } />
             <PrBlock child={ <EarningSales/> } />
         </div>
     )

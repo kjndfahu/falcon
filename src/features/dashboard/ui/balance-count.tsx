@@ -14,11 +14,27 @@ interface Props{
 
 export const BalanceCount:React.FC<Props> = ({ sum, userAndBalance, className}) => {
     const [isActive, setActive] = useState(false);
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setActive(true);
+    };
+
     return (
-        <div onClick={() => setActive(true)} className="flex flex-col text-[18px] font-semibold text-black gap-[40px]">
-            Суммарный баланс пользователей
-            <h3 className="text-[42px]  font-semibold text-[#101D2C]">{sum}$</h3>
-            {isActive && ( <Modal styles="w-[80%]" title="Балансы" setModal={setActive} isModal={isActive} child={ <UserAndBalanceModal userAndBalance={userAndBalance}/> } /> )}
-        </div>
+        <>
+            <div onClick={handleClick} className="flex flex-col text-[18px] font-semibold text-black gap-[40px] cursor-pointer">
+                Суммарный баланс пользователей
+                <h3 className="text-[42px] font-semibold text-[#101D2C]">{sum}$</h3>
+            </div>
+            {isActive && (
+                <Modal 
+                    styles="w-[80%]" 
+                    title="Балансы" 
+                    setModal={setActive} 
+                    isModal={isActive} 
+                    child={<UserAndBalanceModal userAndBalance={userAndBalance}/>} 
+                /> 
+            )}
+        </>
     )
 }

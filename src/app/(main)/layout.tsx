@@ -37,7 +37,7 @@ export default async function RootLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const { isAuth } = await sessionService.verifySession();
+    const { isAuth } = await sessionService.checkSession();
 
     return (
         <html lang="en">

@@ -30,8 +30,6 @@ export const metadata: Metadata = {
 };
 
 export default async function AuthLayout({children}: {children: React.ReactNode}){
-    // const {session} = await sessionService.verifySession()
-    // console.log(session)
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>

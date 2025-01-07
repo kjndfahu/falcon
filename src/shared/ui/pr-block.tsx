@@ -4,7 +4,7 @@ interface Props{
 
 export const PrBlock:React.FC<Props> = ({child}) => {
     return (
-        <div className={`flex rounded-[15px] px-[25px] py-[28px] w-[413px] border-[1px] border-[#BEDAE9]`}>
+        <div className={`flex rounded-[15px] h-[182px] px-[25px] py-[28px] w-[413px] border-[1px] border-[#BEDAE9]`}>
             {child}
         </div>
     )

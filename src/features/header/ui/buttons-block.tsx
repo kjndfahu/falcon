@@ -7,7 +7,7 @@ interface Props{
 
 export const ButtonsBlock:React.FC<Props> = ({isAuth}) => {
     return(
-        <div className="flex md:flex-row flex-col items-center justify-end xl:gap-[25px] sml:px-0 px-[20px] gap-[15px]">
+        <div className="flex md:flex-row w-full flex-col items-center justify-end xl:gap-[25px] sml:px-0 px-[20px] gap-[15px]">
             {isAuth ? (
                 <div className="w-full">
                     <Link href="/personal-cabinet">

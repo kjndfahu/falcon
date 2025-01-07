@@ -1,30 +1,19 @@
-import { useActionState as useActionStateReact } from "react";
+import { useCallback, useState, useTransition } from "react";
 
-export function useActionState<State, InitialState>(
-    action: (state: Awaited<State>) => State | Promise<State>,
-    initialState: InitialState,
-    permalink?: string,
-): [
-    state: Awaited<State> | InitialState,
-    dispatch: () => void,
-    isPending: boolean,
-];
-export function useActionState<State, InitialState, Payload>(
-    action: (state: Awaited<State>, payload: Payload) => State | Promise<State>,
-    initialState: InitialState,
-    permalink?: string,
-): [
-    state: Awaited<State> | InitialState,
-    dispatch: (payload: Payload) => void,
-    isPending: boolean,
-];
+export function useActionState<TState, TArg = void>(
+    action: (state: TState, arg: TArg) => Promise<TState>,
+    initialState: TState
+): [TState, (arg: TArg) => Promise<TState>, boolean] {
+    const [state, setState] = useState<TState>(initialState);
+    const [isPending, startTransition] = useTransition();
 
-export function useActionState(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    action: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    initialState: any,
-    premalink?: string,
-) {
-    return useActionStateReact(action, initialState, premalink);
+    const dispatch = useCallback(async (arg: TArg) => {
+        const result = await action(state, arg);
+        startTransition(() => {
+            setState(result);
+        });
+        return result;
+    }, [action, state]);
+
+    return [state, dispatch, isPending];
 }

@@ -10,6 +10,8 @@ import {
     CategoryScale,
 } from 'chart.js';
 import { useEffect, useRef } from 'react';
+import {calculateTotalPrice} from "@/features/statistics/actions/calculate-price";
+import {calculateTotalReseller} from "@/features/statistics/actions/calculate-reseller";
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
@@ -25,6 +27,7 @@ export const ResellerSellsDiagram: React.FC<Props> = ({ resellerSells }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
+    const total = calculateTotalReseller(resellerSells)
 
     useEffect(() => {
         if (!chartRef.current || !tooltipRef.current) return;
@@ -153,6 +156,7 @@ export const ResellerSellsDiagram: React.FC<Props> = ({ resellerSells }) => {
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
             ></div>
+            <p className="pt-10">Общая сумма продаж - {total}$</p>
         </div>
     );
 };

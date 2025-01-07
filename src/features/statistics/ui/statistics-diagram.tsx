@@ -2,6 +2,7 @@
 
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
 import { useEffect, useRef } from 'react';
+import {calculateTotalPrice} from "@/features/statistics/actions/calculate-price";
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
@@ -16,6 +17,7 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
+    const total = calculateTotalPrice(sells)
 
     useEffect(() => {
         if (!chartRef.current || !tooltipRef.current) return;
@@ -143,6 +145,7 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
             ></div>
+            <p className="pt-10">Общая сумма продаж - {total}$</p>
         </div>
     );
 };

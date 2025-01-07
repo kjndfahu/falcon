@@ -20,7 +20,7 @@ export async function sendVerificationEmail(
 ): Promise<SendVerificationState> {
     try {
         const email = formData.get('email');
-        
+
         if (!email) {
             return {
                 formData,
@@ -59,4 +59,4 @@ export async function sendVerificationEmail(
             }
         };
     }
-} 
+}

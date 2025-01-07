@@ -37,7 +37,7 @@ export function SignUpForm() {
 
     const handleSubmit = async (formData: FormData) => {
         const email = formData.get('email') as string;
-        
+
         if (!email || !email.includes('@')) {
             return;
         }
@@ -46,7 +46,7 @@ export function SignUpForm() {
         setFormData(formData);
 
         const verificationResult = await sendVerificationEmail({}, formData);
-        
+
         if (verificationResult.success && verificationResult.verificationCode) {
             setVerificationCode(verificationResult.verificationCode);
             setShowVerification(true);
@@ -70,7 +70,7 @@ export function SignUpForm() {
                     for (const [key, value] of formData.entries()) {
                         newFormData.append(key, value);
                     }
-                    
+
                     if (referralCode) {
                         newFormData.append('referralCode', referralCode);
                     }
@@ -116,8 +116,8 @@ export function SignUpForm() {
     };
 
     if (showVerification) {
-        return <Verification 
-            email={userEmail} 
+        return <Verification
+            email={userEmail}
             onVerificationComplete={handleVerificationComplete}
             isPending={isVerifying}
             onResendCode={async () => {

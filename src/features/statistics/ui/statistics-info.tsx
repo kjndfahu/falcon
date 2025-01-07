@@ -24,6 +24,9 @@ interface Props{
 
 export const StatisticsInfo:React.FC<Props> = ({sells, resellerSells, referralBuys}) => {
     const [graphic, setGraphic] = useState('Sells');
+    console.log(sells, 'sells')
+    console.log(resellerSells, 'resellerSells')
+    console.log(referralBuys, 'referralBuys')
     return (
         <div className="flex flex-col text-[25px] text-black font-semibold w-full gap-[50px] flec-col">
             <div className="flex mds:flex-row flex-col items-center gap-[50px]">

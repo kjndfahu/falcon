@@ -17,7 +17,9 @@ export const Header:React.FC<Props> = ({isAuth}) => {
             <div
                 className={`md:flex ${isClicked ? 'flex' : 'hidden'} md:flex-row flex-col md:items-center md:gap-[50px] gap-[25px] md:py-0 py-[25px] md:px-0 px-[20px] `}>
                 <HeaderLinks/>
-
+                <div className="md:hidden w-full flex">
+                    <ButtonsBlock isAuth={isAuth}/>
+                </div>
             </div>
             <div className="md:flex hidden">
                 <ButtonsBlock isAuth={isAuth}/>

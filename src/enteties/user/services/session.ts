@@ -62,4 +62,20 @@ const verifySession = async() => {
     }
 }
 
-export const sessionService = {addSession, deleteSession, verifySession}
+const checkSession = async() => {
+    const cookie = (await cookies()).get("session")?.value;
+    const session = await decrypt(cookie)
+
+    if(session.type === 'left'){
+        return {
+            isAuth: false,
+        }
+    }
+
+    return {
+        isAuth: true,
+        session: session.value
+    }
+}
+
+export const sessionService = {addSession, deleteSession, checkSession, verifySession}

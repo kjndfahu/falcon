@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createUser } from "@/enteties/user/services/create-user";
 import { UserEntity } from "@/enteties/user/domain";
 import { sessionService } from "@/enteties/user/services/session";
+import {getUser} from "@/enteties/user/repositories/user";
 
 export type SignUpFormState = {
     formData?: FormData;
@@ -50,11 +51,15 @@ export const signUpAction = async (
             };
         }
 
+        const findReferredBy = await getUser({referralCode: result.data.referralCode});
+        const referredBy = findReferredBy ? findReferredBy.id : null;
+        const referredString = String(referredBy);
+
         const createUserResult = await createUser({
             login: result.data.login,
             email: result.data.email,
             password: result.data.password,
-            referredBy: result.data.referralCode ? parseInt(result.data.referralCode) : 0
+            referredBy: result.data.referralCode ? parseInt(referredString) : 0
         });
 
         if (createUserResult.type === "left") {
