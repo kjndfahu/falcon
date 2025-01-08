@@ -76,39 +76,51 @@ export function SignUpForm() {
                     }
 
                     const actionResult = await signUpAction({} as SignUpFormState, newFormData);
-                    console.log('Direct action result:', actionResult);
+                    console.log('Registration attempt result:', actionResult);
 
-                    if (!actionResult) {
-                        console.error('Action returned no result');
+                    if (actionResult.errors) {
+                        action(newFormData);
+                        console.error('Registration failed:', actionResult.errors._errors || 'Unknown error');
                         resolve(false);
                         return;
                     }
 
-                    if (actionResult.user) {
-                        const login = newFormData.get('login') as string;
-                        const password = newFormData.get('password') as string;
-
-                        try {
-                            await signIn("credentials", {
-                                login,
-                                password,
-                                callbackUrl: "/personal-cabinet",
-                                redirect: true
-                            });
-                            resolve(true);
-                        } catch (signInError) {
-                            console.error("Sign in error:", signInError);
-                            resolve(false);
-                        }
-                    } else if (actionResult.errors) {
-                        console.error('Registration failed with errors:', actionResult.errors);
+                    if (!actionResult.user) {
+                        console.error('Registration failed: No user data received');
                         resolve(false);
-                    } else {
-                        console.error('Registration failed without specific errors');
+                        return;
+                    }
+
+                    const login = newFormData.get('login')?.toString();
+                    const password = newFormData.get('password')?.toString();
+
+                    if (!login || !password) {
+                        console.error('Missing login or password for sign in');
+                        resolve(false);
+                        return;
+                    }
+
+                    try {
+                        const signInResult = await signIn("credentials", {
+                            login,
+                            password,
+                            callbackUrl: "/personal-cabinet",
+                            redirect: true
+                        });
+
+                        if (signInResult?.error) {
+                            console.error('Sign in failed:', signInResult.error);
+                            resolve(false);
+                            return;
+                        }
+
+                        resolve(true);
+                    } catch (signInError) {
+                        console.error("Sign in error:", signInError);
                         resolve(false);
                     }
                 } catch (error) {
-                    console.error("Verification error:", error);
+                    console.error("Verification process error:", error);
                     resolve(false);
                 }
             });

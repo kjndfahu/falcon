@@ -1,4 +1,3 @@
-import {CopyLogo} from "@/shared/ui/pc-icons";
 import {LogoBlock} from "@/shared/ui/logo-block";
 
 export const ReferralInfoBlock = ({firstlogo, firsttitle, firstvalue, secondlogo, secondtitle, secondvalue}: {
@@ -18,7 +17,7 @@ export const ReferralInfoBlock = ({firstlogo, firsttitle, firstvalue, secondlogo
                 <div className="text-[42px] leading-[50px] rounded-[15px] bg-[#deecff] p-[8px] font-bold text-[#0079FF]">{firstvalue}</div>
             </div>
             <div
-                className="flex md:w-[50%] w-full items-start whitespace-pre-wrap bg-[#EDF9FF] flex-col py-8 xl:px-[103px] mdbvp:px-[60px] md:px-[25px] px-[51px] text-[24px] leading-8 text-[#0A131D] border-[1px] border-[#CCE5F8] md:rounded-l-[0px] rounded-l-[15px] rounded-r-[15px]">
+                className="flex md:w-[50%] w-full gap-4 items-start whitespace-pre-wrap bg-[#EDF9FF] flex-col py-8 xl:px-[103px] mdbvp:px-[60px] md:px-[25px] px-[51px] text-[24px] leading-8 text-[#0A131D] border-[1px] border-[#CCE5F8] md:rounded-l-[0px] rounded-l-[15px] rounded-r-[15px]">
                 <LogoBlock logo={secondlogo}/>
                 {secondtitle}
                 <div

@@ -143,13 +143,19 @@ export function getReferralInfo(userId: UserId){
         }
     })
 }
-export function getMyCustomers(userId: UserId){
-    return prisma.user.findMany({
-        where: {referredBy: userId},
-        select: {
-            id: true
-        }
-    })
+export function createReferrals(userId: number, totalReferrals: number, registeredWithPurchase: number, totalCashback: number, purchasesOfReferrals: number){
+    return prisma.referrals.create({
+        data: {
+            totalReferrals,
+            registeredWithPurchase,
+            totalCashback,
+            purchasesOfReferrals,
+            userId
+        },
+    });
+}
+export function getRoleCustomers(){
+    return prisma.user.findMany({})
 }
 export function referredBy(referralCode:string){
     return prisma.user.findFirst({
@@ -183,4 +189,4 @@ export function buySubscription(type: $Enums.SubscriptionType, price: number, tr
         }
     })
 }
-export const userRepository = {saveUser, getUser, createTopUp, changeUserRole, changeMail, getMyCustomers, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};
+export const userRepository = {saveUser, getUser, createTopUp, createReferrals, changeUserRole, changeMail, getRoleCustomers, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};

@@ -79,7 +79,7 @@ export const FeedbackForm: React.FC<Props> = ({telegram_thread, question }) => {
             className="flex flex-col sml:gap-[50px] gap-[25px]"
             onSubmit={handleSubmit}
         >
-            <div className="flex sml:flex-row flex-col w-full sml:gap-[50px] gap-[25px]">
+            <div id="form-referral" className="flex sml:flex-row flex-col w-full sml:gap-[50px] gap-[25px]">
                 <div className="flex w-full flex-col gap-3 text-[#0A131D] text-[18px] font-medium leading-[17px]">
                     <h4>Your Name</h4>
                     <div className="px-[16px] py-[19px] rounded-[15px] border-[1px] border-[#DDE6EF] bg-[#F3F5F980]">

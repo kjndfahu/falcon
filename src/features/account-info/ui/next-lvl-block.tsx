@@ -12,7 +12,7 @@ export const NextLvLBlock:React.FC<Props> = ({percentage}) => {
 
     return (
         <div
-            className="flex justify-between items-end rounded-[15px] px-[25px] py-[28px] w-[413px] border-[1px] border-[#BEDAE9]">
+            className="flex justify-between items-end rounded-[15px] px-[25px] py-[28px] mds:w-[413px] w-full border-[1px] border-[#BEDAE9]">
             <div className="flex flex-col text-[14px] text-black gap-[40px]">
                 NEXT LVL
                 <h3 className="text-[42px] font-semibold text-[#101D2C]">{percentage?.toFixed(1)}%</h3>

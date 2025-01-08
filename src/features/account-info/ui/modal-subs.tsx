@@ -9,6 +9,7 @@ import {BlueBtn} from "@/shared/ui/blue-btn";
 import { SessionEntity } from "@/enteties/user/domain";
 import { buySubscriptionAction } from "../actions/buy-subscription";
 import { activeSub } from "../actions/constants";
+import { useRouter } from "next/navigation";
 
 interface Props {
     className?: string,
@@ -23,6 +24,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
     const [activeDays, setActiveDays] = useState('30');
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleBuyClick = () => {
         const selectedSub = activeSub.find(sub => sub.title === activeTab);
@@ -42,7 +44,6 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
         formData.append('userId', session.id.toString());
         formData.append('endDate', endDate.toISOString());
 
-
         startTransition(async () => {
             try {
                 console.log('Sending subscription data:', Object.fromEntries(formData));
@@ -51,6 +52,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                 
                 if (!result?.errors) {
                     setIsClicked(false);
+                    router.refresh();
                 } else {
                     setError(result.errors._errors || 'Failed to buy subscription');
                 }

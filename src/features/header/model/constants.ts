@@ -1,34 +1,34 @@
 export const headerLinks = [
     {
         title: "Home",
-        link: "/"
+        link: "/",
     },
     {
         title: "Features",
-        link: "/features"
+        link: "/features",
     },
     {
         title: "Pricing",
-        link: "/pricing"
+        link: "/pricing",
     },
     {
         title: "FAQ",
-        link: "/faq"
+        link: "/faq",
     },
     {
         title: "Commands & Features",
-        link: "/commands-features"
+        link: "/commands-features",
     },
     {
         title: "Telegram",
-        link: "https://desktop.telegram.org/"
+        link: "https://desktop.telegram.org/",
     },
     {
         title: "For business",
-        link: "/referral-programm"
+        link: "/referral-programm",
     },
     {
         title: "Contact Us",
-        link: "/contact-us"
+        link: "/contact-us",
     },
-]
+];

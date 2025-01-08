@@ -60,8 +60,8 @@ export const activeSub: Subscription[] = [
         title: 'Fast',
         prices: {
             '30': '60 $',
-            '90': '180 $',
-            '180': '300 $'
+            '90': '160 $',
+            '180': '285 $'
         },
         scan_speed: '20 sec',
         value: [
@@ -99,8 +99,8 @@ export const activeSub: Subscription[] = [
         title: 'Turbo',
         prices: {
             '30': '110 $',
-            '90': '297 $',
-            '180': '495 $'
+            '90': '295 $',
+            '180': '540 $'
         },
         scan_speed: '5 sec',
         value: [

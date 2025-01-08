@@ -18,15 +18,24 @@ export default async function PersonalCabinet() {
     if (!user) {
         throw new Error("User not found.");
     }
-    const getReferrals = await getActiveCustomers(user.id)
-    console.log(getReferrals)
+    const getCustomers = await getActiveCustomers()
+    if(!getCustomers){
+        console.log(0);
+    }
     const subs = await getSubs({userId: session.id})
+    const totalPriceSales = subs.reduce((sum, sub) => sum + sub.price, 0);
+    if(!totalPriceSales){
+        console.log(0);
+    }
+    const totalEarns = subs.reduce((sum, sub) => sum + sub.earns, 0);
+    if(!totalEarns){
+        console.log(0);
+    }
     const users = await userRepository.getUser({ email: session.email });
     const {progress} = await checkRole(user.id, user.role)
     if(!progress){
         console.log(0);
     }
-    console.log(progress)
 
     return (
         <div className="flex w-full flex-col sml:gap-[50px] gap-[25px] sml:py-[77px] py-[20px] xl:px-[129px] sml:px-[50px] px-[25px]">
@@ -37,7 +46,9 @@ export default async function PersonalCabinet() {
                 <ActiveSubs userRole={users.role} subs={subs.length} session={session}/>
             </div>
 
-            {session.role==="DISTRIBUTOR" && <PremiumBlock getReferrals={getReferrals} progress={progress}/>}
+            {(user.role !== "USER" && user.role !== "INFLUENCER") && (
+                <PremiumBlock getCustomers={getCustomers} totalEarns={totalEarns} totalPriceSales={totalPriceSales} progress={progress} />
+            )}
 
             <Transactions/>
         </div>

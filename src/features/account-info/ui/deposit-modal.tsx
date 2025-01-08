@@ -1,10 +1,10 @@
 'use client'
 import {BlueBtn} from "@/shared/ui/blue-btn";
 import {useAmountInput} from "@/features/account-info/model/useInput";
-import { useSession } from "next-auth/react";
 import {useBalanceStore} from "@/shared/store/balance";
 import { useState } from "react";
 import { createDepositAction } from "@/features/account-info/actions/deposit";
+import { useRouter } from "next/navigation";
 
 interface Props {
     balance?: number;
@@ -15,6 +15,7 @@ export const DepositModal: React.FC<Props> = ({balance, userId}) => {
     const {amount, handleChange} = useAmountInput();
     const [isPending, setIsPending] = useState(false);
     const setBalance = useBalanceStore((state) => state.setBalance);
+    const router = useRouter();
 
     const handleDeposit = async () => {
         if (!amount || isNaN(parseFloat(amount))) {
@@ -26,6 +27,7 @@ export const DepositModal: React.FC<Props> = ({balance, userId}) => {
             const result = await createDepositAction(parseFloat(amount), "TOPUP", 'USDT', parseInt(userId));
             if (result.success && result.data?.updatedBalance) {
                 setBalance(result.data.updatedBalance);
+                router.refresh();
             }
         } catch (error) {
             console.error("Error creating deposit:", error);
@@ -43,7 +45,7 @@ export const DepositModal: React.FC<Props> = ({balance, userId}) => {
                         ${balance?.toFixed(2)}
                     </h3>
                 </div>
-                <div className="flex flex-col justify-center sml:w-auto w-full gap-[25px] text-black font-medium text-[16px] rounded-[15px] border-[1px] border-[#BEDAE9] px-[25px] sml:py-0 py-[28px] bg-[#F3F8FD]">
+                <div className="flex flex-col justify-center sml:w-auto w-full gap-[25px] text-black font-medium text-[16px] rounded-[15px] border-[1px] border-[#BEDAE9] px-[25px] sml:py-[25px] py-[28px] bg-[#F3F8FD]">
                     <h3>Account replenishment</h3>
                     <div className="flex sml:flex-row flex-col gap-[25px]">
                         <div className="border-[1px] md:w-[309px] px-[16px] py-[19px] text-[18px] leading-[22px] rounded-[15px] border-[#DDE6EF]">

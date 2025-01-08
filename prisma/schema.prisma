@@ -94,6 +94,7 @@ model Subscriptions {
   type           SubscriptionType
   price          Int
   trackingNumber Int              @unique
+  earns          Float            @default(0)
   autorenew      Boolean
   user           User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         Int?

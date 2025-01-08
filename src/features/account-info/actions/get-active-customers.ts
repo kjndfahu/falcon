@@ -1,9 +1,8 @@
-import {UserId} from "@/kernel/ids";
 import {userRepository} from "@/enteties/user/repositories/user";
 import {getSubscription} from "@/enteties/subscription/repositories/subscription";
 
-export const getActiveCustomers = async (id: UserId)=> {
-    const getMyReferrals = await userRepository.getMyCustomers(id);
+export const getActiveCustomers = async ()=> {
+    const getMyReferrals = await userRepository.getRoleCustomers();
     const referredIds = getMyReferrals.map((user) => user.id);
 
     const now = new Date();

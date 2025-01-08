@@ -1,6 +1,6 @@
 import { UserId } from "@/kernel/ids";
 
-export type Role = "USER" | "ADMIN" | "RESELLER" | "PARTNER" | "VIPPARTNER" | "DISTRIBUTOR";
+export type Role = "USER" | "ADMIN" | "RESELLER" | "PARTNER" | "VIPPARTNER" | "DISTRIBUTOR" | "INFLUENCER";
 export type DepositType = "USDT" | "VISA";
 
 export type UserEntity = {

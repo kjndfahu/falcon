@@ -4,7 +4,7 @@ import { z } from "zod";
 import { createUser } from "@/enteties/user/services/create-user";
 import { UserEntity } from "@/enteties/user/domain";
 import { sessionService } from "@/enteties/user/services/session";
-import {getUser} from "@/enteties/user/repositories/user";
+import { getUser } from "@/enteties/user/repositories/user";
 
 export type SignUpFormState = {
     formData?: FormData;
@@ -66,13 +66,24 @@ export const signUpAction = async (
             return {
                 formData,
                 errors: {
-                    _errors: createUserResult.value
+                    _errors: createUserResult.error || "Failed to create user"
                 }
             };
         }
 
         const user = createUserResult.value;
-        await sessionService.addSession(user);
+        
+        try {
+            await sessionService.addSession(user);
+        } catch (sessionError) {
+            console.error("Session creation error:", sessionError);
+            return {
+                formData,
+                errors: {
+                    _errors: "Failed to create session"
+                }
+            };
+        }
 
         return {
             formData,

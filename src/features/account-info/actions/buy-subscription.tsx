@@ -1,166 +1,188 @@
 "use server";
 
-import {z} from "zod";
-import {$Enums} from "@prisma/client";
-import {prisma} from "@/shared/lib/db";
-import {getSubscription} from "@/enteties/subscription/repositories/subscription";
-import {userRepository} from "@/enteties/user/repositories/user";
+import { z } from "zod";
+import { prisma } from "@/shared/lib/db";
+import { revalidatePath } from "next/cache";
+import { SubscriptionType, Role } from "@prisma/client";
+
+const buySubscriptionSchema = z.object({
+    type: z.enum(['BASIC', 'FAST', 'TURBO']),
+    price: z.string().transform(Number),
+    trackingNumber: z.string().transform(Number),
+    autorenew: z.string().transform(val => val === 'true'),
+    userId: z.string().transform(Number),
+    endDate: z.string().transform(date => new Date(date))
+});
 
 export type BuySubscriptionState = {
     formData?: FormData;
     errors?: {
         _errors?: string;
-    }
-}
+    };
+};
 
-const buySubscriptionDataSchema = z.object({
-    type: z.enum(['BASIC', 'FAST', 'TURBO']),
-    price: z.string().transform((val) => Number(val)),
-    trackingNumber: z.string().transform((val) => Number(val)),
-    autorenew: z.string().transform((val) => val === 'true'),
-    userId: z.string().transform((val) => Number(val)),
-    endDate: z.string().transform((val) => new Date(val))
-});
+const calculateDiscountedPrice = (price: number, userRole: Role) => {
+    const discounts = {
+        'RESELLER': 0.05,
+        'PARTNER': 0.1,
+        'VIPPARTNER': 0.15,
+        'DISTRIBUTOR': 0.2,
+        'INFLUENCER': 0,
+        'USER': 0,
+        'ADMIN': 0
+    };
 
-export const buySubscriptionAction = async (
+    const discount = discounts[userRole] || 0;
+    const discountedPrice = price * (1 - discount);
+    const savedAmount = price - discountedPrice;
+
+    return {
+        finalPrice: discountedPrice,
+        savedAmount: savedAmount
+    };
+};
+
+export async function buySubscriptionAction(
     state: BuySubscriptionState,
     formData: FormData
-): Promise<BuySubscriptionState> => {
-    const data = Object.fromEntries(formData.entries());
-    console.log('Received data:', data);
-
-    const result = buySubscriptionDataSchema.safeParse(data);
-
-    if (!result.success) {
-        console.error('Validation error:', result.error.format());
-        return {
-            formData,
-            errors: {
-                _errors: "Invalid subscription data"
-            }
-        };
-    }
-
+): Promise<BuySubscriptionState> {
     try {
-        const transaction = await prisma.$transaction(async (tx) => {
-            const user = await tx.user.findUnique({
-                where: {id: result.data.userId}
-            });
+        const data = Object.fromEntries(formData.entries());
+        const result = buySubscriptionSchema.safeParse(data);
 
-            if (!user) {
-                throw new Error("User not found");
+        if (!result.success) {
+            return {
+                formData,
+                errors: {
+                    _errors: "Invalid form data"
+                }
+            };
+        }
+
+        const { type, price, trackingNumber, autorenew, userId, endDate } = result.data;
+
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { 
+                role: true, 
+                balance: true,
+                referredBy: true
             }
+        });
 
-            if (user.balance < result.data.price) {
-                throw new Error("Insufficient balance");
-            }
+        if (!user) {
+            return {
+                formData,
+                errors: {
+                    _errors: "User not found"
+                }
+            };
+        }
 
-            const subscription = await tx.subscriptions.create({
+        const { finalPrice, savedAmount } = calculateDiscountedPrice(price, user.role);
+
+        if (user.balance < finalPrice) {
+            return {
+                formData,
+                errors: {
+                    _errors: "Insufficient balance"
+                }
+            };
+        }
+
+        await prisma.$transaction(async (tx) => {
+            await tx.subscriptions.create({
                 data: {
-                    type: result.data.type as $Enums.SubscriptionType,
-                    price: result.data.price,
-                    trackingNumber: result.data.trackingNumber,
-                    autorenew: result.data.autorenew,
-                    userId: result.data.userId,
-                    endDate: result.data.endDate
+                    type: type as SubscriptionType,
+                    price: Math.round(finalPrice),
+                    trackingNumber,
+                    autorenew,
+                    userId,
+                    endDate,
+                    earns: savedAmount
                 }
             });
 
-            const updatedUser = await tx.user.update({
-                where: {id: user.id},
+            await tx.user.update({
+                where: { id: userId },
                 data: {
-                    balance: user.balance - result.data.price
+                    balance: {
+                        decrement: finalPrice
+                    }
                 }
             });
 
             if (user.referredBy !== 0) {
-                const existingReferral = await tx.referrals.findFirst({
-                    where: {
-                        userId: user.referredBy
-                    }
+                const referer = await tx.user.findUnique({
+                    where: { id: user.referredBy }
                 });
 
-                if (existingReferral) {
-                    const getReferral = await userRepository.getUser({id: existingReferral.userId});
+                if (referer) {
+                    const refererReferral = await tx.referrals.findUnique({
+                        where: { userId: referer.id }
+                    });
 
-                    if (!getReferral) {
-                        throw new Error(`Referral user not found: ${existingReferral.userId}`);
-                    }
+                    const cashback = finalPrice * 0.1;
 
-                    await tx.referrals.update({
-                        where: {
-                            id: existingReferral.id
-                        },
+                    await tx.user.update({
+                        where: { id: referer.id },
                         data: {
-                            purchasesOfReferrals: {
-                                increment: result.data.price
-                            },
-                            registeredWithPurchase: {
-                                increment: 1
-                            },
-                            totalCashback: {
-                                increment: (result.data.price * getReferral.discountRate) / 100
+                            balance: {
+                                increment: cashback
                             }
                         }
                     });
-                } else {
-                    await tx.referrals.create({
+
+                    if (refererReferral) {
+                        await tx.referrals.update({
+                            where: { userId: referer.id },
+                            data: {
+                                purchasesOfReferrals: {
+                                    increment: finalPrice
+                                },
+                                totalCashback: {
+                                    increment: cashback
+                                },
+                                registeredWithPurchase: {
+                                    increment: 1
+                                }
+                            }
+                        });
+                    } else {
+                        await tx.referrals.create({
+                            data: {
+                                userId: referer.id,
+                                purchasesOfReferrals: finalPrice,
+                                totalCashback: cashback,
+                                registeredWithPurchase: 1,
+                                totalReferrals: 1
+                            }
+                        });
+                    }
+
+                    await tx.transactions.create({
                         data: {
-                            userId: user.referredBy,
-                            purchasesOfReferrals: result.data.price,
-                            registeredWithPurchase: 1,
-                            totalReferrals: 1
+                            sum: cashback,
+                            type: "TOPUP",
+                            system: "USDT",
+                            userId: referer.id
                         }
                     });
                 }
             }
-
-            const userSusbcriptions = await getSubscription(result.data.userId)
-
-            if(userSusbcriptions.length >= 0 && userSusbcriptions.length <= 3) {
-                const updateUserRole = await tx.user.update({
-                    where: {id: user.id},
-                    data: {
-                        role: "RESELLER"
-                    }
-                })
-            } else if (userSusbcriptions.length >= 4 && userSusbcriptions.length <= 13){
-                const updateUserRole = await tx.user.update({
-                    where: {id: user.id},
-                    data: {
-                        role: "PARTNER"
-                    }
-                })
-            } else if (userSusbcriptions.length >= 14 && userSusbcriptions.length <= 28){
-                const updateUserRole = await tx.user.update({
-                    where: {id: user.id},
-                    data: {
-                        role: "VIPPARTNER"
-                    }
-                })
-            } else if (userSusbcriptions.length >= 29){
-                const updateUserRole = await tx.user.update({
-                    where: {id: user.id},
-                    data: {
-                        role: "DISTRIBUTOR"
-                    }
-                })
-            }
-
-
-            return {subscription, updatedUser};
         });
 
-        console.log('Transaction completed successfully:', transaction);
-        return {formData};
+        revalidatePath('/personal-cabinet');
+
+        return { formData };
 
     } catch (error) {
-        console.error("Error processing subscription:", error);
+        console.error('Buy subscription error:', error);
         return {
             formData,
             errors: {
-                _errors: error instanceof Error ? error.message : "Failed to process subscription"
+                _errors: error instanceof Error ? error.message : "Failed to buy subscription"
             }
         };
     }
-};
+}

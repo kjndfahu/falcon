@@ -34,7 +34,7 @@ export const Transactions: React.FC = async () => {
                             <tr key={index} className="border-b sml:text-[18px] text-[16px] text-[#101D2C]">
                                 <td className="mds:px-[46px] sml:px-[20px] px-[15px] font-normal py-[20px]">
                                     <div
-                                        className="flex flex-col-reverse sm:flex-row sm:gap-3 gap-1 sm:order-1 sm:items-center sm:justify-start">
+                                        className="flex sm:flex-col flex-row gap-3 sm:gap-0 sm:order-1 sm:items-start items-center sm:justify-start">
                                         ${item.sum}
                                         <p className="sml:flex hidden text-[14px] text-[#4B5167]">
                                             ${item.sum.toFixed(2)} USD

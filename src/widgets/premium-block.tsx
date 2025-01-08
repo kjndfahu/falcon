@@ -5,15 +5,17 @@ import {NextLvLBlock} from "@/features/account-info/ui/next-lvl-block";
 
 interface Props{
     progress?: number;
-    getReferrals?: number;
+    getCustomers: number;
+    totalPriceSales: number;
+    totalEarns: number;
 }
 
-export const PremiumBlock:React.FC<Props> = ({progress, getReferrals}) => {
+export const PremiumBlock:React.FC<Props> = ({progress, totalPriceSales, totalEarns, getCustomers}) => {
     return (
-        <div className="flex items-center gap-[50px]">
+        <div className="flex flex-wrap items-center gap-[50px]">
             <NextLvLBlock percentage={progress}/>
-            <PrBlock child={ <CustomersCount /> } />
-            <PrBlock child={ <EarningSales/> } />
+            <PrBlock child={ <CustomersCount getCustomers={getCustomers} /> } />
+            <PrBlock child={ <EarningSales totalEarns={totalEarns} totalPriceSales={totalPriceSales}/> } />
         </div>
     )
 }

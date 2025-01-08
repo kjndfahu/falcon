@@ -1,6 +1,6 @@
 import { useCallback, useState, useTransition } from "react";
 
-export function useActionState<TState, TArg = void>(
+export function useActionState<TState, TArg = FormData>(
     action: (state: TState, arg: TArg) => Promise<TState>,
     initialState: TState
 ): [TState, (arg: TArg) => Promise<TState>, boolean] {

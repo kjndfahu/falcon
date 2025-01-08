@@ -31,7 +31,7 @@ export const RestoreAccessInput: React.FC<Props> = ({formData, errors}) => {
                 {errors?.email && <div className="text-red-500">{errors.email}</div>}
             </div>
             <div className="flex flex-col text-[18px] gap-3">
-                <label htmlFor={passwordId}>Сумма</label>
+                <label htmlFor={passwordId}>Пароль</label>
                 <div
                     className="rounded-[15px] font-medium border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                     <input

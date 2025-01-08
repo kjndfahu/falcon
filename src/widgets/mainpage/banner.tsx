@@ -1,6 +1,7 @@
 import star from '../../shared/assets/img/star.png'
 import Image from 'next/image'
 import {BlueBtn} from "@/shared/ui/blue-btn";
+import Link from "next/link";
 
 export const Banner = () => {
     return (
@@ -11,7 +12,9 @@ export const Banner = () => {
                         <h3>85% of our clients set up the program once.</h3>
                         <h3>2 clicks. 100+ accounts. Save time with us:</h3>
                     </div>
-                    <BlueBtn title="Take all benefits now"/>
+                    <Link href="/personal-cabinet">
+                        <BlueBtn styles="w-full" title="Take all benefits now"/>
+                    </Link>
                 </div>
             </div>
             <Image className="mdbvp:flex mds:hidden " src={star} alt="star"/>
