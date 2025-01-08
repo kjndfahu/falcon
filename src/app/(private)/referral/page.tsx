@@ -12,7 +12,7 @@ export default async function ReferralPage() {
         throw new Error("User not found.");
     }
     const referralInfo = await getReferralInfo(user.id)
-    console.log(referralInfo, 'referralInfo')
+    console.log(user, 'referralInfo')
 
     return (
         <div className="flex w-full flex-col xl:gap-[50px] mdbvp:gap-[30px] gap-[15px] sml:py-[77px] py-[25px] xl:px-[129px] md:px-[40px] px-[20px]">

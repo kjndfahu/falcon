@@ -1,5 +1,6 @@
 import {GoogleButton} from "@/features/auth/ui/google-button";
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 
 interface Props{
@@ -12,6 +13,8 @@ interface Props{
 }
 
 export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields, maintitle,}) => {
+    const currentPath = usePathname();
+    console.log(currentPath)
     return (
         <div className="flex flex-col w-full text-[#0A131D] text-[32px] font-semibold">
             <h3>{maintitle}</h3>
@@ -22,12 +25,25 @@ export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields
             </form>
             <GoogleButton />
             <div className="flex sml:flex-row flex-col w-full sml:items-center items-start sml:gap-0 gap-3 justify-between sml:pt-[25px] pt-[50px] font-normal">
-                <div className="flex text-[18px] gap-1 text-[#67748E]">Already have an account?
-                    <Link href="/sign-in">
-                        <span className="text-[#0A131D] underline">Sign Up</span>
-                    </Link>
-                </div>
-                <p className="text-[18px] text-[#67748E]">Forgot your <span className="text-[#0A131D] underline">password</span></p>
+                {currentPath === '/sign-up' ? (
+                    <>
+                        <div className="flex text-[18px] gap-1 text-[#67748E]">Already have an account?
+                            <Link href="/sign-in">
+                                <span className="text-[#0A131D] underline">Log In</span>
+                            </Link>
+                        </div>
+                        <p className="text-[18px] text-[#67748E]">Forgot your <span
+                            className="text-[#0A131D] underline">password</span></p>
+                    </>
+                ) : (
+                    <>
+                        <div className="flex text-[18px] gap-1 text-[#67748E]">Dont have account yet?
+                            <Link href="/sign-up">
+                                <span className="text-[#0A131D] underline">Sign Up</span>
+                            </Link>
+                        </div>
+                    </>
+                    )}
             </div>
         </div>
     )

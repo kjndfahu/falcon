@@ -7,7 +7,7 @@ import {getDiscountedPrice} from "@/features/account-info/actions/get-discount-p
 interface Props {
     activeTab: string;
     activeDays: string;
-    userRole: string;
+    userRole?: string;
 }
 
 export const SubscriptionBlock: React.FC<Props> = ({ activeTab, activeDays, userRole }) => {

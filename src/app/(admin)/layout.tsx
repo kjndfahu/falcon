@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import "../globals.css";
 import {AdminNavbar} from "@/widgets/admin-navbar/admin-navbar";
 import {Toaster} from "react-hot-toast";
+import {sessionService} from "@/enteties/user/services/session";
+import {getUserInfo} from "@/features/account-info/model/get-user";
 
 const myFont = localFont({
     src: [
@@ -24,18 +26,24 @@ const myFont = localFont({
 });
 
 export default async function AdminLayout({children}: {children: React.ReactNode}){
-    // const {session} = await sessionService.verifySession()
-    // console.log(session)
+    const {session} = await sessionService.verifySession()
+    const user= await getUserInfo({login: session.login})
+    if(!user){
+        throw new Error("User not found.");
+    }
+    const role = user.role
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
-        <div className="flex md:flex-row flex-col">
-            <AdminNavbar/>
-            <div className="md:ml-[300px] flex-1">
-                <Toaster/>
-                {children}
+        {role === 'ADMIN' && (
+            <div className="flex md:flex-row flex-col">
+                <AdminNavbar/>
+                <div className="md:ml-[300px] flex-1">
+                    <Toaster/>
+                    {children}
+                </div>
             </div>
-        </div>
+        )}
         </body>
         </html>
     )

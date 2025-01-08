@@ -9,7 +9,11 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signOutAction } from "@/features/auth/actions/sign-out";
 
-export const MainNavbar = () => {
+interface Props{
+    role: string;
+}
+
+export const MainNavbar:React.FC<Props> = ({role}) => {
     const [isClicked, setClicked] = useState(false);
     const router = useRouter();
 
@@ -38,7 +42,7 @@ export const MainNavbar = () => {
         <div className="md:fixed flex flex-col md:gap-[100px] gap-[18px] md:w-[300px] w-full md:min-h-screen border-r-[1px] border-[#CDDBEB] md:py-[77px] bg-white">
             <LogoBlock isClicked={isClicked} setClicked={setClicked} />
             <div className={`md:flex ${isClicked ? 'flex' : 'hidden'} flex-col`}>
-                <NavbarButtons/>
+                <NavbarButtons role={role}/>
                 <div className="md:hidden flex flex-col gap-[20px] mt-[25px] px-[20px]">
                     <div className="w-full">
                         <Button 

@@ -31,7 +31,7 @@ export default async function PersonalCabinet() {
     if(!totalEarns){
         console.log(0);
     }
-    const users = await userRepository.getUser({ email: session.email });
+    const users = await userRepository.getUser({ email: user.email });
     const {progress} = await checkRole(user.id, user.role)
     if(!progress){
         console.log(0);
@@ -43,7 +43,7 @@ export default async function PersonalCabinet() {
             <UserInfo/>
             <div className="flex mds:flex-row flex-col gap-[46px]">
                 <PcBlock styles="mds:w-[413px] w-full" balance={user?.balance} userId={user?.id} session={session} title="BALANCE" num={user?.balance} btn={<DepositBlock className="cursor-pointer"/>}/>
-                <ActiveSubs userRole={users.role} subs={subs.length} session={session}/>
+                <ActiveSubs userRole={users?.role} subs={subs.length} session={session}/>
             </div>
 
             {(user.role !== "USER" && user.role !== "INFLUENCER") && (

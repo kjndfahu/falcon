@@ -1,64 +1,83 @@
 "use server";
 
 import { z } from "zod";
-import {userRepository} from "@/enteties/user/repositories/user";
-import {passwordService} from "@/enteties/user/services/password";
+import { prisma } from "@/shared/lib/db";
+import { passwordService } from "@/enteties/user/services/password";
+import { revalidatePath } from "next/cache";
 
 export type ChangePasswordState = {
     formData?: FormData;
     errors?: {
-        email?: string;
-        password?: string;
-        confirmPassword?: string;
         _errors?: string;
     };
+    success?: boolean;
 };
 
-const changePasswordSchema = z
-    .object({
-        email: z.string().email(),
-        password: z.string().min(3),
-        confirmPassword: z
-            .string()
-            .min(3, "Confirm Password must be at least 3 characters long"),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: "Passwords do not match",
-        path: ["confirmPassword"],
-    });
+const changePasswordSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+});
 
-export const changePasswordAction = async (
+export async function changePasswordAction(
     state: ChangePasswordState,
     formData: FormData
-): Promise<ChangePasswordState> => {
-    const data = Object.fromEntries(formData.entries());
-    const result = changePasswordSchema.safeParse(data);
+): Promise<ChangePasswordState> {
+    try {
+        const data = Object.fromEntries(formData.entries());
+        const result = changePasswordSchema.safeParse(data);
 
-    if (!result.success) {
-        const formattedErrors = result.error.format();
+        if (!result.success) {
+            return {
+                formData,
+                errors: {
+                    _errors: result.error.flatten().formErrors[0] || "Invalid form data"
+                }
+            };
+        }
+
+        const { email, password } = result.data;
+
+        const user = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (!user) {
+            return {
+                formData,
+                errors: {
+                    _errors: "User not found"
+                }
+            };
+        }
+
+        const { hash, salt } = await passwordService.hashPassword(password);
+
+        await prisma.user.update({
+            where: { email },
+            data: {
+                password: hash,
+                salt
+            }
+        });
+
+        revalidatePath('/settings');
 
         return {
             formData,
+            success: true
+        };
+
+    } catch (error) {
+        console.error('Change password error:', error);
+        return {
+            formData,
             errors: {
-                email: formattedErrors?.email?._errors.join(", "),
-                password: formattedErrors?.password?._errors.join(", "),
-                confirmPassword: formattedErrors?.confirmPassword?._errors.join(
-                    ", "
-                ),
-                _errors: formattedErrors?._errors.join(", "),
-            },
+                _errors: error instanceof Error ? error.message : "Failed to change password"
+            }
         };
     }
-
-    const {hash, salt} = await passwordService.hashPassword(result.data.password)
-
-    const changedPassword = await userRepository.restoreAccess(result.data.email, hash, salt)
-
-    console.log('Restore access result:', changedPassword);
-    return {
-        formData,
-        errors: {
-            _errors: "Пользователь с таким login или email существует",
-        },
-    };
-};
+}

@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "../globals.css";
 import {Toaster} from "react-hot-toast";
 import {Providers} from "./providers";
+import {sessionService} from "@/enteties/user/services/session";
+import {getUserInfo} from "@/features/account-info/model/get-user";
 
 const myFont = localFont({
     src: [
@@ -24,19 +26,27 @@ const myFont = localFont({
     ],
 });
 
-export default function LK({children}: {children: React.ReactNode}){
+export default async function LK({children}: {children: React.ReactNode}){
+    const {session} = await sessionService.verifySession()
+    const user= await getUserInfo({login: session.login})
+    if(!user){
+        throw new Error("User not found.");
+    }
+    const role = user.role
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
+        {user.isBlocked === false && (
             <Providers>
                 <div className="flex md:flex-row flex-col w-full min-h-screen">
-                    <MainNavbar/>
+                    <MainNavbar role={role}/>
                     <div className="md:ml-[300px] flex-1">
                         <Toaster/>
                         {children}
                     </div>
                 </div>
             </Providers>
+        )}
         </body>
         </html>
     );

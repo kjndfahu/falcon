@@ -39,12 +39,14 @@ export const SignInFields:React.FC<Props> = ({formData, errors}) => {
                 <label htmlFor={passwordId}>Password</label>
                 <div
                     className="flex items-center rounded-[15px] sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] pl-[16px] py-[18px] pr-[31px]">
-                    <input placeholder="Enter your name"
-                           id={passwordId}
+                    <input id={passwordId}
                            name="password"
-                           type="password"
+                           type={passEye ? "text" : "password"}
+                           placeholder="Enter your password"
+                           required
                            defaultValue={formData?.get("password")?.toString()}
-                           className="bg-transparent w-full focus:outline-none focus:ring-0" />
+                           className="bg-transparent w-full focus:outline-none focus:ring-0"
+                    />
                     <div className="cursor-pointer" onClick={() => setPassEye(!passEye)}>
                         {passEye ? (
                             <OpenEye/>

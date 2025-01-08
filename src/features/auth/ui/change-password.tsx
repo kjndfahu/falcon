@@ -1,28 +1,32 @@
 'use client'
 import {Button} from "@/shared/ui/button";
 import { useState } from "react";
-import { ChangePasswordModal } from "./change-password-modal";
-import { MailVerificationModal } from "./mail-verification-modal";
 import { sendVerificationEmail } from "@/features/auth/actions/send-verification-email";
+import {MailVerificationModal} from "@/features/settings/ui/mail-verification-modal";
+import {ChangePasswordModal} from "@/features/settings/ui/change-password-modal";
+import { useRouter } from "next/navigation";
+import { RestorePasswordModal } from "./restore-password-modal";
 
 interface Props {
-    setModal: (isModal: boolean) => void;
+    className?:string;
 }
 
-export const SettingsModal: React.FC<Props> = ({ setModal }) => {
+export const ChangePassword: React.FC<Props> = ({className }) => {
+    const [isModal, setModal] = useState(false);
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showVerificationModal, setShowVerificationModal] = useState(false);
     const [email, setEmail] = useState('');
     const [verificationCode, setVerificationCode] = useState<string>('');
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (email) {
             const formData = new FormData();
             formData.append('email', email);
-            
+
             const result = await sendVerificationEmail({}, formData);
-            
+
             if (result.success && result.verificationCode) {
                 setVerificationCode(result.verificationCode);
                 setShowVerificationModal(true);
@@ -30,17 +34,20 @@ export const SettingsModal: React.FC<Props> = ({ setModal }) => {
         }
     };
 
+    const handleModalClose = (success: boolean) => {
+        setModal(false);
+        if (success) {
+            router.push('/personal-cabinet');
+        }
+    };
+
     if (showPasswordModal) {
-        return <ChangePasswordModal 
-            setModal={setModal} 
-            email={email}
-            redirectAfterSuccess={false}
-        />;
+        return <RestorePasswordModal setModal={setModal} email={email} />;
     }
 
     if (showVerificationModal) {
         return (
-            <MailVerificationModal 
+            <MailVerificationModal
                 email={email}
                 expectedCode={verificationCode}
                 onVerificationComplete={() => {
@@ -77,8 +84,8 @@ export const SettingsModal: React.FC<Props> = ({ setModal }) => {
                     />
                 </div>
             </div>
-            <Button 
-                title="Next" 
+            <Button
+                title="Next"
                 type="submit"
                 styles="items-center justify-center py-[18px] rounded-[15px] text-white bg-[#0A131D]"
             />

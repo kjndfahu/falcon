@@ -16,7 +16,7 @@ interface Props {
     isClicked: boolean,
     setIsClicked: (isClicked: boolean) => void,
     session: SessionEntity;
-    userRole: string;
+    userRole?: string;
 }
 
 export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, session}) => {

@@ -9,7 +9,7 @@ interface Props{
     className?:string,
     session: SessionEntity;
     subs: number;
-    userRole: string;
+    userRole?: string;
 }
 
 export const ActiveSubs:React.FC<Props> = ({className, userRole, subs, session}) => {
