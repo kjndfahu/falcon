@@ -6,6 +6,7 @@ import arrow from '../../../shared/assets/img/ArrowUp.png'
 import {ArrowRight, SaveIcon} from "@/shared/ui/icons";
 import {LogoBlock} from "@/shared/ui/logo-block";
 import Image from 'next/image'
+import Link from "next/link";
 
 const tools = [
     {
@@ -50,7 +51,9 @@ export const MainFeaturesBlocks = () => {
                         </p>
                     </div>
                     <div className="flex items-center text-[#4B5167] mds:pt-0 pt-[45px] text-[18px] leading-[16px] gap-1">
-                        Read more
+                        <Link href="/commands-features">
+                            Read more
+                        </Link>
                         <ArrowRight/>
                     </div>
                     <div className="absolute bottom-0 right-0 mr-[42px]">
@@ -67,7 +70,9 @@ export const MainFeaturesBlocks = () => {
                             location and in-game<br/> activity in real time. Track their movements, actions.</p>
                     </div>
                     <div className="flex items-center text-[#4B5167] text-[18px] mds:pt-0 pt-[45px] leading-[16px] gap-1">
-                        Read more
+                        <Link href="/commands-features">
+                            Read more
+                        </Link>
                         <ArrowRight/>
                     </div>
                     <div className="absolute bottom-0 right-0 xl:mr-[42px] mr-[15px]">
@@ -89,7 +94,9 @@ export const MainFeaturesBlocks = () => {
                             that aligns with your playstyle and objectives.</p>
                     </div>
                     <div className="flex items-center text-[#4B5167] text-[18px] mds:pt-0 pt-[45px] leading-[16px] gap-1">
-                        Read more
+                        <Link href="/commands-features">
+                            Read more
+                        </Link>
                         <ArrowRight/>
                     </div>
                     <div className="absolute bottom-0 right-0 xl:mr-[42px]">
@@ -108,7 +115,9 @@ export const MainFeaturesBlocks = () => {
                         </p>
                     </div>
                     <div className="flex items-center text-[#4B5167] text-[18px] mds:pt-0 pt-[45px] leading-[16px] gap-1">
-                        Read more
+                        <Link href="/commands-features">
+                            Read more
+                        </Link>
                         <ArrowRight/>
                     </div>
                     <div className="absolute bottom-0 right-0 mr-[28px]">

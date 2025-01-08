@@ -28,6 +28,7 @@ export const DecrementBalanceForm: React.FC<Props> = ({formData, errors}) => {
                 <label htmlFor={emailId}>Email</label>
                 <div className="rounded-[15px] font-medium border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                     <input
+                        id={emailId}
                         name="email"
                         type="email"
                         placeholder="Enter email"
@@ -36,13 +37,18 @@ export const DecrementBalanceForm: React.FC<Props> = ({formData, errors}) => {
                         className="bg-transparent w-full focus:outline-none focus:ring-0"
                     />
                 </div>
-                {errors?.email && <div className="text-red-500">{errors.email}</div>}
+                {(errors?.email || errors?._errors) && (
+                    <div className="text-red-500 text-sm">
+                        {errors.email || errors._errors}
+                    </div>
+                )}
             </div>
             <div className="flex flex-col text-[18px] gap-3">
                 <label htmlFor={sumId}>Снять сумму</label>
                 <div
                     className="rounded-[15px] font-medium border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
                     <input
+                        id={sumId}
                         name="sum"
                         type="number"
                         placeholder="Enter sum"
@@ -51,7 +57,9 @@ export const DecrementBalanceForm: React.FC<Props> = ({formData, errors}) => {
                         className="bg-transparent w-full focus:outline-none focus:ring-0"
                     />
                 </div>
-                {errors?.sum && <div className="text-red-500">{errors.sum}</div>}
+                {errors?.sum && (
+                    <div className="text-red-500 text-sm">{errors.sum}</div>
+                )}
             </div>
         </div>
     )

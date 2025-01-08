@@ -32,8 +32,8 @@ export const SignInFields:React.FC<Props> = ({formData, errors}) => {
                         placeholder="Enter your username or email"
                         defaultValue={formData?.get("login")?.toString()}
                         className="bg-transparent w-full focus:outline-none focus:ring-0" />
-                    {errors?.login && <div>{errors.login}</div>}
                 </div>
+                {errors?.login && <div className="text-red-500">{errors.login}</div>}
             </div>
             <div className="flex flex-col font-medium text-[18px] leading-[17px] text-[#0A131D] gap-3">
                 <label htmlFor={passwordId}>Password</label>
@@ -52,8 +52,8 @@ export const SignInFields:React.FC<Props> = ({formData, errors}) => {
                             <ClosedEye/>
                         )}
                     </div>
-                    {errors?.password && <div>{errors.password}</div>}
                 </div>
+                {errors?.password && <div className="text-red-500">{errors.password}</div>}
             </div>
 
         </div>

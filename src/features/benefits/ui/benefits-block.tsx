@@ -1,4 +1,5 @@
 import {ArrowRight} from "@/shared/ui/icons";
+import Link from "next/link";
 
 interface Props{
     title?:string;
@@ -18,7 +19,9 @@ export const BenefitsBlock:React.FC<Props> = ({title, text, logo}) => {
                 <p className="text-[18px] leading-[25px] font-normal text-[#4B5167]">{text}</p>
             </div>
             <div className="flex items-center text-[#4B5167] text-[18px] leading-[16px] gap-1">
-                Read more
+                <Link href="/commands-features">
+                    Read more
+                </Link>
                 <ArrowRight/>
             </div>
         </div>

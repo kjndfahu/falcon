@@ -28,7 +28,6 @@ async function decrypt(session: string | undefined = "") {
         return left(error);
     }
 }
-
 async function addSession (user: UserEntity){
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const sessionDate = userToSession(user,  expiresAt.toString());
@@ -47,7 +46,6 @@ async function deleteSession(){
     const cookieStore = await cookies();
     cookieStore.delete('session')
 }
-
 const verifySession = async() => {
     const cookie = (await cookies()).get("session")?.value;
     const session = await decrypt(cookie)
@@ -61,7 +59,6 @@ const verifySession = async() => {
         session: session.value
     }
 }
-
 const checkSession = async() => {
     const cookie = (await cookies()).get("session")?.value;
     const session = await decrypt(cookie)

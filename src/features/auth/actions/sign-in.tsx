@@ -34,17 +34,14 @@ export const signInAction = async(state: SignInFormState, formData: FormData): P
             }
         }
     }
-
     const verifyUserResult = await verifyUserPassword(result.data);
 
     if(verifyUserResult.type === "right"){
         await sessionService.addSession(verifyUserResult.value);
-
         redirect("/personal-cabinet")
     }
-
     const errors = {
-        "wrong-login-or-password": "Неверный логин или пароль"
+        "wrong-login-or-password": "Incorrect login or password"
     }[verifyUserResult.error]
 
     return {

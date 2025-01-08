@@ -21,11 +21,11 @@ export const headerLinks = [
     },
     {
         title: "Telegram",
-        link: "/telegram"
+        link: "https://desktop.telegram.org/"
     },
     {
         title: "For business",
-        link: "/for-business"
+        link: "/referral-programm"
     },
     {
         title: "Contact Us",

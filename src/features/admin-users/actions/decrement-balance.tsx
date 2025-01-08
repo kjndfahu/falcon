@@ -1,134 +1,82 @@
 "use server";
 
-import {z} from "zod";
-import {createTransaction, userRepository} from "@/enteties/user/repositories/user";
-import {createdWithdraws} from "@/enteties/user/services/create-withdraw";
-import {decrementBalance} from "@/enteties/user/services/decrement-balance";
+import { z } from "zod";
+import { prisma } from "@/shared/lib/db";
+import { revalidatePath } from "next/cache";
 
 export type DecrementBalanceState = {
     formData?: FormData;
     errors?: {
         email?: string;
-        sum?: string;
+        sum?: number;
         _errors?: string;
-    }
-}
+    };
+    success?: boolean;
+};
 
-const decrementBalanceDataSchema = z.object({
-    email: z.string().email(),
-    sum: z.string().transform((val) => Number(val))
-        .refine((val) => !isNaN(val) && val > 0, "Sum must be a positive number")
-})
+const decrementBalanceSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    sum: z.string().transform(Number),
+});
 
-export async function decrementBalanceAction(state: DecrementBalanceState, formData: FormData): Promise<DecrementBalanceState> {
-    console.log("Starting decrementBalanceAction with formData:", Object.fromEntries(formData.entries()));
-
-    if (!formData) {
-        return {
-            errors: {
-                _errors: "No form data provided"
-            }
-        };
-    }
-
+export async function decrementBalanceAction(
+    state: DecrementBalanceState,
+    formData: FormData
+): Promise<DecrementBalanceState> {
     try {
         const data = Object.fromEntries(formData.entries());
-        const result = decrementBalanceDataSchema.safeParse(data);
+        const result = decrementBalanceSchema.safeParse(data);
 
-        if(!result.success){
-            const formattedErrors = result.error.format();
-
+        if (!result.success) {
             return {
                 formData,
                 errors: {
-                    email: formattedErrors?.email?._errors.join(", "),
-                    sum: formattedErrors?.sum?._errors.join(", "),
-                    _errors: formattedErrors?._errors.join(", "),
+                    email: result.error.flatten().fieldErrors.email?.[0],
+                    _errors: "Invalid data"
                 }
-            }
+            };
         }
 
-        const { email, sum } = result.data;
-
-        const user = await userRepository.getUser({ email });
+        const user = await prisma.user.findUnique({
+            where: { email: result.data.email }
+        });
 
         if (!user) {
             return {
                 formData,
                 errors: {
-                    _errors: "User does not exist"
+                    _errors: "User doesn't exist"
                 }
             };
         }
 
-        if (user.balance < sum) {
+        if (user.balance < result.data.sum) {
             return {
                 formData,
                 errors: {
-                    _errors: "Insufficient funds"
+                    _errors: "Insufficient balance"
                 }
             };
         }
 
-        try {
-            const withdrawResult = await createdWithdraws(
-                sum, 
-                "WITHDRAW", 
-                "ADMINRECHARGE", 
-                user.id
-            ).catch(error => {
-                return null;
-            });
+        await prisma.user.update({
+            where: { email: result.data.email },
+            data: { balance: { decrement: result.data.sum } }
+        });
 
-            const transactionResult = await createTransaction(sum, "WITHDRAW", "ADMINRECHARGE", user.id)
+        revalidatePath('/admin');
 
-            if (!withdrawResult) {
-                return {
-                    formData,
-                    errors: {
-                        _errors: "Failed to create withdrawal record"
-                    }
-                };
-            }
-
-            const balanceResult = await decrementBalance(user.id, sum);
-
-            if (!balanceResult.success) {
-                return {
-                    formData,
-                    errors: {
-                        _errors: balanceResult.error || "Failed to update balance"
-                    }
-                };
-            }
-
-            return { 
-                formData,
-                errors: undefined
-            };
-
-        } catch (error) {
-            return {
-                formData,
-                errors: {
-                    _errors: error instanceof Error ? error.message : "Failed to process withdrawal"
-                }
-            };
-        }
+        return {
+            formData,
+            success: true
+        };
 
     } catch (error) {
-        if (error instanceof Error) {
-            return {
-                formData,
-                errors: {
-                    _errors: error.message
-                }
-            };
-        }
+        console.error("Error decrementing balance:", error);
         return {
             formData,
             errors: {
-                _errors: "An unexpected error occurred"
+                _errors: error instanceof Error ? error.message : "Failed to decrement balance"
             }
         };
     }

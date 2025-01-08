@@ -37,7 +37,7 @@ export default async function PersonalCabinet() {
                 <ActiveSubs userRole={users.role} subs={subs.length} session={session}/>
             </div>
 
-            <PremiumBlock getReferrals={getReferrals} progress={progress}/>
+            {session.role==="DISTRIBUTOR" && <PremiumBlock getReferrals={getReferrals} progress={progress}/>}
 
             <Transactions/>
         </div>

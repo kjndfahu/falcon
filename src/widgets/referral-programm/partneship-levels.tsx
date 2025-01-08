@@ -45,7 +45,7 @@ export const PartneshipLevels:React.FC<Props> = ({}) => {
                                      blockstyles="bg-[#342b67] text-[#FF4A8B]"
                                      title="Distributor"
                                      text="Become a Distributor with 30+ active subscriptions to unlock the highest benefits, including a 20% discount and access to a personal group for testing with plan Turb..."
-                                     laststyles="text-[#FF4A8B"
+                                     laststyles="text-[#FF4A8B]"
                                      logo1={ <DistributorLogo/> }
                 />
             </div>

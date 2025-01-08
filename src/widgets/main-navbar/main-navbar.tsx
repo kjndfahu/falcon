@@ -6,23 +6,31 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/shared/ui/button";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { signOutAction } from "@/features/auth/actions/sign-out";
 
 export const MainNavbar = () => {
     const [isClicked, setClicked] = useState(false);
-    
+    const router = useRouter();
+
     const handleLogout = async () => {
         try {
-            await fetch('/api/auth/signout', {
-                method: 'POST'
-            });
-            
-            await signOut({
-                callbackUrl: '/',
-                redirect: true
-            });
+            const result = await signOutAction();
+
+            if (result.success) {
+                await signOut({ redirect: false });
+
+                if (typeof window !== 'undefined') {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                }
+
+                router.push(result.redirectUrl || '/');
+            } else {
+                console.error('Logout failed:', result.error);
+            }
         } catch (error) {
             console.error("Logout error:", error);
-            window.location.href = '/';
         }
     };
     

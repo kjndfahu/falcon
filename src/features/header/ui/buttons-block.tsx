@@ -12,7 +12,7 @@ export const ButtonsBlock:React.FC<Props> = ({isAuth}) => {
                 <div className="w-full">
                     <Link href="/personal-cabinet">
                         <Button title="Back to the office"
-                                styles="bg-[#0057FF] md:w-[150px] w-full leading-[20px] py-[15px] md:rounded-[5px] rounded-[12px]"/>
+                                styles="bg-[#0057FF] md:w-[150px] w-full leading-[20px] py-[8px] md:rounded-[5px] rounded-[12px]"/>
                     </Link>
                 </div>
             ) : (
@@ -21,13 +21,13 @@ export const ButtonsBlock:React.FC<Props> = ({isAuth}) => {
                     <div className="w-full">
                         <Link href="/sign-in">
                             <Button title="Log in"
-                                    styles="bg-[#0057FF] md:w-[80px] w-full leading-[20px] py-[15px] md:rounded-[5px] rounded-[12px]"/>
+                                    styles="bg-[#0057FF] md:w-[80px] w-full leading-[20px] py-[8px] md:rounded-[5px] rounded-[12px]"/>
                         </Link>
                     </div>
                     <div className="w-full ">
                         <Link href="/sign-up">
                             <Button title="Sign up"
-                                    styles="bg-[#101D2C] md:w-[80px] w-full leading-[20px] py-[15px] md:rounded-[5px] rounded-[12px]"/>
+                                    styles="bg-[#101D2C] md:w-[80px] w-full leading-[20px] py-[8px] md:rounded-[5px] rounded-[12px]"/>
                         </Link>
                     </div>
                 </>

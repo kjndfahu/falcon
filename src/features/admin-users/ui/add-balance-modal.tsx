@@ -18,8 +18,7 @@ interface Props{
 
 export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
     const [activeType, setActiveType] = useState('Пополнить');
-    const [formState] = useActionState(addBalanceAction, {} as AddBalanceState);
-    const [formDecrementState] = useActionState(decrementBalanceAction, {} as DecrementBalanceState);
+    const [formState, setFormState] = useState<AddBalanceState | DecrementBalanceState>({});
     const [isPending, setIsPending] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -29,11 +28,20 @@ export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) 
         try {
             const formData = new FormData(e.target as HTMLFormElement);
             const result = await handleBalanceForm(activeType, formData);
+            console.log('Form submission result:', result);
+
+            setFormState(result);
+
             if (result && !result.errors) {
                 setActiveModal(null);
             }
         } catch (error) {
             console.error('Error submitting form:', error);
+            setFormState({
+                errors: {
+                    _errors: 'Failed to process request'
+                }
+            });
         } finally {
             setIsPending(false);
         }
@@ -54,13 +62,8 @@ export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) 
                 <BalanceType label1="Пополнить" label2="Снять" activeType={activeType} setActiveType={setActiveType}/>
                 {activeType === 'Пополнить'
                     ? <AddBalanceForm {...formState} />
-                    : <DecrementBalanceForm {...formDecrementState} />
+                    : <DecrementBalanceForm {...formState} />
                 }
-                <ErrorMessage error={
-                    activeType === 'Пополнить'
-                        ? formState.errors?._errors
-                        : formDecrementState.errors?._errors
-                }/>
                 <BlueBtn
                     styles="w-full"
                     title="Submit"

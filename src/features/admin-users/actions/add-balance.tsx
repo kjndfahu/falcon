@@ -1,79 +1,74 @@
 "use server";
 
-import {z} from "zod";
-import {updateUserBalance} from "@/enteties/user/services/update-balance";
-import {createTransaction, userRepository} from "@/enteties/user/repositories/user";
-import {createdTopUp} from "@/enteties/user/services/create-top-up";
+import { z } from "zod";
+import { prisma } from "@/shared/lib/db";
+import { revalidatePath } from "next/cache";
 
 export type AddBalanceState = {
     formData?: FormData;
     errors?: {
         email?: string;
-        sum?: string;
+        sum?: number;
         _errors?: string;
-    }
-}
+    };
+    success?: boolean;
+};
 
-const addBalanceDataSchema = z.object({
-    email: z.string().email(),
-    sum: z.string().transform((val) => Number(val))
-        .refine((val) => !isNaN(val) && val > 0, "Sum must be a positive number")
-})
+const addBalanceSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    sum: z.string().transform(Number),
+});
 
-export const addBalanceAction = async (state: AddBalanceState, formData: FormData): Promise<AddBalanceState> => {
-    const data = Object.fromEntries(formData.entries());
-    const result = addBalanceDataSchema.safeParse(data);
-
-    if(!result.success){
-        const formattedErrors = result.error.format();
-
-        return {
-            formData,
-            errors: {
-                email: formattedErrors?.email?._errors.join(", "),
-                sum: formattedErrors?.sum?._errors.join(", "),
-                _errors: formattedErrors?._errors.join(", "),
-            }
-        }
-    }
-
-    const { email, sum } = result.data;
-
+export async function addBalanceAction(
+    state: AddBalanceState,
+    formData: FormData
+): Promise<AddBalanceState> {
     try {
-        const user = await userRepository.getUser({ email });
+        const data = Object.fromEntries(formData.entries());
+        const result = addBalanceSchema.safeParse(data);
+
+        if (!result.success) {
+            return {
+                formData,
+                errors: {
+                    email: result.error.flatten().fieldErrors.email?.[0],
+                    _errors: "Invalid data"
+                }
+            };
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { email: result.data.email }
+        });
 
         if (!user) {
             return {
                 formData,
                 errors: {
-                    _errors: "User does not exist.",
-                },
+                    _errors: "User doesn't exist"
+                }
             };
         }
 
-        const depositResult = await createdTopUp(sum, "TOPUP", "ADMINRECHARGE", user.id);
-        const transactionResult = await createTransaction(sum, "TOPUP", "ADMINRECHARGE", user.id)
+        await prisma.user.update({
+            where: { email: result.data.email },
+            data: { balance: { increment: result.data.sum } }
+        });
 
-        const addBalanceResult = await updateUserBalance(user.id, sum);
-        if (!addBalanceResult.success) {
-            return {
-                formData,
-                errors: {
-                    _errors: "Failed to update balance.",
-                },
-            };
-        }
+        revalidatePath('/admin');
 
         return {
             formData,
+            success: true
         };
+
     } catch (error) {
-        console.error("Error updating balance:", error);
+        console.error("Error adding balance:", error);
         return {
             formData,
             errors: {
-                _errors: "Failed to update balance",
-            },
+                _errors: error instanceof Error ? error.message : "Failed to add balance"
+            }
         };
     }
 }
