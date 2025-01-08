@@ -12,6 +12,7 @@ import { useRouter, useParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Verification } from "../ui/verification";
 import { sendVerificationEmail } from "../actions/send-verification-email";
+import {Terms} from "@/features/auth/ui/terms";
 
 export function SignUpForm() {
     const [formState, action, isPending] = useActionState<SignUpFormState>(signUpAction, {
@@ -36,6 +37,11 @@ export function SignUpForm() {
     }, [status, router]);
 
     const handleSubmit = async (formData: FormData) => {
+        const validationResult = await action(formData);
+        if (validationResult.errors) {
+            return;
+        }
+
         const email = formData.get('email') as string;
 
         if (!email || !email.includes('@')) {
@@ -150,6 +156,7 @@ export function SignUpForm() {
             maintitle="Create Your Account"
             titlebtn="Sign Up"
             fields={<SignUpFields {...formState}/>}
+            terms={ <Terms/> }
             actions={
                 <Button
                     isPending={isPending}

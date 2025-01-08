@@ -88,7 +88,6 @@ export const SignUpFields:React.FC<Props> = ({formData, errors}) => {
                 </div>
                 {errors?.confirmPassword && <div className="text-red-500">{errors.confirmPassword}</div>}
             </div>
-            {errors?._errors && <div className="text-red-500">{errors._errors}</div>}
         </div>
     )
 }

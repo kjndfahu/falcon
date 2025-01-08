@@ -9,10 +9,11 @@ interface Props{
     maintitle:string;
     actions:React.ReactNode;
     errors: React.ReactNode,
+    terms?: React.ReactNode;
     action?  : (formData: FormData) => void;
 }
 
-export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields, maintitle,}) => {
+export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, terms, fields, maintitle,}) => {
     const currentPath = usePathname();
     console.log(currentPath)
     return (
@@ -21,6 +22,7 @@ export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields
             <form action={action}>
                 {fields}
                 {errors}
+                {terms}
                 {actions}
             </form>
             <GoogleButton />
@@ -32,8 +34,15 @@ export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, fields
                                 <span className="text-[#0A131D] underline">Log In</span>
                             </Link>
                         </div>
-                        <p className="text-[18px] text-[#67748E]">Forgot your <span
-                            className="text-[#0A131D] underline">password</span></p>
+                        <div className="flex items-center gap-1">
+                            <p className="text-[18px] text-[#67748E]">Forgot your</p>
+                            <Link className="text-[#0A131D] text-[18px] underline" href="/change-password">
+                                <span
+                                    className="text-[#0A131D] text-[18px] underline">password</span>
+                            </Link>
+                        </div>
+
+
                     </>
                 ) : (
                     <>

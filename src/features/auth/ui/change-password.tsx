@@ -3,7 +3,6 @@ import {Button} from "@/shared/ui/button";
 import { useState } from "react";
 import { sendVerificationEmail } from "@/features/auth/actions/send-verification-email";
 import {MailVerificationModal} from "@/features/settings/ui/mail-verification-modal";
-import {ChangePasswordModal} from "@/features/settings/ui/change-password-modal";
 import { useRouter } from "next/navigation";
 import { RestorePasswordModal } from "./restore-password-modal";
 
