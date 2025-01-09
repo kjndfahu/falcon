@@ -22,6 +22,8 @@ export async function createUser(dto: CreateUserDTO): Promise<Either<string, Use
             ]
         });
 
+        console.log(dto.referredBy, 'dto.referredBy')
+
         if (existingUser) {
             return left("User already exists");
         }

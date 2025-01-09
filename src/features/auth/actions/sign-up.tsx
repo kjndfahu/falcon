@@ -54,6 +54,7 @@ export const signUpAction = async (
         const findReferredBy = await getUser({referralCode: result.data.referralCode});
         const referredBy = findReferredBy ? findReferredBy.id : null;
         const referredString = String(referredBy);
+        console.log(referredString, 'referredString')
 
         const createUserResult = await createUser({
             login: result.data.login,
@@ -72,7 +73,7 @@ export const signUpAction = async (
         }
 
         const user = createUserResult.value;
-        
+
         try {
             await sessionService.addSession(user);
         } catch (sessionError) {

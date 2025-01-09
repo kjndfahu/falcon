@@ -37,11 +37,6 @@ export function SignUpForm() {
     }, [status, router]);
 
     const handleSubmit = async (formData: FormData) => {
-        const validationResult = await action(formData);
-        if (validationResult.errors) {
-            return;
-        }
-
         const email = formData.get('email') as string;
 
         if (!email || !email.includes('@')) {

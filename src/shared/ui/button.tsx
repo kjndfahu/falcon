@@ -12,14 +12,14 @@ interface Props {
     disabled?: boolean;
 }
 
-export const Button: React.FC<Props> = ({ 
-    styles = "", 
-    title,
-    type = "submit",
-    isPending = false,
-    onClick,
-    disabled = false
-}) => {
+export const Button: React.FC<Props> = ({
+                                            styles = "",
+                                            title,
+                                            type = "submit",
+                                            isPending = false,
+                                            onClick,
+                                            disabled = false
+                                        }) => {
     return (
         <button
             type={type}

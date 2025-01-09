@@ -1,25 +1,43 @@
+'use client'
+import React from 'react';
 import {GoogleButton} from "@/features/auth/ui/google-button";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import { useState } from "react";
 
-
-interface Props{
+interface Props {
     fields?: React.ReactNode;
     titlebtn: string;
-    maintitle:string;
-    actions:React.ReactNode;
-    errors: React.ReactNode,
+    maintitle: string;
+    actions: React.ReactNode;
+    errors: React.ReactNode;
     terms?: React.ReactNode;
-    action?  : (formData: FormData) => void;
+    action?: (formData: FormData) => void;
 }
 
-export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, terms, fields, maintitle,}) => {
+export const AuthFormLayout: React.FC<Props> = ({ 
+    actions, 
+    errors, 
+    action, 
+    terms, 
+    fields, 
+    maintitle 
+}) => {
+    const [isTermsAccepted, setIsTermsAccepted] = useState(false);
     const currentPath = usePathname();
-    console.log(currentPath)
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (action) {
+            const formData = new FormData(e.currentTarget);
+            await action(formData);
+        }
+    };
+
     return (
         <div className="flex flex-col w-full text-[#0A131D] text-[32px] font-semibold">
             <h3>{maintitle}</h3>
-            <form action={action}>
+            <form onSubmit={handleSubmit}>
                 {fields}
                 {errors}
                 {terms}
@@ -52,8 +70,8 @@ export const AuthFormLayout:React.FC<Props> = ({ actions, errors, action, terms,
                             </Link>
                         </div>
                     </>
-                    )}
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
