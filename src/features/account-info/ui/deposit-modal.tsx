@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
     balance?: number;
-    userId: string;
+    userId?: number;
 }
 
 export const DepositModal: React.FC<Props> = ({balance, userId}) => {
@@ -16,15 +16,20 @@ export const DepositModal: React.FC<Props> = ({balance, userId}) => {
     const [isPending, setIsPending] = useState(false);
     const setBalance = useBalanceStore((state) => state.setBalance);
     const router = useRouter();
+    const userString = String(userId);
 
     const handleDeposit = async () => {
         if (!amount || isNaN(parseFloat(amount))) {
             return;
         }
 
+        if(!userId){
+            return;
+        }
+
         setIsPending(true);
         try {
-            const result = await createDepositAction(parseFloat(amount), "TOPUP", 'USDT', parseInt(userId));
+            const result = await createDepositAction(parseFloat(amount), "TOPUP", 'USDT', parseInt(userString));
             if (result.success && result.data?.updatedBalance) {
                 setBalance(result.data.updatedBalance);
                 router.refresh();

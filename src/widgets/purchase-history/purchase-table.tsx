@@ -1,8 +1,20 @@
-import {tableHeaders, testValues} from "@/features/purchase-table/model/constants";
+import {tableHeaders} from "@/features/purchase-table/model/constants";
 import {formatDate, formatType} from "@/shared/lib/formats";
+import {$Enums} from "@prisma/client";
 
 interface Props {
-    subs: any[];
+    subs: {
+        createdAt: Date,
+        price: number,
+        trackingNumber: number,
+        type: $Enums.SubscriptionType,
+        id: number,
+        earns: number,
+        autorenew: boolean,
+        userId: number | null,
+        updatedAt: Date,
+        endDate: Date
+    }[];
 }
 
 

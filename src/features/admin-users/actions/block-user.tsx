@@ -1,8 +1,7 @@
 "use server";
 
 import {z} from "zod";
-import {userRepository} from "@/enteties/user/repositories/user";
-
+import {blockUser, getUser} from "../../../enteties/user/repositories/user";
 export type BlockUserState = {
     formData?: FormData;
     errors?: {
@@ -34,7 +33,7 @@ export const blockUserAction = async (state: BlockUserState, formData: FormData)
     const { email } = result.data;
 
     try {
-        const user = await userRepository.getUser({ email });
+        const user = await getUser({ email });
 
         if (!user) {
             return {
@@ -45,7 +44,7 @@ export const blockUserAction = async (state: BlockUserState, formData: FormData)
             };
         }
 
-        const blockedUser = await userRepository.blockUser(email);
+        const blockedUser = await blockUser(email);
 
         if (!blockedUser) {
             return {

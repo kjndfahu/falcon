@@ -4,12 +4,11 @@ import {Modal} from "@/shared/ui/modal";
 import {SubsModal} from "@/features/dashboard/ui/subs-modal";
 
 interface Props{
-    className?:string;
     activeSubs: number;
     subscriptionCounts:  Record<string, number>;
 }
 
-export const SubsCount:React.FC<Props> = ({activeSubs, subscriptionCounts, className}) => {
+export const SubsCount:React.FC<Props> = ({activeSubs, subscriptionCounts}) => {
     const [isActive, setActive] = useState(false);
 
     const handleOpen = (e: React.MouseEvent) => {

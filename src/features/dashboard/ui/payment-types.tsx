@@ -4,11 +4,7 @@ import {useState} from "react";
 import {Modal} from "@/shared/ui/modal";
 import {PaymentsModal} from "@/features/dashboard/ui/payments-modal";
 
-interface Props{
-    className?:string;
-}
-
-export const PaymentTypes:React.FC<Props> = ({ className}) => {
+export const PaymentTypes = () => {
     const [isActive, setActive] = useState(false);
 
     const handleClick = (e: React.MouseEvent) => {

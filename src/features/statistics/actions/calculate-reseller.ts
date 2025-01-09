@@ -1,3 +1,5 @@
+import {UserId} from "@/kernel/ids";
+
 export const calculateTotalReseller = (sells: { createdAt: Date; price: number; userId: UserId | null }[]): number => {
     return sells.reduce((total, item) => {
         if (item.userId !== null) {

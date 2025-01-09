@@ -71,6 +71,7 @@ export const ReferralsDiagram: React.FC<Props> = ({ referralBuys }) => {
                 `;
             }
 
+            // @ts-ignore
             const canvasPosition = chartRef.current.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';

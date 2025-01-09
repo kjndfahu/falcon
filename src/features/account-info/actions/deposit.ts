@@ -2,11 +2,10 @@
 
 import { createdTopUp } from "@/enteties/user/services/create-top-up";
 import { updateUserBalance } from "@/enteties/user/services/update-balance";
-import {createTransaction} from "@/enteties/user/repositories/user";
+import { createTransaction } from "@/enteties/user/repositories/user";
 
 type DepositActionResult = {
     success: boolean;
-    nothing: null;
     data?: {
         deposit: any;
         updatedBalance: number;
@@ -22,19 +21,24 @@ export async function createDepositAction(
 ): Promise<DepositActionResult> {
     try {
         const depositResult = await createdTopUp(depositSum, type, system, userId);
-
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const transactionResult = await createTransaction(depositSum, type, system, userId);
         
         if (!depositResult) {
-            return { success: false, error: "Failed to create deposit" };
+            return { 
+                success: false, 
+                error: "Failed to create deposit" 
+            };
         }
 
         const balanceResult = await updateUserBalance(userId, depositSum);
         
         if (!balanceResult.success || !balanceResult.data) {
-            return { success: false, error: "Failed to update balance" };
+            return { 
+                success: false, 
+                error: "Failed to update balance" 
+            };
         }
-
 
         return { 
             success: true, 
@@ -45,6 +49,9 @@ export async function createDepositAction(
         };
     } catch (error) {
         console.error("Error creating deposit:", error);
-        return { success: false, error: "Failed to create deposit" };
+        return { 
+            success: false, 
+            error: "Failed to create deposit" 
+        };
     }
 } 

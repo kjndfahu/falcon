@@ -19,6 +19,6 @@ export function MailVerificationForm() {
         //     }
         //     errors={<ErrorMessage error={formState.errors?._errors}/>}
         // />
-        <Verification/>
+        <></>
     )
 }

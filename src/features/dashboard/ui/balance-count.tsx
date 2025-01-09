@@ -4,7 +4,6 @@ import {Modal} from "@/shared/ui/modal";
 import {UserAndBalanceModal} from "@/features/dashboard/ui/user-and-balance-modal";
 
 interface Props{
-    className?:string;
     sum: number;
     userAndBalance: {
         id: number;
@@ -12,7 +11,7 @@ interface Props{
     }[];
 }
 
-export const BalanceCount:React.FC<Props> = ({ sum, userAndBalance, className}) => {
+export const BalanceCount:React.FC<Props> = ({ sum, userAndBalance}) => {
     const [isActive, setActive] = useState(false);
 
     const handleClick = (e: React.MouseEvent) => {

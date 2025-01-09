@@ -1,10 +1,7 @@
 import React from "react";
 
-interface Props{
-    className?: string;
-}
 
-export const PaymentsModal:React.FC<Props> = ({className}) => {
+export const PaymentsModal = () => {
     return (
         <div className="max-h-[600px] w-[90%] overflow-y-auto">
             {/*<table className="min-w-full table-auto">*/}

@@ -4,11 +4,9 @@ import {BalanceType} from "@/features/admin-users/ui/balance-type";
 import {useState} from "react";
 import {AddBalanceForm} from "@/features/admin-users/ui/add-balance-form";
 import {BlueBtn} from "@/shared/ui/blue-btn";
-import {useActionState} from "@/shared/lib/react";
-import {addBalanceAction, AddBalanceState} from "@/features/admin-users/actions/add-balance";
-import {ErrorMessage} from "@/features/auth/ui/error-message";
+import {AddBalanceState} from "@/features/admin-users/actions/add-balance";
 import {DecrementBalanceForm} from "@/features/admin-users/ui/decrement-balance-modal";
-import {decrementBalanceAction, DecrementBalanceState} from "@/features/admin-users/actions/decrement-balance";
+import { DecrementBalanceState} from "@/features/admin-users/actions/decrement-balance";
 import { handleBalanceForm } from "../actions/handle-balance-form";
 
 interface Props{
@@ -16,7 +14,7 @@ interface Props{
     setActiveModal: (activeModal: string | null) => void;
 }
 
-export const AddBalanceModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
+export const AddBalanceModal: React.FC<Props> = ({setActiveModal}) => {
     const [activeType, setActiveType] = useState('Пополнить');
     const [formState, setFormState] = useState<AddBalanceState | DecrementBalanceState>({});
     const [isPending, setIsPending] = useState(false);

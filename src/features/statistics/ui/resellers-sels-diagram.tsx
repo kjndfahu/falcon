@@ -72,6 +72,7 @@ export const ResellerSellsDiagram: React.FC<Props> = ({ resellerSells }) => {
                 `;
             }
 
+            // @ts-ignore
             const canvasPosition = chartRef.current.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';

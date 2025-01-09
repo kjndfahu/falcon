@@ -31,7 +31,7 @@ export const SettingsBlock: React.FC<Props> = ({title, info, type}) => {
                     setModal={setModal} 
                     title={type === 'email' ? "Change Email" : "Change Password"}
                     child={type === 'email' 
-                        ? <ChangeMailModal setModal={setModal} currentEmail={info} /> 
+                        ? <ChangeMailModal setModal={setModal} currentEmail={info || ''} />
                         : <SettingsModal setModal={setModal} />
                     }
                 />

@@ -23,7 +23,7 @@ export async function blockUserAction(
 ): Promise<BlockUserState> {
     try {
         const data = Object.fromEntries(formData.entries());
-        console.log("Received data:", data); // Для отладки
+        console.log("Received data:", data);
 
         const result = blockUserSchema.safeParse(data);
 
@@ -55,7 +55,7 @@ export async function blockUserAction(
             data: { isBlocked: true }
         });
 
-        revalidatePath('/admin'); // Обновляем страницу админки
+        revalidatePath('/admin');
 
         return {
             formData,

@@ -1,11 +1,4 @@
 import {ReactNode} from "react";
-import {
-    MainLogoActive,
-    MainLogoInactive, SettingActive,
-    SettingInactive,
-    SubsActive,
-    SubsInactive
-} from "@/shared/ui/pc-icons";
 import {ChartNoAxesCombined, Gauge, UserCog} from "lucide-react";
 
 

@@ -90,7 +90,6 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                             title={isPending ? "Processing..." : "Buy"}
                             onClick={handleBuyClick}
                             type="button"
-                            isUsed={false}
                             styles="w-[50vw]"
                         />
                     </div>
@@ -120,7 +119,6 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                                 title={isPending ? "Processing..." : "Buy"}
                                 onClick={handleBuyClick}
                                 type="button"
-                                isUsed={false}
                                 styles="w-full"
                             />
                         </div>

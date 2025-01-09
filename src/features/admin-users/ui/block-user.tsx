@@ -2,8 +2,6 @@
 import {XLogo} from "@/shared/ui/pc-icons";
 import {BalanceType} from "@/features/admin-users/ui/balance-type";
 import {useState, useTransition} from "react";
-import {BlockUserForm} from "@/features/admin-users/ui/block-user-form";
-import {UnblockUserForm} from "@/features/admin-users/ui/unblock-user-form";
 import {useActionState} from "@/shared/lib/react";
 import {blockUserAction, BlockUserState} from "@/features/admin-users/actions/block-user";
 import {unblockUserAction, UnblockUserState} from "@/features/admin-users/actions/unblock-user";
@@ -13,7 +11,7 @@ interface Props {
     setActiveModal: (activeModal: string | null) => void;
 }
 
-export const BlockUserModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
+export const BlockUserModal: React.FC<Props> = ({ setActiveModal}) => {
     const [activeType, setActiveType] = useState('Заблокировать');
     const [formState, action] = useActionState(blockUserAction, {} as BlockUserState);
     const [formUnblock, actionUnblock] = useActionState(unblockUserAction, {} as UnblockUserState);

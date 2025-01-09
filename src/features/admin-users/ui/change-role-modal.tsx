@@ -9,7 +9,7 @@ interface Props {
     setActiveModal: (modal: string | null) => void;
 }
 
-export const ChangeRoleModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
+export const ChangeRoleModal: React.FC<Props> = ({ setActiveModal}) => {
     const [formState, action] = useActionState(changeRoleAction, {} as ChangeRoleState);
     const [isPending, startTransition] = useTransition();
     const [email, setEmail] = useState('');

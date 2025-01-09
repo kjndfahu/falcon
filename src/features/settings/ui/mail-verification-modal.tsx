@@ -2,7 +2,7 @@
 import { useState, useTransition } from "react";
 
 interface Props {
-    email: string;
+    email?: string;
     expectedCode: string;
     onVerificationComplete: () => void;
     onResendCode: () => Promise<boolean>;

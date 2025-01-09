@@ -23,7 +23,7 @@ export async function unblockUserAction(
 ): Promise<UnblockUserState> {
     try {
         const data = Object.fromEntries(formData.entries());
-        console.log("Received data:", data); // Для отладки
+        console.log("Received data:", data);
 
         const result = unblockUserSchema.safeParse(data);
 
@@ -55,7 +55,7 @@ export async function unblockUserAction(
             data: { isBlocked: false }
         });
 
-        revalidatePath('/admin'); // Обновляем страницу админки
+        revalidatePath('/admin');
 
         return {
             formData,

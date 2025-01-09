@@ -6,13 +6,12 @@ import {ModalSubs} from "@/features/account-info/ui/modal-subs";
 import {SessionEntity} from "@/enteties/user/domain";
 
 interface Props{
-    className?:string,
     session: SessionEntity;
     subs: number;
     userRole?: string;
 }
 
-export const ActiveSubs:React.FC<Props> = ({className, userRole, subs, session}) => {
+export const ActiveSubs:React.FC<Props> = ({ userRole, subs, session}) => {
     const [isClicked, setIsClicked] = useState(false);
 
     return (

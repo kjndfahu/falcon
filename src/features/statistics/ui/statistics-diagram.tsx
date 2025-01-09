@@ -61,6 +61,7 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
                 `;
             }
 
+            // @ts-ignore
             const canvasPosition = chartRef.current.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';

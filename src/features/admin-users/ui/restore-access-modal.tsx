@@ -10,7 +10,7 @@ interface Props {
     setActiveModal: (modal: string | null) => void;
 }
 
-export const RestoreAccessModal: React.FC<Props> = ({activeModal, setActiveModal}) => {
+export const RestoreAccessModal: React.FC<Props> = ({ setActiveModal}) => {
     const [formState, action, isPending] = useActionState(restoreAccessAction, {
         formData: undefined,
         errors: undefined
