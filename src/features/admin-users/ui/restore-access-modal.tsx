@@ -11,16 +11,14 @@ interface Props {
     setActiveModal: (modal: string | null) => void;
 }
 
-// Определяем тип для состояния формы
 interface RestoreAccessFormState {
     formData: FormData | undefined;
-    errors?: {    // errors может быть объектом или undefined
+    errors?: {
         _errors?: string;
     };
 }
 
 export const RestoreAccessModal: React.FC<Props> = ({ setActiveModal }) => {
-    // Используем типизированное состояние
     const [formState, action, isPending] = useActionState<RestoreAccessFormState>(restoreAccessAction, {
         formData: undefined,
         errors: undefined

@@ -9,9 +9,12 @@ interface Props{
     session: SessionEntity;
     subs: number;
     userRole?: string;
+    sells: {price: number,
+        createdAt: Date
+    }[],
 }
 
-export const ActiveSubs:React.FC<Props> = ({ userRole, subs, session}) => {
+export const ActiveSubs:React.FC<Props> = ({ userRole, subs, sells, session}) => {
     const [isClicked, setIsClicked] = useState(false);
 
     return (
@@ -24,7 +27,7 @@ export const ActiveSubs:React.FC<Props> = ({ userRole, subs, session}) => {
                     <BlueBtn styles="py-[10px] px-6" title="Purchase"/>
                 </div>
             </div>
-            {isClicked && ( <ModalSubs userRole={userRole} session={session} isClicked={isClicked} setIsClicked={setIsClicked} /> )}
+            {isClicked && ( <ModalSubs sells={sells} userRole={userRole} session={session} isClicked={isClicked} setIsClicked={setIsClicked} /> )}
         </div>
     )
 }

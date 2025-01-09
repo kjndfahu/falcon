@@ -1,4 +1,4 @@
-import {AccountLogo} from "@/shared/ui/icons";
+import { MainLogo} from "@/shared/ui/icons";
 import {AlignJustify, X} from "lucide-react";
 
 export const LogoBlock = ({isClicked, setClicked}: {isClicked: boolean, setClicked: (isClicked: boolean) => void}) => {
@@ -6,7 +6,7 @@ export const LogoBlock = ({isClicked, setClicked}: {isClicked: boolean, setClick
         <div
             className="flex items-center justify-between md:bg-transparent bg-[#1F2340] px-[42px] text-[18px] md:py-0 py-[30px] font-semibold md:text-[#101D2C] leading-[23px]">
             <div className="flex items-center gap-3">
-                <AccountLogo/>
+                <MainLogo/>
                 Logo Time
             </div>
             <div

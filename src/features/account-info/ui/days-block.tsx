@@ -30,7 +30,7 @@ export const DaysBlock: React.FC<Props> = ({ activeDays, setActiveDays }) => {
                             <span className={`text-[14px] rounded-[5px] font-bold px-[5px] py-[7px] ${
                                 activeDays === plan.label
                                     ? 'bg-[#003d99] text-white'
-                                    : 'bg-[#d7e7ff] text-[#005dff]'
+                                    : 'bg-[#d7e7ff] font-normal text-white bg-[linear-gradient(102.67deg,_#6072B1_3.55%,_#1725A4_100%)]'
                             }`}>
                                 {plan.save}
                             </span>

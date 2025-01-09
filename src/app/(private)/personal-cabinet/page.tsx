@@ -8,7 +8,7 @@ import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
 import {ActiveSubs} from "@/features/account-info/ui/active-subs";
 import {getSubs} from "@/enteties/subscription/services/get-subscriptions";
-import {userRepository} from "@/enteties/user/repositories/user";
+import {getTotalSells, userRepository} from "@/enteties/user/repositories/user";
 import {checkRole} from "@/features/account-info/actions/check-role";
 import {getActiveCustomers} from "@/features/account-info/actions/get-active-customers";
 
@@ -36,6 +36,7 @@ export default async function PersonalCabinet() {
     if(!progress){
         console.log(0);
     }
+    const sells = await getTotalSells();
 
     return (
         <div className="flex w-full flex-col sml:gap-[50px] gap-[25px] sml:py-[77px] py-[20px] xl:px-[129px] sml:px-[50px] px-[25px]">
@@ -43,7 +44,7 @@ export default async function PersonalCabinet() {
             <UserInfo/>
             <div className="flex mds:flex-row flex-col gap-[46px]">
                 <PcBlock styles="mds:w-[413px] w-full" balance={user?.balance} userId={user?.id} session={session} title="BALANCE" num={user?.balance} btn={<DepositBlock className="cursor-pointer"/>}/>
-                <ActiveSubs userRole={users?.role} subs={subs.length} session={session}/>
+                <ActiveSubs sells={sells} userRole={users?.role} subs={subs.length} session={session}/>
             </div>
 
             {(user.role !== "USER" && user.role !== "INFLUENCER") && (

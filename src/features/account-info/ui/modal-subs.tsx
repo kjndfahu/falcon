@@ -1,4 +1,5 @@
 'use client'
+
 import {XLogo} from "@/shared/ui/pc-icons";
 import {SubsTabs} from "@/features/account-info/ui/subs-tabs";
 import {SubscriptionBlock} from "@/features/account-info/ui/subscription-block";
@@ -17,9 +18,12 @@ interface Props {
     setIsClicked: (isClicked: boolean) => void,
     session: SessionEntity;
     userRole?: string;
+    sells: {price: number,
+        createdAt: Date
+    }[],
 }
 
-export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, session}) => {
+export const ModalSubs: React.FC<Props> = ({isClicked, sells, setIsClicked, userRole, session}) => {
     const [activeTab, setActiveTab] = useState('Basic');
     const [activeDays, setActiveDays] = useState('30');
     const [isPending, startTransition] = useTransition();
@@ -93,7 +97,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                         />
                     </div>
                     <div className="md:hidden flex">
-                        <ReferralDiagram/>
+                        <ReferralDiagram sells={sells}/>
                         {error && (
                             <div className="text-red-500">{error}</div>
                         )}
@@ -108,7 +112,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                         </div>
                         <DaysBlock activeDays={activeDays} setActiveDays={setActiveDays}/>
                         <div className="md:flex hidden">
-                            <ReferralDiagram/>
+                            <ReferralDiagram sells={sells}/>
                             {error && (
                                 <div className="text-red-500">{error}</div>
                             )}

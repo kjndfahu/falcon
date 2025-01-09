@@ -14,9 +14,15 @@ import {
 } from 'chart.js';
 import { useEffect, useRef } from 'react';
 
+interface Props{
+    sells: {price: number,
+        createdAt: Date
+    }[],
+}
+
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-export const ReferralDiagram = () => {
+export const ReferralDiagram:React.FC<Props> = ({sells}) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
@@ -29,12 +35,19 @@ export const ReferralDiagram = () => {
 
         if (!ctx || !tooltipEl) return;
 
-        // Уничтожаем предыдущий экземпляр графика
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
 
-        // Кастомный tooltip с явным типом
+        const groupedData = sells.reduce<Record<string, number>>((acc, sell) => {
+            const date = new Date(sell.createdAt).toLocaleDateString();
+            acc[date] = (acc[date] || 0) + sell.price;
+            return acc;
+        }, {});
+
+        const labels = Object.keys(groupedData);
+        const data = Object.values(groupedData);
+
         const customTooltip = (context: { tooltip: TooltipModel<'line'> }) => {
             const tooltipModel = context.tooltip;
 
@@ -47,35 +60,44 @@ export const ReferralDiagram = () => {
                 const title = tooltipModel.title[0] || '';
                 const value = tooltipModel.body[0]?.lines[0] || '';
                 tooltipEl.innerHTML = `
-                    <div style="font-size: 16px; font-weight: bold; color: #3b82f6;">
-                        ${title}
-                    </div>
-                    <div style="font-size: 14px; color: #374151;">
-                        ${value}
-                    </div>
-                `;
+            <div style="font-size: 16px; font-weight: bold; color: #3b82f6;">
+                ${title}
+            </div>
+            <div style="font-size: 14px; color: #374151;">
+                ${value}
+            </div>
+        `;
             }
 
             const canvasPosition = chartRef.current?.getBoundingClientRect();
             if (canvasPosition) {
+                const isLastPoint = tooltipModel.dataPoints?.[0]?.dataIndex === labels.length - 1;
+                const caretX = tooltipModel.caretX;
+                const caretY = tooltipModel.caretY;
+
                 tooltipEl.style.opacity = '1';
                 tooltipEl.style.position = 'absolute';
-                tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;
-                tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY - 200}px`;
                 tooltipEl.style.pointerEvents = 'none';
                 tooltipEl.style.transition = 'opacity 0.2s ease';
+
+                if (isLastPoint) {
+                    tooltipEl.style.left = `${canvasPosition.left + caretX - 1020}px`;
+                    tooltipEl.style.top = `${canvasPosition.top + caretY - 400}px`;
+                } else {
+                    tooltipEl.style.left = `${canvasPosition.left + caretX - 850}px`;
+                    tooltipEl.style.top = `${canvasPosition.top + caretY - 450}px`;
+                }
             }
         };
 
-        // Создание нового экземпляра графика
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Point 1', 'Point 2', 'Point 3', 'Point 4', 'Point 5'],
+                labels: labels,
                 datasets: [
                     {
                         label: 'Subscriptions',
-                        data: [10, 20, 15, 30, 25],
+                        data: data,
                         borderColor: '#3b82f6',
                         borderWidth: 2,
                         pointBackgroundColor: '#3b82f6',
