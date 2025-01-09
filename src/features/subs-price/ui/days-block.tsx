@@ -1,8 +1,8 @@
 import {PromoBlock} from "@/shared/ui/promo-block";
 
 interface Props{
-    activeDays: string;
-    setActiveDays(activeDays: string): void;
+    activeDays: '30' | '90' | '180';
+    setActiveDays: React.Dispatch<React.SetStateAction<'30' | '90' | '180'>>;
 }
 
 export const DaysBlock:React.FC<Props> = ({activeDays, setActiveDays}) => {

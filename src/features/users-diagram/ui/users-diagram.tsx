@@ -5,10 +5,6 @@ import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
-interface User {
-    id: number;
-    createdAt: string;
-}
 
 interface Props {
     users:  {id: number;

@@ -1,5 +1,4 @@
-export const EndDateSwitcher = ({isActive, setIsActive}: {isActive: boolean, setIsActive: (boolean: any) => void}) => {
-
+export const EndDateSwitcher = ({isActive, setIsActive}: {isActive: boolean, setIsActive: (isActive: boolean) => void}) => {
     return (
         <div
             className="flex items-center justify-between rounded-[15px] border-[1px] sml:w-[548px] w-full border-[#CCE5F8] py-4 px-[50px] bg-[#F6FCFF]">

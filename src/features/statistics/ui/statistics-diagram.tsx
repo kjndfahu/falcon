@@ -1,6 +1,16 @@
 'use client';
 
-import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
+import {
+    Chart,
+    LineController,
+    LineElement,
+    PointElement,
+    LinearScale,
+    Title,
+    Tooltip,
+    CategoryScale,
+    TooltipModel
+} from 'chart.js';
 import { useEffect, useRef } from 'react';
 import {calculateTotalPrice} from "@/features/statistics/actions/calculate-price";
 
@@ -40,7 +50,7 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
         const labels = Object.keys(groupedData);
         const data = Object.values(groupedData);
 
-        const customTooltip = (context: any) => {
+        const customTooltip = (context: { tooltip: TooltipModel<'line'> }) => {
             const tooltipModel = context.tooltip;
 
             if (!tooltipModel.opacity) {
@@ -61,8 +71,7 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
                 `;
             }
 
-            // @ts-ignore
-            const canvasPosition = chartRef.current.getBoundingClientRect();
+            const canvasPosition = chartRef.current!.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';
             tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;

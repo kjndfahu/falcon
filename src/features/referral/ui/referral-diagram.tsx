@@ -1,6 +1,17 @@
 'use client';
 
-import { Chart, LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
+import {
+    Chart,
+    LineController,
+    LineElement,
+    PointElement,
+    LinearScale,
+    Title,
+    Tooltip,
+    CategoryScale,
+    ChartOptions,
+    TooltipModel,
+} from 'chart.js';
 import { useEffect, useRef } from 'react';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
@@ -18,13 +29,13 @@ export const ReferralDiagram = () => {
 
         if (!ctx || !tooltipEl) return;
 
-
+        // Уничтожаем предыдущий экземпляр графика
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
         }
 
-
-        const customTooltip = (context: any) => {
+        // Кастомный tooltip с явным типом
+        const customTooltip = (context: { tooltip: TooltipModel<'line'> }) => {
             const tooltipModel = context.tooltip;
 
             if (!tooltipModel.opacity) {
@@ -45,16 +56,18 @@ export const ReferralDiagram = () => {
                 `;
             }
 
-            // @ts-ignore
-            const canvasPosition = chartRef.current.getBoundingClientRect();
-            tooltipEl.style.opacity = '1';
-            tooltipEl.style.position = 'absolute';
-            tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;
-            tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY - 200}px`;
-            tooltipEl.style.pointerEvents = 'none';
-            tooltipEl.style.transition = 'opacity 0.2s ease';
+            const canvasPosition = chartRef.current?.getBoundingClientRect();
+            if (canvasPosition) {
+                tooltipEl.style.opacity = '1';
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX - 340}px`;
+                tooltipEl.style.top = `${canvasPosition.top + tooltipModel.caretY - 200}px`;
+                tooltipEl.style.pointerEvents = 'none';
+                tooltipEl.style.transition = 'opacity 0.2s ease';
+            }
         };
 
+        // Создание нового экземпляра графика
         chartInstanceRef.current = new Chart(ctx, {
             type: 'line',
             data: {
@@ -104,7 +117,7 @@ export const ReferralDiagram = () => {
                         },
                     },
                 },
-            },
+            } as ChartOptions<'line'>,
         });
 
         return () => {
@@ -132,4 +145,4 @@ export const ReferralDiagram = () => {
             ></div>
         </div>
     );
-}
+};

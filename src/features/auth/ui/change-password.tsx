@@ -3,20 +3,16 @@ import {Button} from "@/shared/ui/button";
 import { useState } from "react";
 import { sendVerificationEmail } from "@/features/auth/actions/send-verification-email";
 import {MailVerificationModal} from "@/features/settings/ui/mail-verification-modal";
-import { useRouter } from "next/navigation";
 import { RestorePasswordModal } from "./restore-password-modal";
 
-interface Props {
-    className?:string;
-}
 
-export const ChangePassword: React.FC<Props> = ({className }) => {
+export const ChangePassword =( ) => {
     const [isModal, setModal] = useState(false);
+    console.log(isModal)
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showVerificationModal, setShowVerificationModal] = useState(false);
     const [email, setEmail] = useState('');
     const [verificationCode, setVerificationCode] = useState<string>('');
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,12 +29,6 @@ export const ChangePassword: React.FC<Props> = ({className }) => {
         }
     };
 
-    const handleModalClose = (success: boolean) => {
-        setModal(false);
-        if (success) {
-            router.push('/personal-cabinet');
-        }
-    };
 
     if (showPasswordModal) {
         return <RestorePasswordModal setModal={setModal} email={email} />;

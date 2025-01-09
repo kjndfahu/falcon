@@ -5,7 +5,7 @@ import { DaysBlock } from "./days-block";
 import { useState } from "react";
 
 export const PriceList = () => {
-    const [activeDays, setActiveDays] = useState('30');
+    const [activeDays, setActiveDays] = useState<'30' | '90' | '180'>('30');
 
     return (
         <div className="flex flex-col items-center gap-[50px]">

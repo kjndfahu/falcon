@@ -7,10 +7,9 @@ import {
     LinearScale,
     Title,
     Tooltip,
-    CategoryScale,
+    CategoryScale, TooltipModel,
 } from 'chart.js';
 import { useEffect, useRef } from 'react';
-import {calculateTotalPrice} from "@/features/statistics/actions/calculate-price";
 import {calculateTotalReseller} from "@/features/statistics/actions/calculate-reseller";
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
@@ -51,7 +50,7 @@ export const ResellerSellsDiagram: React.FC<Props> = ({ resellerSells }) => {
         );
         const data = resellerSells.map((item) => item.price);
 
-        const customTooltip = (context: any) => {
+        const customTooltip = (context: { tooltip: TooltipModel<'line'> }) => {
             const tooltipModel = context.tooltip;
 
             if (!tooltipModel.opacity) {
@@ -72,8 +71,7 @@ export const ResellerSellsDiagram: React.FC<Props> = ({ resellerSells }) => {
                 `;
             }
 
-            // @ts-ignore
-            const canvasPosition = chartRef.current.getBoundingClientRect();
+            const canvasPosition = chartRef.current!.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';
             tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX}px`;

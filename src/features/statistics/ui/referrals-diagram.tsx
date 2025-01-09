@@ -1,4 +1,5 @@
 'use client';
+
 import {
     Chart,
     LineController,
@@ -8,25 +9,26 @@ import {
     Title,
     Tooltip,
     CategoryScale,
+    TooltipModel,
 } from 'chart.js';
 import { useEffect, useRef } from 'react';
-import {calculateTotalReseller} from "@/features/statistics/actions/calculate-reseller";
+import { calculateTotalReseller } from '@/features/statistics/actions/calculate-reseller';
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
 interface Props {
     referralBuys: {
-        price: number,
-        userId: number | null,
-        createdAt: Date
-    }[]
+        price: number;
+        userId: number | null;
+        createdAt: Date;
+    }[];
 }
 
 export const ReferralsDiagram: React.FC<Props> = ({ referralBuys }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const chartInstanceRef = useRef<Chart | null>(null);
-    const total = calculateTotalReseller(referralBuys)
+    const chartInstanceRef = useRef<Chart<'line'> | null>(null);
+    const total = calculateTotalReseller(referralBuys);
 
     useEffect(() => {
         if (!chartRef.current || !tooltipRef.current) return;
@@ -50,7 +52,7 @@ export const ReferralsDiagram: React.FC<Props> = ({ referralBuys }) => {
         );
         const data = referralBuys.map((item) => item.price);
 
-        const customTooltip = (context: any) => {
+        const customTooltip = (context: { tooltip: TooltipModel<'line'> }) => {
             const tooltipModel = context.tooltip;
 
             if (!tooltipModel.opacity) {
@@ -71,8 +73,7 @@ export const ReferralsDiagram: React.FC<Props> = ({ referralBuys }) => {
                 `;
             }
 
-            // @ts-ignore
-            const canvasPosition = chartRef.current.getBoundingClientRect();
+            const canvasPosition = chartRef.current!.getBoundingClientRect();
             tooltipEl.style.opacity = '1';
             tooltipEl.style.position = 'absolute';
             tooltipEl.style.left = `${canvasPosition.left + tooltipModel.caretX}px`;

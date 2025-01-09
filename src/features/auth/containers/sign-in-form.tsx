@@ -25,9 +25,7 @@ export function SignInForm(){
     const handleSubmit = async (formData: FormData) => {
         const result = await action(formData);
 
-
-        // @ts-ignore
-        if (result && !result.errors && result.user) {
+        if (result && !result.errors) {
             const login = formData.get('login') as string;
             const password = formData.get('password') as string;
 

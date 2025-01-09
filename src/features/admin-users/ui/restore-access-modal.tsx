@@ -1,8 +1,9 @@
 'use client'
-import {XLogo} from "@/shared/ui/pc-icons";
-import {BlueBtn} from "@/shared/ui/blue-btn";
-import {restoreAccessAction} from "@/features/admin-users/actions/restore-access";
-import {RestoreAccessInput} from "@/features/admin-users/ui/restore-access-input";
+
+import { XLogo } from "@/shared/ui/pc-icons";
+import { BlueBtn } from "@/shared/ui/blue-btn";
+import { restoreAccessAction } from "@/features/admin-users/actions/restore-access";
+import { RestoreAccessInput } from "@/features/admin-users/ui/restore-access-input";
 import { useActionState } from '@/shared/lib/react';
 
 interface Props {
@@ -10,8 +11,17 @@ interface Props {
     setActiveModal: (modal: string | null) => void;
 }
 
-export const RestoreAccessModal: React.FC<Props> = ({ setActiveModal}) => {
-    const [formState, action, isPending] = useActionState(restoreAccessAction, {
+// Определяем тип для состояния формы
+interface RestoreAccessFormState {
+    formData: FormData | undefined;
+    errors?: {    // errors может быть объектом или undefined
+        _errors?: string;
+    };
+}
+
+export const RestoreAccessModal: React.FC<Props> = ({ setActiveModal }) => {
+    // Используем типизированное состояние
+    const [formState, action, isPending] = useActionState<RestoreAccessFormState>(restoreAccessAction, {
         formData: undefined,
         errors: undefined
     });
@@ -34,10 +44,10 @@ export const RestoreAccessModal: React.FC<Props> = ({ setActiveModal}) => {
                 <div className="flex items-center w-full text-black justify-between">
                     Восстановить доступ
                     <div className="cursor-pointer" onClick={() => setActiveModal(null)}>
-                        <XLogo/>
+                        <XLogo />
                     </div>
                 </div>
-                <RestoreAccessInput {...formState}/>
+                <RestoreAccessInput {...formState} />
                 {formState.errors?._errors && (
                     <div className="text-red-500">{formState.errors._errors}</div>
                 )}

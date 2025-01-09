@@ -13,9 +13,9 @@ export async function signOutAction(): Promise<SignOutResult> {
     try {
         await sessionService.deleteSession();
 
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
         const allCookies = cookieStore.getAll();
-        
+
         allCookies.forEach(cookie => {
             if (cookie.name) {
                 cookieStore.delete(cookie.name);
@@ -33,4 +33,4 @@ export async function signOutAction(): Promise<SignOutResult> {
             error: error instanceof Error ? error.message : 'Failed to sign out'
         };
     }
-} 
+}

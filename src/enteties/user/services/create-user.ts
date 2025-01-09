@@ -1,5 +1,5 @@
 import {UserEntity} from "@/enteties/user/domain";
-import {referredBy, userRepository} from "@/enteties/user/repositories/user";
+import { userRepository} from "@/enteties/user/repositories/user";
 import {Either, left, right} from "@/shared/lib/either";
 import {passwordService} from "@/enteties/user/services/password";
 import {generateReferralCode} from "@/enteties/user/services/referralcode-generation";

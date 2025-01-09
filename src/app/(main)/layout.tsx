@@ -3,7 +3,6 @@ import "../globals.css";
 import {Header} from "@/widgets/header";
 import localFont from "next/font/local";
 import {Footer} from "@/widgets/footer";
-import {userRepository} from "@/enteties/user/repositories/user";
 import {sessionService} from "@/enteties/user/services/session";
 import {Toaster} from "react-hot-toast";
 

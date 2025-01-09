@@ -16,7 +16,7 @@ export const MailVerificationModal: React.FC<Props> = ({
 }) => {
     const [code, setCode] = useState<string[]>(Array(5).fill(""));
     const [error, setError] = useState<string | null>(null);
-    const [isPending, startTransition] = useTransition();
+    const [isPending] = useTransition();
     const [isResending, startResending] = useTransition();
 
     const handleInputChange = (value: string, index: number) => {

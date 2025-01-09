@@ -15,6 +15,7 @@ export const FeedbackForm: React.FC<Props> = ({telegram_thread, question }) => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
+    console.log(success)
 
     const TELEGRAM_BOT_TOKEN = "7586414621:AAHVHOMUgJr7s364uXJufB71b5Ep-LakCLI";
     const TELEGRAM_CHAT_ID = "-1002487651254";

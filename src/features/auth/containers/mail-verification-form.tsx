@@ -1,5 +1,3 @@
-import {Verification} from "@/features/auth/ui/verification";
-
 export function MailVerificationForm() {
     return (
         // <AuthFormLayout

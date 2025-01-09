@@ -6,7 +6,7 @@ import {subscriptions} from "@/features/subs-price/model/constants";
 import Link from "next/link";
 
 interface Props {
-    activeDays: string;
+    activeDays: '30' | '90' | '180';
 }
 
 export const PriceBlock: React.FC<Props> = ({activeDays}) => {

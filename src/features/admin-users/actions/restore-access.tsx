@@ -1,15 +1,26 @@
 'use server'
 
-import {z} from "zod";
-import { userRepository} from "@/enteties/user/repositories/user";
-import {passwordService} from "@/enteties/user/services/password";
+import { z } from "zod";
+import { userRepository } from "@/enteties/user/repositories/user";
+import { passwordService } from "@/enteties/user/services/password";
 
+// Определяем схему для валидации данных
 const restoreAccessDataSchema = z.object({
     email: z.string().email(),
     password: z.string().min(3),
-})
+});
 
-export async function restoreAccessAction(prevState: any, formData: FormData) {
+// Определяем тип для состояния
+interface RestoreAccessState {
+    formData: FormData | undefined;
+    errors?: {    // errors может быть объектом или undefined
+        email?: string;
+        password?: string;
+        _errors?: string;
+    };
+}
+
+export async function restoreAccessAction(prevState: RestoreAccessState, formData: FormData) {
     console.log('Action started with data:', Object.fromEntries(formData.entries()));
     const data = Object.fromEntries(formData.entries());
     const result = restoreAccessDataSchema.safeParse(data);

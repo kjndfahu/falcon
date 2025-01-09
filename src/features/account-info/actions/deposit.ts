@@ -3,11 +3,21 @@
 import { createdTopUp } from "@/enteties/user/services/create-top-up";
 import { updateUserBalance } from "@/enteties/user/services/update-balance";
 import { createTransaction } from "@/enteties/user/repositories/user";
+import {$Enums, DepositType} from "@prisma/client";
+import DepositSystem = $Enums.DepositSystem;
 
 type DepositActionResult = {
     success: boolean;
     data?: {
-        deposit: any;
+        deposit: {
+            id: number;
+            createdAt: Date;
+            updateAt: Date;
+            depositSum: number;
+            type: DepositType;
+            system: DepositSystem;
+            userId: number | null;
+        };
         updatedBalance: number;
     };
     error?: string;
@@ -30,6 +40,7 @@ export async function createDepositAction(
                 error: "Failed to create deposit" 
             };
         }
+
 
         const balanceResult = await updateUserBalance(userId, depositSum);
         

@@ -3,7 +3,6 @@ import React from 'react';
 import {GoogleButton} from "@/features/auth/ui/google-button";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import { useState } from "react";
 
 interface Props {
     fields?: React.ReactNode;
@@ -23,7 +22,6 @@ export const AuthFormLayout: React.FC<Props> = ({
     fields, 
     maintitle 
 }) => {
-    const [isTermsAccepted, setIsTermsAccepted] = useState(false);
     const currentPath = usePathname();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

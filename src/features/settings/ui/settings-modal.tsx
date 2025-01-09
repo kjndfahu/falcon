@@ -34,7 +34,7 @@ export const SettingsModal: React.FC<Props> = ({ setModal }) => {
         return <ChangePasswordModal 
             setModal={setModal} 
             email={email}
-            redirectAfterSuccess={false}
+
         />;
     }
 

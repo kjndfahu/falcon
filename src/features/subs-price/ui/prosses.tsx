@@ -4,13 +4,13 @@ import React from "react";
 interface Props {
     item: {
         title: string;
-        price: string;
+        price?: string;
         scan_speed: string;
         value: {
             name: string;
             value: boolean;
-        }[]
-    }
+        }[];
+    };
 }
 
 export const Prosses:React.FC<Props> = ({item}) => {

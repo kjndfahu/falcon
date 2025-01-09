@@ -83,8 +83,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                     <XLogo/>
                 </div>
                 <SubsTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
-                <div
-                    className="flex items-center mds:overflow-y-hidden overflow-y-auto mds:scroll-y-auto custom-scroll md:flex-row flex-col-reverse w-full gap-[25px]">
+                <div className="flex h-full items-center mds:overflow-y-hidden overflow-y-auto mds:scroll-y-auto custom-scroll md:flex-row flex-col-reverse w-full gap-[25px]">
                     <div className="md:hidden flex">
                         <BlueBtn
                             title={isPending ? "Processing..." : "Buy"}
@@ -100,7 +99,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
                         )}
                     </div>
                     <SubscriptionBlock userRole={userRole} activeTab={activeTab} activeDays={activeDays}/>
-                    <div className="flex w-full justify-between  flex-col">
+                    <div className="flex md:h-[585px] w-full justify-between flex-col">
                         <div className="flex sm:text-[36px] text-[24px] text-black items-center justify-between ">
                             Subscription pricing
                             <div className="md:flex hidden cursor-pointer" onClick={() => setIsClicked(false)}>
