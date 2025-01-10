@@ -147,7 +147,7 @@ export const ReferralDiagram:React.FC<Props> = ({sells}) => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, []);
+    }, [sells]);
 
     return (
         <div className="relative mdbvp:w-[643px] sml:w-[450px] w-[300px]">
