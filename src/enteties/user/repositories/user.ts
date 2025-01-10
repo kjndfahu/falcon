@@ -1,7 +1,8 @@
-import {DepositSystem, DepositType, Prisma, Role, SubscriptionType} from "@prisma/client";
+import {Prisma} from "@prisma/client";
 import {UserEntity} from "../domain";
 import {prisma} from "@/shared/lib/db";
 import {UserId} from "@/kernel/ids";
+import {DepositSystem, DepositType, Role, SubscriptionType} from "@/kernel/types-user";
 
 export function saveUser(user: UserEntity): Promise<UserEntity> {
     return prisma.user.upsert({
