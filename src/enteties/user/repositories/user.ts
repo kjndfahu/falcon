@@ -1,7 +1,8 @@
-import {$Enums, Prisma} from "@prisma/client";
+import {$Enums, DepositType, Prisma, Role, SubscriptionType} from "@prisma/client";
 import {UserEntity} from "../domain";
 import {prisma} from "@/shared/lib/db";
 import {UserId} from "@/kernel/ids";
+import DepositSystem = $Enums.DepositSystem;
 
 export function saveUser(user: UserEntity): Promise<UserEntity> {
     return prisma.user.upsert({
@@ -55,7 +56,7 @@ export function getActiveSubscriptions(now: Date) {
         },
     });
 }
-export function createTransaction(sum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number) {
+export function createTransaction(sum: number, type: DepositType, system: DepositSystem, userId: number) {
     return prisma.transactions.create({
         data: {
             sum,
@@ -65,7 +66,7 @@ export function createTransaction(sum: number, type: $Enums.DepositType, system:
         }
     })
 }
-export function createTopUp(depositSum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number) {
+export function createTopUp(depositSum: number, type: DepositType, system: DepositSystem, userId: number) {
     return prisma.deposits.create({
         data: {
             depositSum,
@@ -75,7 +76,7 @@ export function createTopUp(depositSum: number, type: $Enums.DepositType, system
         },
     });
 }
-export function createWithdraw(withrdawSum: number, type: $Enums.DepositType, system: $Enums.DepositSystem, userId: number){
+export function createWithdraw(withrdawSum: number, type: DepositType, system: DepositSystem, userId: number){
     return prisma.withdraws.create({
         data: {
             withrdawSum,
@@ -85,7 +86,7 @@ export function createWithdraw(withrdawSum: number, type: $Enums.DepositType, sy
         },
     });
 }
-export function changeUserRole(userEmail: string, role: $Enums.Role) {
+export function changeUserRole(userEmail: string, role: Role) {
     return prisma.user.update({
         where: {email: userEmail},
         data: {role}
@@ -177,7 +178,7 @@ export function changeMail(userEmail: string, newMail: string){
         data: {email: newMail}
     })
 }
-export function buySubscription(type: $Enums.SubscriptionType, price: number, trackingNumber: number, autorenew: boolean, userId: UserId, endDate: Date) {
+export function buySubscription(type: SubscriptionType, price: number, trackingNumber: number, autorenew: boolean, userId: UserId, endDate: Date) {
     return prisma.subscriptions.create({
         data: {
             type,
