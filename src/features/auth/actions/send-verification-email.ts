@@ -34,7 +34,7 @@ export async function sendVerificationEmail(
 
         await resend.emails.send({
             from: 'onboarding@resend.dev',
-            to: 'ccursor6@gmail.com',
+            to: recipientEmail,
             subject: 'Email Verification',
             html: `
                 <h1>Email Verification</h1>

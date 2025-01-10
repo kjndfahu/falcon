@@ -4,6 +4,7 @@ import {ClosedEye, OpenEye} from "@/shared/ui/pc-icons";
 import {useState} from "react";
 import { useActionState } from "@/shared/lib/react";
 import { changePasswordAction } from "../actions/change-password";
+import toast from "react-hot-toast";
 
 interface Props {
     setModal: (isModal: boolean) => void;
@@ -24,9 +25,11 @@ export const ChangePasswordModal: React.FC<Props> = ({ setModal, email }) => {
         try {
             const result = await formAction(formData);
             if (!result?.errors) {
+                toast.success("Password successfully changed!");
                 setModal(false);
             }
         } catch (error) {
+            toast.error("Error changing password");
             console.error('Error changing password:', error);
         }
     };

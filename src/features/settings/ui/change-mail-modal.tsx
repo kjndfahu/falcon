@@ -6,6 +6,7 @@ import { changeMailAction } from "../actions/change-mail";
 import { MailVerificationModal } from "./mail-verification-modal";
 import { sendVerificationEmail } from "@/features/auth/actions/send-verification-email";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 interface Props {
     setModal: (isModal: boolean) => void;
@@ -58,11 +59,12 @@ export const ChangeMailModal: React.FC<Props> = ({ setModal, currentEmail }) => 
                     await update({
                         email: newEmail
                     });
-                    
+                    toast.success("Mail successfully changed!");
                     setModal(false);
                     window.location.reload();
                 }
             } catch (error) {
+                toast.error("Error changing email");
                 console.error('Error changing email:', error);
             }
         });

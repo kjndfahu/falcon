@@ -26,7 +26,8 @@ interface Props{
         id: number;
         userId: number | null;
         createdAt: Date;
-        updatedAt: Date; }[]
+        updatedAt: Date;
+    }[]
 }
 
 export const AllBlock:React.FC<Props>  =({subs, activeSubs}) => {

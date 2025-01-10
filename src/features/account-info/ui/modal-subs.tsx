@@ -11,6 +11,7 @@ import { SessionEntity } from "@/enteties/user/domain";
 import { buySubscriptionAction } from "../actions/buy-subscription";
 import { activeSub } from "../actions/constants";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface Props {
     className?: string,
@@ -55,9 +56,11 @@ export const ModalSubs: React.FC<Props> = ({isClicked, sells, setIsClicked, user
                 console.log('Subscription result:', result);
                 
                 if (!result?.errors) {
+                    toast.success("Subscription successfully purchased!");
                     setIsClicked(false);
                     router.refresh();
                 } else {
+                    toast.error("Failed to buy subscription");
                     setError(result.errors._errors || 'Failed to buy subscription');
                 }
             } catch (error) {

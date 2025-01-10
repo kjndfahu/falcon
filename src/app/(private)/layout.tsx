@@ -41,7 +41,6 @@ export default async function LK({children}: {children: React.ReactNode}){
                 <div className="flex md:flex-row flex-col w-full min-h-screen">
                     <MainNavbar role={role}/>
                     <div className="md:ml-[300px] flex-1">
-                        <Toaster/>
                         {children}
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import {useBalanceStore} from "@/shared/store/balance";
 import { useState } from "react";
 import { createDepositAction } from "@/features/account-info/actions/deposit";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface Props {
     balance?: number;
@@ -31,10 +32,12 @@ export const DepositModal: React.FC<Props> = ({balance, userId}) => {
         try {
             const result = await createDepositAction(parseFloat(amount), "TOPUP", 'USDT', parseInt(userString));
             if (result.success && result.data?.updatedBalance) {
+                toast.success("Deposit successfully created!");
                 setBalance(result.data.updatedBalance);
                 router.refresh();
             }
         } catch (error) {
+            toast.error("Error creating deposit!");
             console.error("Error creating deposit:", error);
         } finally {
             setIsPending(false);

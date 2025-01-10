@@ -17,3 +17,16 @@ export function setAutoRenew(trackingNumber: number, autorenew: boolean) {
 export function getAllSubscriptions(){
     return prisma.subscriptions.findMany()
 }
+export function getNeededSubscription(trackingNumber: number) {
+    return prisma.subscriptions.findFirst({
+        where: {trackingNumber},
+    })
+}
+export function updateSubscription(trackingNumber: number, endDate: Date) {
+    return prisma.subscriptions.update({
+        where: {trackingNumber},
+        data: {
+            endDate
+        }
+    })
+}

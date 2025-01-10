@@ -4,16 +4,15 @@ import { z } from "zod";
 import { userRepository } from "@/enteties/user/repositories/user";
 import { passwordService } from "@/enteties/user/services/password";
 
-// Определяем схему для валидации данных
 const restoreAccessDataSchema = z.object({
     email: z.string().email(),
     password: z.string().min(3),
 });
 
-// Определяем тип для состояния
+
 interface RestoreAccessState {
     formData: FormData | undefined;
-    errors?: {    // errors может быть объектом или undefined
+    errors?: {
         email?: string;
         password?: string;
         _errors?: string;
