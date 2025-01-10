@@ -1,8 +1,7 @@
-import {$Enums, DepositType, Prisma, Role, SubscriptionType} from "@prisma/client";
+import {DepositSystem, DepositType, Prisma, Role, SubscriptionType} from "@prisma/client";
 import {UserEntity} from "../domain";
 import {prisma} from "@/shared/lib/db";
 import {UserId} from "@/kernel/ids";
-import DepositSystem = $Enums.DepositSystem;
 
 export function saveUser(user: UserEntity): Promise<UserEntity> {
     return prisma.user.upsert({
