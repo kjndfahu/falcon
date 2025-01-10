@@ -2,7 +2,7 @@ import {userRepository} from "@/enteties/user/repositories/user";
 import {left, right} from "@/shared/lib/either";
 import {passwordService} from "@/enteties/user/services/password";
 
-export async function verifyUserPassword({login, password} :{login: string, password:string}) {
+export async function verifyUserPassword({login, password} :{login?: string, password?:string}) {
     const user = await userRepository.getUser({login})
 
     if(!user){

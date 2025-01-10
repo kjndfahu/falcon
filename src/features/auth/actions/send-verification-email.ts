@@ -3,7 +3,6 @@
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const TEST_EMAIL = 'denispoda17@gmail.com';
 
 export type SendVerificationState = {
     formData?: FormData;
@@ -19,7 +18,8 @@ export async function sendVerificationEmail(
     formData: FormData
 ): Promise<SendVerificationState> {
     try {
-        const email = formData.get('email');
+        const email = formData.get('email')?.toString();
+        const recipientEmail = email;
 
         if (!email) {
             return {
@@ -34,7 +34,7 @@ export async function sendVerificationEmail(
 
         await resend.emails.send({
             from: 'onboarding@resend.dev',
-            to: TEST_EMAIL,
+            to: 'ccursor6@gmail.com',
             subject: 'Email Verification',
             html: `
                 <h1>Email Verification</h1>
