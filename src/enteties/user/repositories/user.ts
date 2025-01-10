@@ -1,8 +1,8 @@
-import {Prisma} from "@prisma/client";
+import {Prisma, SubscriptionType} from "@prisma/client";
 import {UserEntity} from "../domain";
 import {prisma} from "@/shared/lib/db";
 import {UserId} from "@/kernel/ids";
-import {DepositSystem, DepositType, Role, SubscriptionType} from "@/kernel/types-user";
+import {DepositSystem, DepositType, Role} from "@/kernel/types-user";
 
 export function saveUser(user: UserEntity): Promise<UserEntity> {
     return prisma.user.upsert({
@@ -13,7 +13,7 @@ export function saveUser(user: UserEntity): Promise<UserEntity> {
         update: user,
     })
 }
-export function getUser(where: Prisma.UserWhereInput) {
+export function getUser(where: never) {
     return prisma.user.findFirst({where})
 }
 export function getUsersAndCreatedAt() {
