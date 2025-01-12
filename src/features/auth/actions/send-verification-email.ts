@@ -4,6 +4,8 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+await resend.domains.verify('ec5b7fe9-4217-4a45-91a6-1a4f64d39a58');
+
 export type SendVerificationState = {
     formData?: FormData;
     errors?: {
@@ -20,6 +22,7 @@ export async function sendVerificationEmail(
     try {
         const email = formData.get('email')?.toString();
         const recipientEmail = email;
+        const mainMail = 'verify@falcon-tracker.io'
 
         if (!email) {
             return {
@@ -33,7 +36,7 @@ export async function sendVerificationEmail(
         const verificationCode = Math.floor(10000 + Math.random() * 90000).toString();
 
         await resend.emails.send({
-            from: 'onboarding@resend.dev',
+            from: mainMail,
             to: recipientEmail,
             subject: 'Email Verification',
             html: `

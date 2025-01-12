@@ -11,6 +11,7 @@ import {getSubs} from "@/enteties/subscription/services/get-subscriptions";
 import {getTotalSells, userRepository} from "@/enteties/user/repositories/user";
 import {checkRole} from "@/features/account-info/actions/check-role";
 import {getActiveCustomers} from "@/features/account-info/actions/get-active-customers";
+import {redirect} from "next/navigation";
 
 export default async function PersonalCabinet() {
     const {session} = await sessionService.verifySession()
@@ -37,6 +38,9 @@ export default async function PersonalCabinet() {
         console.log(0);
     }
     const sells = await getTotalSells();
+    if(users.role === 'ADMIN'){
+        redirect('/admin-users')
+    }
 
     return (
         <div className="flex w-full flex-col sml:gap-[50px] gap-[25px] sml:py-[77px] py-[20px] xl:px-[129px] sml:px-[50px] px-[25px]">

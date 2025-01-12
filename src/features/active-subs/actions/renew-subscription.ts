@@ -90,9 +90,14 @@ export async function renewSubscription(trackingNumber: number, autorenew: boole
 
         console.log(dateDifference)
         const newDate = new Date(getSub.endDate);
-        newDate.setDate(newDate.getDate() + dateDifference);
-
-        await updateSubscription(trackingNumber, newDate);
+        const nowDate = new Date();
+        if(nowDate > newDate){
+            const newRenewDate = new Date(nowDate.getTime() + dateDifference);
+            await updateSubscription(trackingNumber, newRenewDate)
+        } else {
+            newDate.setDate(newDate.getDate() + dateDifference);
+            await updateSubscription(trackingNumber, newDate);
+        }
 
         return {success: true}
 

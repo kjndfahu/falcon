@@ -1,7 +1,6 @@
 import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
 import localFont from "next/font/local";
 import "../globals.css";
-import {Toaster} from "react-hot-toast";
 import {Providers} from "./providers";
 import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
