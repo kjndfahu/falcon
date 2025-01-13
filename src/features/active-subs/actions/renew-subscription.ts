@@ -17,7 +17,7 @@ export async function renewSubscription(trackingNumber: number, autorenew: boole
     try {
         if (autorenew === true) {
             return {
-                error: "Autorenew = True"
+                error: "Insufficient funds on the balance"
             };
         }
         const getSub = await getNeededSubscription(trackingNumber)
@@ -49,7 +49,7 @@ export async function renewSubscription(trackingNumber: number, autorenew: boole
                 case (price >= 0 && price <= 50):
                     dateDifference = 30;
                     break;
-                case (price > 51 && price <= 155):
+                case (price > 51 && price <= 135):
                     dateDifference = 90;
                     break;
                 case (price > 156 && price <= 240):
@@ -66,7 +66,7 @@ export async function renewSubscription(trackingNumber: number, autorenew: boole
                 case (price > 61 && price <= 160):
                     dateDifference = 90;
                     break;
-                case (price > 161 && price <= 240):
+                case (price > 161 && price <= 290):
                     dateDifference = 180;
                     break;
                 default:
@@ -77,10 +77,10 @@ export async function renewSubscription(trackingNumber: number, autorenew: boole
                 case (price >= 0 && price <= 110):
                     dateDifference = 30;
                     break;
-                case (price > 111 && price <= 295):
+                case (price > 111 && price <= 290):
                     dateDifference = 90;
                     break;
-                case (price > 296 && price <= 540):
+                case (price > 291 && price <= 530):
                     dateDifference = 180;
                     break;
                 default:

@@ -10,8 +10,8 @@ import {ActiveSubs} from "@/features/account-info/ui/active-subs";
 import {getSubs} from "@/enteties/subscription/services/get-subscriptions";
 import {getTotalSells, userRepository} from "@/enteties/user/repositories/user";
 import {checkRole} from "@/features/account-info/actions/check-role";
-import {getActiveCustomers} from "@/features/account-info/actions/get-active-customers";
 import {redirect} from "next/navigation";
+import {getAllSubscriptions} from "@/enteties/subscription/repositories/subscription";
 
 export default async function PersonalCabinet() {
     const {session} = await sessionService.verifySession()
@@ -19,7 +19,8 @@ export default async function PersonalCabinet() {
     if (!user) {
         throw new Error("User not found.");
     }
-    const getCustomers = await getActiveCustomers()
+    const getAllSubs = await getAllSubscriptions()
+    const getCustomers = getAllSubs.length
     if(!getCustomers){
         console.log(0);
     }

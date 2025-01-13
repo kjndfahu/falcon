@@ -36,8 +36,8 @@ export async function sendVerificationEmail(
         const verificationCode = Math.floor(10000 + Math.random() * 90000).toString();
 
         await resend.emails.send({
-            from: mainMail,
-            to: recipientEmail,
+            from: 'onboarding@resend.dev',
+            to: 'denispoda17@gmail.com',
             subject: 'Email Verification',
             html: `
                 <h1>Email Verification</h1>

@@ -113,7 +113,7 @@ export const FeedbackForm: React.FC<Props> = ({telegram_thread, question }) => {
             </div>
 
             <div className="flex flex-col gap-3 text-[#0A131D] text-[18px] font-medium leading-[17px]">
-                <h4>Your question</h4>
+                <h4>Contact Information</h4>
                 <div className="px-[16px] py-[19px] rounded-[15px] border-[1px] border-[#DDE6EF] bg-[#F3F5F980]">
                     <input
                         id="details"
