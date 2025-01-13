@@ -19,12 +19,9 @@ interface Props {
     setIsClicked: (isClicked: boolean) => void,
     session: SessionEntity;
     userRole?: string;
-    sells: {price: number,
-        createdAt: Date
-    }[],
 }
 
-export const ModalSubs: React.FC<Props> = ({isClicked, sells, setIsClicked, userRole, session}) => {
+export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, session}) => {
     const [activeTab, setActiveTab] = useState('Basic');
     const [activeDays, setActiveDays] = useState('30');
     const [isPending, startTransition] = useTransition();

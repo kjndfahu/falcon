@@ -10,10 +10,28 @@ interface Props {
 export const EmailBlock: React.FC<Props> = ({ example }) => {
     const handleCopy = async () => {
         try {
-            await copyToClipboard(example);
-            toast.success("Email copied to clipboard!");
-            console.log("Email copied successfully!");
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+                await navigator.clipboard.writeText(example);
+                toast.success("Email copied to clipboard!");
+                console.log("Email copied successfully!");
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = example;
+                document.body.appendChild(textArea);
+                textArea.select();
+                textArea.setSelectionRange(0, 99999);
+
+                if (document.execCommand("copy")) {
+                    toast.success("Email copied to clipboard!");
+                    console.log("Email copied successfully!");
+                } else {
+                    throw new Error("Fallback copy method failed.");
+                }
+
+                document.body.removeChild(textArea);
+            }
         } catch (error) {
+            toast.error("Failed to copy email.");
             console.error("Failed to copy email:", error);
         }
     };
