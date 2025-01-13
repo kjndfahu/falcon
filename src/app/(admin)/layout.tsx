@@ -1,9 +1,9 @@
 import localFont from "next/font/local";
 import "../globals.css";
-import {AdminNavbar} from "@/widgets/admin-navbar/admin-navbar";
 import {Toaster} from "react-hot-toast";
 import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
+import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
 
 const myFont = localFont({
     src: [
@@ -37,7 +37,7 @@ export default async function AdminLayout({children}: {children: React.ReactNode
         <body className={`${myFont.className} bg-white antialiased`}>
         {role === 'ADMIN' && (
             <div className="flex md:flex-row flex-col">
-                <AdminNavbar/>
+                <MainNavbar role={role}/>
                 <div className="md:ml-[300px] flex-1">
                     <Toaster/>
                     {children}

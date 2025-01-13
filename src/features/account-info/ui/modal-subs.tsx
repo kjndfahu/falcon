@@ -5,13 +5,13 @@ import {SubsTabs} from "@/features/account-info/ui/subs-tabs";
 import {SubscriptionBlock} from "@/features/account-info/ui/subscription-block";
 import {DaysBlock} from "@/features/account-info/ui/days-block";
 import {useEffect, useState, useTransition} from "react";
-import {ReferralDiagram} from "@/features/referral/ui/referral-diagram";
 import {BlueBtn} from "@/shared/ui/blue-btn";
 import { SessionEntity } from "@/enteties/user/domain";
 import { buySubscriptionAction } from "../actions/buy-subscription";
 import { activeSub } from "../actions/constants";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import {AllSubscriptions} from "@/features/account-info/ui/all-subscriptions";
 
 interface Props {
     className?: string,
@@ -37,7 +37,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, sells, setIsClicked, user
 
         const price = parseInt(selectedSub.prices[activeDays as keyof typeof selectedSub.prices]);
         const trackingNumber = Math.floor(Math.random() * 1000000);
-        
+
         const endDate = new Date();
         endDate.setDate(endDate.getDate() + parseInt(activeDays));
 
@@ -54,7 +54,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, sells, setIsClicked, user
                 console.log('Sending subscription data:', Object.fromEntries(formData));
                 const result = await buySubscriptionAction({}, formData);
                 console.log('Subscription result:', result);
-                
+
                 if (!result?.errors) {
                     toast.success("Subscription successfully purchased!");
                     setIsClicked(false);
@@ -99,27 +99,16 @@ export const ModalSubs: React.FC<Props> = ({isClicked, sells, setIsClicked, user
                             styles="w-[50vw]"
                         />
                     </div>
-                    <div className="md:hidden flex">
-                        <ReferralDiagram sells={sells}/>
-                        {error && (
-                            <div className="text-red-500">{error}</div>
-                        )}
-                    </div>
                     <SubscriptionBlock userRole={userRole} activeTab={activeTab} activeDays={activeDays}/>
-                    <div className="flex md:h-[585px] w-full justify-between flex-col">
-                        <div className="flex sm:text-[36px] text-[24px] text-black items-center justify-between ">
+                    <div className="flex w-full justify-between gap-[10px] flex-col">
+                        <div className="flex sm:text-[30px] text-[22px] text-black items-center justify-between ">
                             Subscription pricing
                             <div className="md:flex hidden cursor-pointer" onClick={() => setIsClicked(false)}>
                                 <XLogo/>
                             </div>
                         </div>
                         <DaysBlock activeDays={activeDays} setActiveDays={setActiveDays}/>
-                        <div className="md:flex hidden">
-                            <ReferralDiagram sells={sells}/>
-                            {error && (
-                                <div className="text-red-500">{error}</div>
-                            )}
-                        </div>
+                        <AllSubscriptions activeDays={activeDays as "30" | "90" | "180"}/>
                         <div className="md:flex hidden">
                             <BlueBtn
                                 title={isPending ? "Processing..." : "Buy"}

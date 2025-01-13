@@ -10,7 +10,6 @@ import {ActiveSubs} from "@/features/account-info/ui/active-subs";
 import {getSubs} from "@/enteties/subscription/services/get-subscriptions";
 import {getTotalSells, userRepository} from "@/enteties/user/repositories/user";
 import {checkRole} from "@/features/account-info/actions/check-role";
-import {redirect} from "next/navigation";
 import {getAllSubscriptions} from "@/enteties/subscription/repositories/subscription";
 
 export default async function PersonalCabinet() {
@@ -21,27 +20,12 @@ export default async function PersonalCabinet() {
     }
     const getAllSubs = await getAllSubscriptions()
     const getCustomers = getAllSubs.length
-    if(!getCustomers){
-        console.log(0);
-    }
     const subs = await getSubs({userId: session.id})
     const totalPriceSales = subs.reduce((sum, sub) => sum + sub.price, 0);
-    if(!totalPriceSales){
-        console.log(0);
-    }
     const totalEarns = subs.reduce((sum, sub) => sum + sub.earns, 0);
-    if(!totalEarns){
-        console.log(0);
-    }
     const users = await userRepository.getUser({ email: user.email });
     const {progress} = await checkRole(user.id, user.role)
-    if(!progress){
-        console.log(0);
-    }
     const sells = await getTotalSells();
-    if(users.role === 'ADMIN'){
-        redirect('/admin-users')
-    }
 
     return (
         <div className="flex w-full flex-col sml:gap-[50px] gap-[25px] sml:py-[77px] py-[20px] xl:px-[129px] sml:px-[50px] px-[25px]">

@@ -12,7 +12,7 @@ export const ButtonsBlock:React.FC<Props> = ({isAuth}) => {
                 <div className="w-full">
                     <Link href="/personal-cabinet">
                         <Button title="Back to Dashboard"
-                                styles="bg-[#0057FF] md:w-[150px] w-full leading-[20px] py-[8px] md:rounded-[5px] rounded-[12px]"/>
+                                styles="bg-[#0057FF] md:w-[170px] w-full leading-[20px] py-[8px] md:rounded-[5px] rounded-[12px]"/>
                     </Link>
                 </div>
             ) : (

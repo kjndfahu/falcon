@@ -4,6 +4,7 @@ import "../globals.css";
 import {Providers} from "./providers";
 import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
+import {BlockedUser} from "@/features/account-info/ui/blocked-user";
 
 const myFont = localFont({
     src: [
@@ -35,7 +36,7 @@ export default async function LK({children}: {children: React.ReactNode}){
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
-        {user.isBlocked === false && (
+        {user.isBlocked === false ? (
             <Providers>
                 <div className="flex md:flex-row flex-col w-full min-h-screen">
                     <MainNavbar role={role}/>
@@ -44,6 +45,8 @@ export default async function LK({children}: {children: React.ReactNode}){
                     </div>
                 </div>
             </Providers>
+        ) : (
+            <BlockedUser/>
         )}
         </body>
         </html>

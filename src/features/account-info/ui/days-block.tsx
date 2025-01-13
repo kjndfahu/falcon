@@ -9,17 +9,17 @@ export const DaysBlock: React.FC<Props> = ({ activeDays, setActiveDays }) => {
     const plans = [
         { label: '30', save: null },
         { label: '90', save: 'Save 10%' },
-        { label: '180', save: 'Save 50%' },
+        { label: '180', save: 'Save 20%' },
     ];
 
     return (
         <div className="flex w-full items-center justify-center">
-            <div className="flex mds:flex-row flex-col w-full mdbvp:gap-[30px] gap-[10px] bg-[#f8fbff] border border-[#d7e7ff] mdbvp:p-5 p-2 rounded-[12px]">
+            <div className="flex mds:flex-row flex-col w-full mdbvp:gap-[30px] gap-[10px] bg-[#f8fbff] border border-[#d7e7ff] mdbvp:p-2 p-2 rounded-[12px]">
                 {plans.map((plan) => (
                     <div
                         key={plan.label}
                         onClick={() => setActiveDays(plan.label)}
-                        className={`flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] mdbvp:text-[22px] text-[18px] leading-[23px] font-medium cursor-pointer transition ${
+                        className={`flex w-full justify-center items-center rounded-[10px] gap-[10px] p-[5px] mdbvp:text-[20px] text-[18px] leading-[21px] font-medium cursor-pointer transition ${
                             activeDays === plan.label
                                 ? 'bg-[#005dff] text-white'
                                 : 'bg-white text-[#000] border border-[#d7e7ff]'

@@ -8,6 +8,7 @@ import {
     SubsActive,
     SubsInactive
 } from "@/shared/ui/pc-icons";
+import {BookUser, ChartNoAxesCombined, Gauge, UserCog} from "lucide-react";
 
 
 export interface NavbarLink {
@@ -53,5 +54,33 @@ export const navbarLinks: NavbarLink[] = [
         link: "/referral",
         logoInactive: <ReferralInactive className="w-[27px] h-[27px]" />,
         logoActive: <ReferralActive className="w-[27px] h-[27px]" />,
+    },
+    {
+        id: 6,
+        title: 'Admin Users',
+        link: '/admin-users',
+        logoInactive: <UserCog color="#4b5167" /> ,
+        logoActive: <UserCog color="#0067FF" />,
+    },
+    {
+        id: 7,
+        title: 'Dashboard',
+        link: '/dashboard',
+        logoInactive: <Gauge color="#4b5167" />,
+        logoActive: <Gauge color="#0067FF" />,
+    },
+    {
+        id: 8,
+        title: 'Statistics',
+        link: '/statistics',
+        logoInactive: <ChartNoAxesCombined color="#4b5167" />,
+        logoActive: <ChartNoAxesCombined color="#0067FF" />,
+    },
+    {
+        id: 9,
+        title: 'Admin Purchases',
+        link: '/admin-purchase-history',
+        logoInactive: <BookUser  color="#4b5167" />,
+        logoActive: <BookUser color="#0067FF" />,
     },
 ];

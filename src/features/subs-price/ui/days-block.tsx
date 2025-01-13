@@ -26,7 +26,7 @@ export const DaysBlock:React.FC<Props> = ({activeDays, setActiveDays}) => {
                 className={`flex ${activeDays === '180' ? 'bg-[#0094FF] text-white' : ''} gap-[10px] text-[24px] rounded-[10px] sml:w-auto w-[230px] leading-[30px] cursor-pointer border-[#BCE3FF] border-[1px] px-[18px] py-[10px]`}
             >
                 180 days
-                <PromoBlock title="Save 50%" styles="bg-[linear-gradient(95.02deg,_#0027B3_4.13%,_#0066FF_96.05%)]"/>
+                <PromoBlock title="Save 20%" styles="bg-[linear-gradient(95.02deg,_#0027B3_4.13%,_#0066FF_96.05%)]"/>
             </div>
         </div>
     )
