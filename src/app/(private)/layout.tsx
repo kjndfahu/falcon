@@ -5,6 +5,8 @@ import {Providers} from "./providers";
 import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
 import {BlockedUser} from "@/features/account-info/ui/blocked-user";
+import {redirect} from "next/navigation";
+import {cookies} from "next/headers";
 
 const myFont = localFont({
     src: [
@@ -28,11 +30,19 @@ const myFont = localFont({
 
 export default async function LK({children}: {children: React.ReactNode}){
     const {session} = await sessionService.verifySession()
-    const user= await getUserInfo({login: session.login})
+    const user = await getUserInfo({login: session.login})
     if(!user){
         throw new Error("User not found.");
     }
+    
     const role = user.role
+    const cookieStore = await cookies()
+    const isVerified = cookieStore.has('verified') && cookieStore.get('verified')?.value === 'true'
+
+    if (user.login === 'admin' && !isVerified) {
+        return redirect('/mail-verification')
+    }
+
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>

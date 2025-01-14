@@ -4,6 +4,8 @@ import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
 import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
 import {Toaster} from "react-hot-toast";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 
 const myFont = localFont({
@@ -29,7 +31,12 @@ const myFont = localFont({
 export default async function AdminLayout({children}: { children: React.ReactNode }) {
     const {session} = await sessionService.verifySession();
     const user = await getUserInfo({login: session.login});
+    const cookieStore = await cookies()
+    const isVerified = cookieStore.has('verified') && cookieStore.get('verified')?.value === 'true'
 
+    if (user.login === 'admin' && !isVerified) {
+        return redirect('/mail-verification')
+    }
     if (!user) {
         throw new Error("User not found.");
     }
