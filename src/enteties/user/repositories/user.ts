@@ -38,6 +38,15 @@ export function getTotalSells() {
         },
     });
 }
+export function getUserTotalSells(userId: number) {
+    return prisma.subscriptions.findMany({
+        where: {userId},
+        select: {
+            createdAt: true,
+            price: true,
+        },
+    });
+}
 export function getUserAndBalance() {
     return prisma.user.findMany({
         select: {
@@ -189,4 +198,4 @@ export function buySubscription(type: SubscriptionType, price: number, trackingN
         }
     })
 }
-export const userRepository = {saveUser, getUser, createTopUp, createReferrals, changeUserRole, changeMail, getRoleCustomers, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};
+export const userRepository = {saveUser, getUser, createTopUp, createReferrals, getUserTotalSells, changeUserRole, changeMail, getRoleCustomers, getActiveSubscriptions, restoreAccess, getReferredBy, getUserAndBalance, blockUser, unblockUser, buySubscription, createWithdraw, getUserTransactions};

@@ -24,7 +24,7 @@ export const GraphicSwitcher: React.FC<Props> = ({ graphic, setGraphic, dateFilt
     };
 
     return (
-        <div className="flex gap-[20px] items-center">
+        <div className="flex text-[18px] sm:gap-[20px] gap-1 items-center">
             <select
                 value={graphic}
                 onChange={(e) => setGraphic(e.target.value)}

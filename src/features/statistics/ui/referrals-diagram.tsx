@@ -27,7 +27,7 @@ interface Props {
 export const ReferralsDiagram: React.FC<Props> = ({ referralBuys }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const chartInstanceRef = useRef<Chart<'line'> | null>(null);
+    const chartInstanceRef = useRef<Chart<"line", number[], string> | null>(null);
     const total = calculateTotalReseller(referralBuys);
 
     useEffect(() => {

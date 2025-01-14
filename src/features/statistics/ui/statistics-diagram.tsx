@@ -9,10 +9,14 @@ import {
     Title,
     Tooltip,
     CategoryScale,
-    TooltipModel
+    TooltipModel,
+    ChartTypeRegistry,
+    Point,
+    BubbleDataPoint
 } from 'chart.js';
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {calculateTotalPrice} from "@/features/statistics/actions/calculate-price";
+import {getUserSellsAction} from "@/features/statistics/actions/get-user-sells-action";
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
@@ -23,11 +27,15 @@ interface Props {
     }[];
 }
 
+type SellsData = Props['sells'];
+
 export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const chartInstanceRef = useRef<Chart | null>(null);
+    const chartInstanceRef = useRef<Chart<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint)[], unknown> | null>(null);
     const total = calculateTotalPrice(sells)
+    const [email, setEmail] = useState('');
+    const [userSells, setUserSells] = useState<SellsData | null>(null);
 
     useEffect(() => {
         if (!chartRef.current || !tooltipRef.current) return;
@@ -41,11 +49,12 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
             chartInstanceRef.current.destroy();
         }
 
-        const groupedData = sells.reduce<Record<string, number>>((acc, sell) => {
+        const dataToUse = email && userSells ? userSells : sells;
+        const groupedData = dataToUse.reduce((acc: Record<string, number>, sell) => {
             const date = new Date(sell.createdAt).toLocaleDateString();
             acc[date] = (acc[date] || 0) + sell.price;
             return acc;
-        }, {});
+        }, {} as Record<string, number>);
 
         const labels = Object.keys(groupedData);
         const data = Object.values(groupedData);
@@ -137,19 +146,47 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, [sells]);
+    }, [sells, email, userSells]);
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    };
+
+    const handleSearchClick = async () => {
+        if (!email.trim()) {
+            setUserSells(null);
+            return;
+        }
+
+        try {
+            const result = await getUserSellsAction(email);
+            if (typeof result === 'string') {
+                console.error(result);
+                setUserSells(null);
+            } else {
+                setUserSells(result);
+            }
+        } catch (error) {
+            console.error('Error fetching user sells:', error);
+            setUserSells(null);
+        }
+    };
 
     return (
         <div className="relative w-[90%]">
-            <div className="flex flex-col mb-5 text-[18px] gap-3">
-                <div
-                    className="rounded-[15px] font-normal sml:w-[528px] w-full border-[1px] border-[#DDE6EF] bg-[#F3F5F9] px-[16px] py-[18px]">
-                    <input
-                        type="email"
-                        placeholder="Enter new email"
-                        required
-                        className="bg-transparent w-full focus:outline-none focus:ring-0"
-                    />
+            <div className="flex flex-col mb-5 text-[18px] ">
+                <input
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="Введите email пользователя"
+                    className="px-4 py-[10px] font-normal mb-5 w-[300px] border border-blue-500 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div 
+                    onClick={handleSearchClick} 
+                    className="flex items-center cursor-pointer justify-center font-normal py-[10px] mb-5 text-white w-[250px] bg-blue-500 rounded-[10px]"
+                >
+                    Найти пользователя
                 </div>
             </div>
             <canvas ref={chartRef} className="w-[1000px]"></canvas>
@@ -166,7 +203,8 @@ export const StatisticsDiagram: React.FC<Props> = ({ sells }) => {
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
             ></div>
-            <p className="pt-10">Общая сумма продаж - {total}$</p>
+            <p className="pt-10">Общая сумма продаж - {email && userSells ? calculateTotalPrice(userSells) : total}$</p>
+
         </div>
     );
 };

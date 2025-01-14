@@ -9,7 +9,7 @@ import { ReferralsDiagram } from "@/features/statistics/ui/referrals-diagram";
 interface Props {
     sells: { price: number; createdAt: Date }[];
     resellerSells: { price: number; userId: number | null; createdAt: Date }[];
-    referralBuys: { price: number; userId: number; createdAt: Date }[]; // Обновили тип userId на обязательный
+    referralBuys: { price: number; userId: number; createdAt: Date }[];
 }
 
 export const StatisticsInfo: React.FC<Props> = ({ sells, resellerSells, referralBuys }) => {
@@ -46,6 +46,7 @@ export const StatisticsInfo: React.FC<Props> = ({ sells, resellerSells, referral
 
         return data;
     };
+
 
     const filterResellerSells = (data: { price: number; userId: number | null; createdAt: Date }[]) => {
         const now = new Date();
