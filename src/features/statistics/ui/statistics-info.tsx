@@ -134,19 +134,21 @@ export const StatisticsInfo: React.FC<Props> = ({ sells, resellerSells, referral
 
     return (
         <div className="flex flex-col text-[25px] text-black font-semibold w-full gap-[50px]">
-            <div className="flex mds:flex-row flex-col items-center gap-[50px]">
-                <h3>Статистика</h3>
-                <GraphicSwitcher
-                    graphic={graphic}
-                    setGraphic={setGraphic}
-                    dateFilter={dateFilter}
-                    setDateFilter={setDateFilter}
-                />
+            <div className="flex gap-5 flex-col">
+                <div className="flex mds:flex-row flex-col items-center gap-[50px]">
+                    <h3>Статистика</h3>
+                    <GraphicSwitcher
+                        graphic={graphic}
+                        setGraphic={setGraphic}
+                        dateFilter={dateFilter}
+                        setDateFilter={setDateFilter}
+                    />
+                </div>
             </div>
 
-            {graphic === "Sells" && <StatisticsDiagram sells={filteredSells} />}
-            {graphic === "Resellers" && <ResellerSellsDiagram resellerSells={filteredResellerSells} />}
-            {graphic === "Referrals" && <ReferralsDiagram referralBuys={filteredReferralBuys} />}
+            {graphic === "Sells" && <StatisticsDiagram sells={filteredSells}/>}
+            {graphic === "Resellers" && <ResellerSellsDiagram resellerSells={filteredResellerSells}/>}
+            {graphic === "Referrals" && <ReferralsDiagram referralBuys={filteredReferralBuys}/>}
         </div>
     );
 };
