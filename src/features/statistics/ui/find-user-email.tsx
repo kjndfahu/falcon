@@ -1,10 +1,7 @@
 'use client';
 
-interface Props {
-    className?:string;
-}
 
-export const FindUserEmail: React.FC<Props> = ({ className }) => {
+export const FindUserEmail=  ( ) => {
     return (
         <div className="flex w-full">
             <div className="flex flex-col mb-5 text-[18px] gap-3">

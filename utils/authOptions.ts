@@ -6,6 +6,8 @@ import {passwordService} from "@/enteties/user/services/password";
 import ShortUniqueId from "short-unique-id";
 import {generateReferralCode} from "@/enteties/user/services/referralcode-generation";
 
+const baseUrl = process.env.NEXTAUTH_URL
+
 export const authOptions: AuthOptions = {
     providers: [
         GoogleProvider({

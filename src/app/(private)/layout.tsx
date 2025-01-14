@@ -7,6 +7,7 @@ import {getUserInfo} from "@/features/account-info/model/get-user";
 import {BlockedUser} from "@/features/account-info/ui/blocked-user";
 import {redirect} from "next/navigation";
 import {cookies} from "next/headers";
+import type {Metadata} from "next";
 
 const myFont = localFont({
     src: [
@@ -28,6 +29,7 @@ const myFont = localFont({
     ],
 });
 
+
 export default async function LK({children}: {children: React.ReactNode}){
     const {session} = await sessionService.verifySession()
     const user = await getUserInfo({login: session.login})
@@ -44,21 +46,19 @@ export default async function LK({children}: {children: React.ReactNode}){
     }
 
     return (
-        <html lang="en">
-        <body className={`${myFont.className} bg-white antialiased`}>
-        {user.isBlocked === false ? (
-            <Providers>
-                <div className="flex md:flex-row flex-col w-full min-h-screen">
-                    <MainNavbar role={role}/>
-                    <div className="md:ml-[300px] flex-1">
-                        {children}
+        <div className={myFont.className + " bg-white antialiased"}>
+            {user.isBlocked === false ? (
+                <Providers>
+                    <div className="flex md:flex-row flex-col w-full min-h-screen">
+                        <MainNavbar role={role}/>
+                        <div className="md:ml-[300px] flex-1">
+                            {children}
+                        </div>
                     </div>
-                </div>
-            </Providers>
-        ) : (
-            <BlockedUser/>
-        )}
-        </body>
-        </html>
+                </Providers>
+            ) : (
+                <BlockedUser/>
+            )}
+        </div>
     );
 }

@@ -67,6 +67,13 @@ export const AuthFormLayout: React.FC<Props> = ({
                                 <span className="text-[#0A131D] underline">Sign Up</span>
                             </Link>
                         </div>
+                        <div className="flex items-center gap-1">
+                            <p className="text-[18px] text-[#67748E]">Forgot your</p>
+                            <Link className="text-[#0A131D] text-[18px] underline" href="/change-password">
+                                <span
+                                    className="text-[#0A131D] text-[18px] underline">password</span>
+                            </Link>
+                        </div>
                     </>
                 )}
             </div>

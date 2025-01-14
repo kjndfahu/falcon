@@ -1,4 +1,8 @@
+import type {Metadata} from "next";
 
+export const metadata: Metadata = {
+    title: "Falcon Tracker",
+};
 
 export default function RootLayout({
   children,

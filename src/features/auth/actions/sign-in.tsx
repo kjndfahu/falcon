@@ -15,7 +15,7 @@ export type SignInFormState = {
 }
 
 const formDataSchema = z.object({
-    login: z.string().min(3),
+    login: z.string().min(3).transform(val => val.toLowerCase()),
     password: z.string().min(3),
 })
 

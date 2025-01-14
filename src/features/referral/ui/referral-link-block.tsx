@@ -1,24 +1,54 @@
 'use client'
 
 import { CopyLogo } from "@/shared/ui/pc-icons";
-import {copyCode} from "@/features/referral/model/useCopyCode";
 import toast from "react-hot-toast";
-
 
 interface Props {
     referralCode?: string;
 }
 
 export const ReferralLinkBlock: React.FC<Props> = ({ referralCode }) => {
-    const handleCopy = () => {
-        if (referralCode) {
-            copyCode(`http://falcon-tracker.io/sign-up/${referralCode}`);
-            toast.success("Referral code copied to clipboard!");
+    const handleCopy = async () => {
+        if (!referralCode) return;
+        
+        const text = `http://falcon-tracker.io/sign-up/${referralCode}`;
+        
+        try {
+            // Try using the Clipboard API first
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                toast.success("Referral code copied to clipboard!");
+                return;
+            }
+            
+            // Fallback for non-secure contexts or when Clipboard API is not available
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // Avoid scrolling to bottom
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                toast.success("Referral code copied to clipboard!");
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                toast.error("Failed to copy referral code");
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+            toast.error("Failed to copy referral code");
         }
     };
-
-
-    console.log(window.location)
 
     return (
         <div className="flex sml:w-auto w-full sml:flex-row flex-col">
