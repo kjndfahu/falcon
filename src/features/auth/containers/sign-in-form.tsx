@@ -36,6 +36,8 @@ export function SignInForm(){
                     callbackUrl: "/personal-cabinet",
                     redirect: true
                 });
+
+
             } catch (error) {
                 console.error("Sign in error:", error);
             }

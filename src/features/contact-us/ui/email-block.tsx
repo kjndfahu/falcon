@@ -1,6 +1,5 @@
 'use client'
 import {CopyIcon, MailLogo} from "@/shared/ui/icons";
-import {copyToClipboard} from "@/features/contact-us/model/handleCopy";
 import toast from "react-hot-toast";
 
 interface Props {

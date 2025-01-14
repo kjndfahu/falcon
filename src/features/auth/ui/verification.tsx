@@ -40,6 +40,7 @@ export const Verification: React.FC<Props> = ({
                 if (!isValid) {
                     setError("Invalid verification code");
                 }
+
             } catch (err) {
                 console.error("Verification error:", err);
                 setError("Error during verification");

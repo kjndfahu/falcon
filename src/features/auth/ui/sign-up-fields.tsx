@@ -32,7 +32,7 @@ export const SignUpFields:React.FC<Props> = ({formData, errors}) => {
                     <input id={loginId}
                            name="login"
                            type="login"
-                           placeholder="Enter your login"
+                           placeholder="Enter your username"
                            required
                            defaultValue={formData?.get("login")?.toString()}
                            className="bg-transparent w-full focus:outline-none focus:ring-0"

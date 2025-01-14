@@ -1,13 +1,9 @@
 import localFont from "next/font/local";
 import "../globals.css";
-import {Toaster} from "react-hot-toast";
 import {sessionService} from "@/enteties/user/services/session";
 import {getUserInfo} from "@/features/account-info/model/get-user";
 import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
-import {VerificationWrapper} from "@/features/auth/ui/verefication-wrapper";
-import ClientOnly from "@/features/auth/ui/client-only";
-import {ReactNode} from "react";
-import {AdminLayoutContent} from "@/features/admin-users/ui/admin-ui-content";
+import {Toaster} from "react-hot-toast";
 
 
 const myFont = localFont({
@@ -39,18 +35,18 @@ export default async function AdminLayout({children}: { children: React.ReactNod
     }
 
     const role = user.role;
-    const isVerified = typeof window !== "undefined" && localStorage.getItem("isAdminVerified") === "true";
-
-    console.log(isVerified);
 
     return (
         <html lang="en" className={`${myFont.className} bg-white antialiased`}>
-        <body> {role === 'ADMIN' && (
-            <ClientOnly>
-                <AdminLayoutContent role={role}>
-                {children}
-            </AdminLayoutContent>
-            </ClientOnly>
+        <body>
+        {role === 'ADMIN' && (
+            <div className="flex md:flex-row flex-col">
+                <MainNavbar role={role}/>
+                <div className="md:ml-[300px] flex-1">
+                    <Toaster/>
+                    {children}
+                </div>
+            </div>
         )}
         </body>
         </html>

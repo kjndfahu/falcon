@@ -26,6 +26,7 @@ export const ModalSubs: React.FC<Props> = ({isClicked, setIsClicked, userRole, s
     const [activeDays, setActiveDays] = useState('30');
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
+    console.log(error)
     const router = useRouter();
 
     const handleBuyClick = () => {

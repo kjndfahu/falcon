@@ -15,8 +15,8 @@ export const NavbarButtons: React.FC<Props> = ({ role }) => {
 
     const filteredLinks = navbarLinks.filter((item) => {
         if (role === "ADMIN") return true;
-        if (role === "INFLUENCER") return item.id <= 6;
-        return item.id <= 5;
+        if (role === "INFLUENCER") return item.id <= 5;
+        return item.id <= 4;
     });
 
     return (
