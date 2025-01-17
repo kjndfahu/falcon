@@ -17,7 +17,7 @@ export function SignInForm(){
 
     useEffect(() => {
         if (status === "authenticated") {
-            router.push("/personal-cabinet");
+            router.replace("/personal-cabinet");
         }
     }, [status, router]);
 

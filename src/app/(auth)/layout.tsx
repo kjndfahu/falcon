@@ -1,7 +1,6 @@
 import {AuthBanner} from "@/widgets/auth-banner";
 import localFont from "next/font/local";
 import "../globals.css";
-import type {Metadata} from "next";
 import {NextAuthProvider} from "@/providers/next-auth-provider";
 
 const myFont = localFont({

@@ -6,7 +6,6 @@ import {MainNavbar} from "@/widgets/main-navbar/main-navbar";
 import {Toaster} from "react-hot-toast";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
-import type {Metadata} from "next";
 
 
 const myFont = localFont({

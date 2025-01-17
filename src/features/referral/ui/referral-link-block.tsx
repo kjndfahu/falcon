@@ -14,18 +14,15 @@ export const ReferralLinkBlock: React.FC<Props> = ({ referralCode }) => {
         const text = `http://falcon-tracker.io/sign-up/${referralCode}`;
         
         try {
-            // Try using the Clipboard API first
             if (navigator.clipboard && window.isSecureContext) {
                 await navigator.clipboard.writeText(text);
                 toast.success("Referral code copied to clipboard!");
                 return;
             }
-            
-            // Fallback for non-secure contexts or when Clipboard API is not available
+
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            
-            // Avoid scrolling to bottom
+
             textArea.style.top = "0";
             textArea.style.left = "0";
             textArea.style.position = "fixed";

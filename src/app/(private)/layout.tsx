@@ -7,7 +7,6 @@ import {getUserInfo} from "@/features/account-info/model/get-user";
 import {BlockedUser} from "@/features/account-info/ui/blocked-user";
 import {redirect} from "next/navigation";
 import {cookies} from "next/headers";
-import type {Metadata} from "next";
 
 const myFont = localFont({
     src: [

@@ -5,8 +5,8 @@ import {prisma} from "@/shared/lib/db";
 import {passwordService} from "@/enteties/user/services/password";
 import ShortUniqueId from "short-unique-id";
 import {generateReferralCode} from "@/enteties/user/services/referralcode-generation";
-
-const baseUrl = process.env.NEXTAUTH_URL
+import crypto from 'crypto';
+import {sessionService} from "@/enteties/user/services/session";
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -64,22 +64,25 @@ export const authOptions: AuthOptions = {
         async signIn({ user, account }) {
             if (account?.provider === "google") {
                 try {
-                    const existingUser = await prisma.user.findFirst({
+                    let dbUser = await prisma.user.findFirst({
                         where: {
                             email: user.email!
                         }
                     });
 
-                    if (!existingUser) {
+                    if (!dbUser) {
                         const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
-                        await prisma.user.create({
+                        const randomPassword = crypto.randomBytes(32).toString('hex');
+                        const { hash, salt } = await passwordService.hashPassword(randomPassword);
+                        
+                        dbUser = await prisma.user.create({
                             data: {
                                 id: parseInt(uid.randomUUID()),
                                 email: user.email!,
                                 login: user.email!.split('@')[0],
                                 role: "USER",
-                                password: "",
-                                salt: "",
+                                password: hash,
+                                salt: salt,
                                 isBlocked: false,
                                 referralCode: generateReferralCode(),
                                 referredBy: 0,
@@ -87,6 +90,15 @@ export const authOptions: AuthOptions = {
                             }
                         });
                     }
+
+                    // Обновляем user объект информацией из базы данных
+                    user.id = dbUser.id.toString();
+                    user.role = dbUser.role;
+                    user.login = dbUser.login;
+
+                    // Создаем кастомную сессию
+                    await sessionService.addSession(dbUser);
+                    
                     return true;
                 } catch (error) {
                     console.error("Error in signIn callback:", error);
@@ -95,10 +107,16 @@ export const authOptions: AuthOptions = {
             }
             return true;
         },
-        async jwt({ token, trigger, session }) {
-            if (trigger === "update" && session?.email) {
+        async jwt({ token, trigger, session, user }) {
+            if (user) {
+                // При первой авторизации или после OAuth
+                token.id = user.id;
+                token.email = user.email;
+                token.role = user.role;
+                token.login = user.login;
+            } else if (trigger === "update" && session?.email && session.email !== token.email) {
+                // При обновлении email
                 token.email = session.email;
-
                 await prisma.user.update({
                     where: { id: parseInt(token.id) },
                     data: { email: session.email }
@@ -115,7 +133,16 @@ export const authOptions: AuthOptions = {
             }
             return session;
         },
-        async redirect({baseUrl }) {
+        async redirect({ url, baseUrl }) {
+            // Если это URL для callback после OAuth, направляем на personal-cabinet
+            if (url.includes('/api/auth/callback/')) {
+                return `${baseUrl}/personal-cabinet`;
+            }
+            // Если URL начинается с baseUrl, используем его
+            if (url.startsWith(baseUrl)) {
+                return url;
+            }
+            // По умолчанию направляем на personal-cabinet
             return `${baseUrl}/personal-cabinet`;
         }
     },
