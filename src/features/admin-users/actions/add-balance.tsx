@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { prisma } from "@/shared/lib/db";
 import { revalidatePath } from "next/cache";
+import {createdTopUp} from "@/enteties/user/services/create-top-up";
+import {createTransaction} from "@/enteties/user/repositories/user";
 
 export type AddBalanceState = {
     formData?: FormData;
@@ -55,12 +57,17 @@ export async function addBalanceAction(
             data: { balance: { increment: result.data.sum } }
         });
 
+        await createdTopUp(result.data.sum, "TOPUP", "ADMINRECHARGE", user.id);
+
+        await createTransaction(result.data.sum, "TOPUP", "ADMINRECHARGE", user.id);
+
         revalidatePath('/admin');
 
         return {
             formData,
             success: true
         };
+
 
     } catch (error) {
         console.error("Error adding balance:", error);

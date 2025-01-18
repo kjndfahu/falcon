@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { prisma } from "@/shared/lib/db";
 import { revalidatePath } from "next/cache";
+import {createdWithdraws} from "@/enteties/user/services/create-withdraw";
+import {createTransaction} from "@/enteties/user/repositories/user";
 
 export type DecrementBalanceState = {
     formData?: FormData;
@@ -63,6 +65,10 @@ export async function decrementBalanceAction(
             where: { email: result.data.email },
             data: { balance: { decrement: result.data.sum } }
         });
+
+        await createdWithdraws(result.data.sum, "WITHDRAW", "ADMINRECHARGE", user.id)
+
+        await createTransaction(result.data.sum, "WITHDRAW", "ADMINRECHARGE", user.id);
 
         revalidatePath('/admin');
 
