@@ -89,14 +89,16 @@ export const authOptions: AuthOptions = {
                                 discountRate: 0
                             }
                         });
+
+
                     }
 
-                    // Обновляем user объект информацией из базы данных
+
                     user.id = dbUser.id.toString();
                     user.role = dbUser.role;
                     user.login = dbUser.login;
 
-                    // Создаем кастомную сессию
+
                     await sessionService.addSession(dbUser);
                     
                     return true;

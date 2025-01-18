@@ -2,6 +2,8 @@ import {AuthBanner} from "@/widgets/auth-banner";
 import localFont from "next/font/local";
 import "../globals.css";
 import {NextAuthProvider} from "@/providers/next-auth-provider";
+import {sessionService} from "@/enteties/user/services/session";
+import {redirect} from "next/navigation";
 
 const myFont = localFont({
     src: [
@@ -25,6 +27,10 @@ const myFont = localFont({
 
 
 export default async function AuthLayout({children}: {children: React.ReactNode}){
+    const session = await sessionService.verifySession()
+    if(session){
+        redirect("/personal-cabinet")
+    }
     return (
         <html lang="en">
         <body className={`${myFont.className} bg-white antialiased`}>
