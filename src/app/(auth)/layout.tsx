@@ -27,8 +27,8 @@ const myFont = localFont({
 
 
 export default async function AuthLayout({children}: {children: React.ReactNode}){
-    const session = await sessionService.verifySession()
-    if(session){
+    const session = await sessionService.checkSession()
+    if(session.isAuth){
         redirect("/personal-cabinet")
     }
     return (

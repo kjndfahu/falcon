@@ -6,7 +6,7 @@ import {ErrorMessage} from "@/features/auth/ui/error-message";
 import {useActionState} from "@/shared/lib/react";
 import {signInAction, SignInFormState} from "@/features/auth/actions/sign-in";
 import {signIn, useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {Button} from "@/shared/ui/button";
 import {useEffect} from "react";
 
@@ -14,6 +14,8 @@ export function SignInForm(){
     const [formState, action, isPending] = useActionState(signInAction, {} as SignInFormState)
     const { status } = useSession();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const referralCode = searchParams.get('ref');
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -36,14 +38,11 @@ export function SignInForm(){
                     callbackUrl: "/personal-cabinet",
                     redirect: true
                 });
-
-
             } catch (error) {
                 console.error("Sign in error:", error);
             }
         }
     };
-
 
     return (
         <AuthFormLayout
@@ -55,9 +54,10 @@ export function SignInForm(){
                 <Button
                     isPending={isPending}
                     styles="flex w-full justify-center text-[18px] mt-[25px] py-4 font-light text-white rounded-[15px] bg-[#0057FF]"
-                    title="Sign up"
+                    title="Sign in"
                 />
             }
-            errors={ <ErrorMessage error={formState.errors?._errors}/> }/>
+            errors={ <ErrorMessage error={formState.errors?._errors}/> }
+        />
     )
 }

@@ -12,6 +12,7 @@ interface Props {
     errors: React.ReactNode;
     terms?: React.ReactNode;
     action?: (formData: FormData) => void;
+    referralCode?: string;
 }
 
 export const AuthFormLayout: React.FC<Props> = ({ 
@@ -20,7 +21,8 @@ export const AuthFormLayout: React.FC<Props> = ({
     action, 
     terms, 
     fields, 
-    maintitle 
+    maintitle,
+    referralCode 
 }) => {
     const currentPath = usePathname();
 
@@ -41,7 +43,7 @@ export const AuthFormLayout: React.FC<Props> = ({
                 {terms}
                 {actions}
             </form>
-            <GoogleButton />
+            <GoogleButton referralCode={referralCode} />
             <div className="flex sml:flex-row flex-col w-full sml:items-center items-start sml:gap-0 gap-3 justify-between sml:pt-[25px] pt-[50px] font-normal">
                 {currentPath === '/sign-up' ? (
                     <>

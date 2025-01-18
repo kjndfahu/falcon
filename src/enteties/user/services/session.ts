@@ -51,7 +51,7 @@ const verifySession = async() => {
     const session = await decrypt(cookie)
 
     if(session.type === 'left'){
-        redirect("/sign-in");
+        redirect('/sign-in')
     }
 
     return {

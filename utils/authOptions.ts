@@ -7,6 +7,7 @@ import ShortUniqueId from "short-unique-id";
 import {generateReferralCode} from "@/enteties/user/services/referralcode-generation";
 import crypto from 'crypto';
 import {sessionService} from "@/enteties/user/services/session";
+import {createUserWithReferral} from "@/features/auth/services/create-user";
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -64,43 +65,28 @@ export const authOptions: AuthOptions = {
         async signIn({ user, account }) {
             if (account?.provider === "google") {
                 try {
+                    if (!user.email) {
+                        return false;
+                    }
+
+                    console.log('Google sign-in callback started');
+                    console.log('Callback URL:', account.callback_url);
+
                     let dbUser = await prisma.user.findFirst({
-                        where: {
-                            email: user.email!
-                        }
+                        where: { email: user.email }
                     });
 
                     if (!dbUser) {
-                        const uid = new ShortUniqueId({ dictionary: 'number', length: 4 });
-                        const randomPassword = crypto.randomBytes(32).toString('hex');
-                        const { hash, salt } = await passwordService.hashPassword(randomPassword);
-                        
-                        dbUser = await prisma.user.create({
-                            data: {
-                                id: parseInt(uid.randomUUID()),
-                                email: user.email!,
-                                login: user.email!.split('@')[0],
-                                role: "USER",
-                                password: hash,
-                                salt: salt,
-                                isBlocked: false,
-                                referralCode: generateReferralCode(),
-                                referredBy: 0,
-                                discountRate: 0
-                            }
+                        dbUser = await createUserWithReferral({
+                            email: user.email
                         });
-
-
                     }
-
 
                     user.id = dbUser.id.toString();
                     user.role = dbUser.role;
                     user.login = dbUser.login;
 
-
                     await sessionService.addSession(dbUser);
-                    
                     return true;
                 } catch (error) {
                     console.error("Error in signIn callback:", error);
@@ -152,10 +138,19 @@ export const authOptions: AuthOptions = {
         signIn: '/sign-in',
         error: '/auth/error',
     },
-    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60,
     },
+    secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === 'development',
+};
+
+export const getGoogleSignInUrl = (referralCode?: string) => {
+    const baseUrl = process.env.NEXTAUTH_URL || '';
+    const signInUrl = `${baseUrl}/api/auth/signin/google`;
+    if (referralCode) {
+        return `${signInUrl}?ref=${referralCode}`;
+    }
+    return signInUrl;
 }

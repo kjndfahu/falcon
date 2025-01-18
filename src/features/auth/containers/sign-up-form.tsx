@@ -160,6 +160,7 @@ export function SignUpForm() {
                 />
             }
             errors={<ErrorMessage error={formState.errors?._errors}/>}
+            referralCode={referralCode}
         />
     );
 }
